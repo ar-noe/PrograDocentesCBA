@@ -37,12 +37,12 @@
                             Click="BtnDocentes_Click"/>
 
                     <Button x:Name="btnModulos" Content="📚 Módulos Impartidos" 
-                            Style="{StaticResource SecondaryButtonStyle}"
+                            Style="{StaticResource PrimaryButtonStyle}"
                             Margin="0,5" Height="45"
                             Click="BtnModulos_Click"/>
 
                     <Button x:Name="btnAulas" Content="🏫 Agregar Aulas" 
-                            Style="{StaticResource PrimaryButtonStyle}"
+                            Style="{StaticResource SecondaryButtonStyle}"
                             Margin="0,5" Height="45"
                             Click="BtnAulas_Click"/>
                 </StackPanel>
@@ -51,7 +51,7 @@
 
         <!-- Área de Contenido Principal -->
         <TabControl x:Name="MainTabControl" Grid.Column="1" 
-                    Background="{StaticResource VeryLightBlueBrush}">
+                    Background="{StaticResource VeryLightBlueBrush}" Cursor="">
 
             <!-- Pestaña de Módulos Impartidos (seleccionada por defecto) -->
             <TabItem x:Name="tabModulos" Header="Gestión de Módulos" IsSelected="True">
@@ -90,23 +90,21 @@
                                 <!-- Combobox Classroom -->
                                 <StackPanel Margin="0,0,0,10">
                                     <Label Content="Select a classroom:"
-               Style="{StaticResource FieldLabelStyle}"
-               Margin="0,0,0,3"/>
+                                            Style="{StaticResource FieldLabelStyle}"
+                                            Margin="0,0,0,3"/>
                                     <ComboBox x:Name="cmbSelectClassroom"
-                Style="{StaticResource ComboBoxStyle}"
-                Height="40" SelectionChanged="cmbSelectClassroom_SelectionChanged"/>
+                                              Style="{StaticResource ComboBoxStyle}"
+                                              Height="40" SelectionChanged="cmbSelectClassroom_SelectionChanged"/>
                                 </StackPanel>
 
                                 <!-- Botones -->
                                 <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" 
                                             Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Content="➕ Agregar Módulo" 
+                                    <Button Content="Seleccionar Aula" 
                                             Style="{StaticResource PrimaryButtonStyle}"
-                                            Click="BtnAgregarModulo_Click"
                                             Margin="0,0,20,0"/>
-                                    <Button Content="🔄 Limpiar" 
-                                            Style="{StaticResource SecondaryButtonStyle}"
-                                            Click="BtnLimpiarFormulario_Click"/>
+                                    <Button Content="Limpiar" 
+                                            Style="{StaticResource SecondaryButtonStyle}"/>
                                 </StackPanel>
                             </Grid>
                         </GroupBox>
@@ -116,10 +114,26 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- Otras pestañas (vacías por ahora) -->
+            <!-- Mensaje de error/éxito -->
+            <TextBlock x:Name="txtMessage"
+            Grid.Row="2"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            FontFamily="pack://application:,,,/Fonts/#Avenir Next"
+            FontSize="13"
+            Foreground="{StaticResource AccentBrush}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            TextWrapping="Wrap"
+            Visibility="Collapsed"/>
+
+            <!-- Otras pestañas  -->
             <TabItem x:Name="tabHorarios" Header="Horarios"/>
             <TabItem x:Name="tabDocentes" Header="Docentes"/>
             <TabItem x:Name="tabAulas" Header="Aulas"/>
         </TabControl>
+        
+        
+        
     </Grid>
 </Window>

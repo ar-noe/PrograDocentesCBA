@@ -126,6 +126,17 @@ namespace wpfAppCBADoc
                 this.Close();
                 if (ventanaAnterior != null)
                     ventanaAnterior.Close();
+
+                //Abrir ventanas de inicio dependiendo del rol
+                if (rolSeleccionado.IdRol == 2)
+                {
+                    
+                }
+                else if (rolSeleccionado.IdRol == 3)
+                {
+
+                }
+
             }
             catch (Exception ex)
             {
@@ -205,11 +216,6 @@ namespace wpfAppCBADoc
             txtMessage.Text = message;
             txtMessage.Foreground = isError ? Brushes.Red : Brushes.Green;
             txtMessage.Visibility = Visibility.Visible;
-        }
-
-        private void cmbUserType_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            
         }
     }
 }

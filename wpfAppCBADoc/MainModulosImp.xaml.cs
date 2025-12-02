@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace wpfAppCBADoc
 {
     /// <summary>
-    /// Interaction logic for MainModulosImp.xaml
+    /// Lógica de interacción para MainModulosImp.xaml
     /// </summary>
     public partial class MainModulosImp : Window
     {
@@ -446,7 +446,9 @@ namespace wpfAppCBADoc
 
         private void BtnAulas_Click(object sender, RoutedEventArgs e)
         {
-            ShowMessage("Funcionalidad de Aulas en desarrollo", false);
+            ManagerMainWindow aula = new ManagerMainWindow();
+            aula.Show();
+            this.Close();
         }
 
         private void ShowMessage(string message, bool isError)

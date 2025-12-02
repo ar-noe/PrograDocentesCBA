@@ -73,10 +73,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainAdmin.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainDoc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -114,9 +110,6 @@
     </Compile>
     <Compile Include="LogInUsr.xaml.cs">
       <DependentUpon>LogInUsr.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainAdmin.xaml.cs">
-      <DependentUpon>MainAdmin.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainDoc.xaml.cs">
       <DependentUpon>MainDoc.xaml</DependentUpon>

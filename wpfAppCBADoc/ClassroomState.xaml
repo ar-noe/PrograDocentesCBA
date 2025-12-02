@@ -145,13 +145,11 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Content="💾 Guardar Cambios" 
                         Style="{StaticResource PrimaryButtonStyle}"
-                        Click="BtnGuardar_Click"
                         Width="180" Height="45"
                         Margin="0,0,20,0"
                         FontSize="14"/>
                 <Button Content="❌ Cancelar" 
                         Style="{StaticResource SecondaryButtonStyle}"
-                        Click="BtnCancelar_Click"
                         Width="130" Height="45"
                         FontSize="14"/>
             </StackPanel>

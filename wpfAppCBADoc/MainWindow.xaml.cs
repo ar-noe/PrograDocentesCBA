@@ -17,7 +17,7 @@ namespace wpfAppCBADoc
         private void btnGoToLogin_Click(object sender, RoutedEventArgs e)
         {
             // Abrir ventana de Login
-            ManagerMainWindow loginWindow = new ManagerMainWindow();
+            LogIn loginWindow = new LogIn();
             loginWindow.Show();
 
             // Cerrar ventana actual
@@ -62,7 +62,7 @@ namespace wpfAppCBADoc
                         this.Close();
                         break;
                     case 3: // Administrador
-                        MainAdmin mainAdmin = new MainAdmin();
+                        ManagerMainWindow mainAdmin = new ManagerMainWindow();
                         mainAdmin.Show();
                         this.Close();
                         break;
