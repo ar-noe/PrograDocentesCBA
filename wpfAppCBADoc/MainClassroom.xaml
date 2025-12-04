@@ -1,0 +1,205 @@
+﻿<Window x:Class="wpfAppCBADoc.MainClassroom"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpfAppCBADoc"
+        mc:Ignorable="d"
+        
+        Title="Sistema CBA - Gestión de Módulos Impartidos" 
+        Height="700" Width="1200"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Menú Lateral -->
+        <Border Grid.Column="0" Background="{StaticResource PrimaryBlueBrush}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="100"/>
+
+                </Grid.RowDefinitions>
+
+                <!-- Logo o Título -->
+                <Border Grid.Row="0" Background="{StaticResource DarkBlueBrush}" 
+                    Height="100" Padding="20">
+                    <Image x:Name="logo" 
+                   Source="/images/cba.png"
+                   Stretch="Uniform"
+                   Height="80"
+                   Width="120"/>
+                </Border>
+
+                <!-- Opciones del Menú -->
+                <StackPanel Grid.Row="1" Margin="10,20">
+                    <Button x:Name="btnAulas" Content="🏫 Ver Aulas" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Margin="0,2" Height="45"
+                        Background="{StaticResource LightBlueBrush}"
+                        Foreground="{StaticResource DarkTextBrush}"
+                        Click="BtnAulas_Click"/>
+                    <Button x:Name="btnModulos" Content="📚 Módulos Impartidos" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Margin="0,2" Height="45"
+                        Click="BtnModulos_Click"/>
+                    <Button x:Name="btnHorarios" Content="📅 Ver Horarios" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Margin="0,2" Height="45"
+                        Click="BtnHorarios_Click"/>
+                </StackPanel>
+
+                <!-- Footer -->
+                <StackPanel Grid.Row="2" VerticalAlignment="Center">
+                    <Button Content="➜] Exit" 
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Margin="0,0,0,0"
+                        Width="150"/>
+                </StackPanel>
+                
+            </Grid>
+        </Border>
+
+        <!-- Área de Contenido Principal -->
+        <Border Grid.Column="1" Background="{StaticResource BackgroundBrush}" 
+            Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título Principal -->
+                <Border Grid.Row="0" Background="{StaticResource WhiteBrush}" 
+                    CornerRadius="8" Padding="20,15" Margin="0,0,0,15"
+                    BorderBrush="{StaticResource LightBlueBrush}" 
+                    BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Gestión de Módulos Impartidos" 
+                              Foreground="{StaticResource DarkTextBrush}"
+                              FontSize="24" FontWeight="Bold"
+                              VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Contenido Principal -->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Formulario para agregar módulos -->
+                    <GroupBox Grid.Row="0" Header="Agregar Nuevo Módulo Impartido" 
+                          Style="{StaticResource GroupBoxStyle}">
+                        <Grid Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Combobox Classroom -->
+                            <StackPanel Margin="0,0,0,10"
+                                        Width="800">
+                                <Label Content="Select a classroom:"
+                                        Style="{StaticResource FieldLabelStyle}"
+                                        Margin="0,0,0,3"/>
+                                <ComboBox x:Name="cmbSelectClassroom"
+                                        Style="{StaticResource ComboBoxStyle}"
+                                          Width="700"
+                                        Height="40" SelectionChanged="cmbSelectClassroom_SelectionChanged"/>
+                            </StackPanel>
+
+                            <!-- Botones -->
+                            <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" 
+                                        Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="Continue" 
+                                        Style="{StaticResource PrimaryButtonStyle}"
+                                        Margin="0,0,20,0"/>
+                                <Button Content="Cancel" 
+                                        Style="{StaticResource SecondaryButtonStyle}"/>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Lista de módulos existentes -->
+                    <GroupBox Grid.Row="1" Header="Modify Classroom" 
+                          Style="{StaticResource GroupBoxStyle}" Margin="0,15,0,0">
+                        <Grid Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Combobox Classroom -->
+                            <StackPanel Margin="0,0,0,10"
+                        Width="800">
+                                <Label Content="State:"
+                                        Style="{StaticResource FieldLabelStyle}"
+                                        Margin="0,0,0,3"/>
+                                <ComboBox x:Name="cmbSelectState"
+                                        Style="{StaticResource ComboBoxStyle}"
+                                        Width="700"
+                                        Height="40" SelectionChanged="cmbSelectClassroom_SelectionChanged"/>
+                            </StackPanel>
+
+                            <!-- State and Description -->
+
+                            <StackPanel Margin="0,10,0,10"
+                                        Width="800"
+                                        Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3"
+ 
+                                        Orientation="Vertical" HorizontalAlignment="Center">
+                                <Label Content="Description:"
+                                        Style="{StaticResource FieldLabelStyle}"
+                                        Margin="0,0,0,3"/>
+                                <TextBox x:Name="cmbS"
+                                        Style="{StaticResource TextBoxStyle}" 
+                                        Width="700"
+                                        Height="40" />
+                            </StackPanel>
+
+                            <!-- Botones -->
+                            <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" 
+                                        Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="Save" 
+                                        Style="{StaticResource PrimaryButtonStyle}"
+                                        Margin="0,0,20,0"/>
+                                
+                            </StackPanel>
+
+
+
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
