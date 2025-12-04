@@ -128,13 +128,17 @@ namespace wpfAppCBADoc
                     ventanaAnterior.Close();
 
                 //Abrir ventanas de inicio dependiendo del rol
-                if (rolSeleccionado.IdRol == 2)
+                if (rolSeleccionado.IdRol == 2) //docente
                 {
-                    
+                    Schedules schedules = new Schedules();
+                    schedules.Show();
+                    this.Close();
                 }
-                else if (rolSeleccionado.IdRol == 3)
+                else if (rolSeleccionado.IdRol == 3)//administrador
                 {
-
+                    ManagerMainWindow aulas = new ManagerMainWindow();
+                    aulas.Show();
+                    this.Close();
                 }
 
             }

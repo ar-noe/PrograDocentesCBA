@@ -54,7 +54,7 @@
                     Background="{StaticResource VeryLightBlueBrush}" Cursor="">
 
             <!-- Pestaña de Módulos Impartidos (seleccionada por defecto) -->
-            <TabItem x:Name="tabModulos" Header="Gestión de Módulos" IsSelected="True">
+            <TabItem x:Name="tabModulos" Header="Gestión de Aulas" IsSelected="True">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <Grid Margin="20">
                         <Grid.RowDefinitions>
@@ -64,7 +64,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Título -->
-                        <Label Grid.Row="0" Content="Gestión de Cursos" 
+                        <Label Grid.Row="0" Content="Gestión de Aulas" 
                                Style="{StaticResource TitleLabelStyle}"
                                Foreground="{StaticResource PrimaryBrush}"
                                FontSize="28" FontWeight="Bold"

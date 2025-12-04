@@ -1,0 +1,254 @@
+﻿<Window x:Class="wpfAppCBADoc.EditHorarios"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpfAppCBADoc"
+        mc:Ignorable="d"
+       Title="Sistema CBA - Asignación de Horarios" 
+        Height="700" Width="1300"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="280"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Menú Lateral Izquierdo -->
+        <Border Grid.Column="0" Background="{StaticResource PrimaryBlueBrush}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Logo -->
+                <Border Grid.Row="0" Background="{StaticResource DarkBlueBrush}" 
+                        Height="100" Padding="20">
+                    <Image x:Name="logo" 
+                           Source="/images/cba.png"
+                           Stretch="Uniform"
+                           Height="80"
+                           Width="120"/>
+                </Border>
+
+                <!-- Opciones del Menú -->
+                <StackPanel Grid.Row="1" Margin="10,20">
+                    <Button x:Name="btnHorarios" Content="📅 Ver Horarios" 
+                            Style="{StaticResource MenuButtonStyle}"
+                            Margin="0,2" Height="45"
+                            Background="{StaticResource LightBlueBrush}"
+                            Foreground="{StaticResource DarkTextBrush}"
+                            Click="BtnHorarios_Click"/>
+
+                    <Button x:Name="btnDocentes" Content="👨‍🏫 Ver Docentes" 
+                            Style="{StaticResource MenuButtonStyle}"
+                            Margin="0,2" Height="45"
+                            Click="BtnDocentes_Click"/>
+
+                    <Button x:Name="btnModulos" Content="📚 Módulos Impartidos" 
+                            Style="{StaticResource MenuButtonStyle}"
+                            Margin="0,2" Height="45"
+                            Click="BtnModulos_Click"/>
+
+                    <Button x:Name="btnAulas" Content="🏫 Gestión de Aulas" 
+                            Style="{StaticResource MenuButtonStyle}"
+                            Margin="0,2" Height="45"
+                            Click="BtnAulas_Click"/>
+                </StackPanel>
+
+                <!-- Footer -->
+                <Border Grid.Row="2" Background="{StaticResource DarkBlueBrush}" 
+                        Height="50" Padding="10">
+                    <TextBlock Text="Sistema Académico CBA" 
+                               Foreground="{StaticResource WhiteBrush}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               FontSize="12"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Área Central Principal -->
+        <Border Grid.Column="1" Background="{StaticResource BackgroundBrush}" 
+                Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título Principal -->
+                <Border Grid.Row="0" Background="{StaticResource WhiteBrush}" 
+                        CornerRadius="8" Padding="20,15" Margin="0,0,0,10"
+                        BorderBrush="{StaticResource LightBlueBrush}" 
+                        BorderThickness="2">
+                    <TextBlock Text="Asignación de Horarios" 
+                               Foreground="{StaticResource DarkTextBrush}"
+                               FontSize="24" FontWeight="Bold"
+                               VerticalAlignment="Center"/>
+                </Border>
+
+                <!-- Título del Horario del Docente -->
+                <Border Grid.Row="1" Background="{StaticResource LightGrayBrush}" 
+                        CornerRadius="6" Padding="15,10" Margin="0,0,0,10">
+                    <TextBlock x:Name="txtTituloHorarioDocente" 
+                               Text="Horario del docente: [Nombre del Docente]"
+                               Foreground="{StaticResource DarkTextBrush}"
+                               FontSize="16" FontWeight="SemiBold"/>
+                </Border>
+
+                <!-- Sección: Horarios Actuales -->
+                <GroupBox Grid.Row="2" Header="Horarios Asignados" 
+                          Style="{StaticResource GroupBoxStyle}" 
+                          Margin="0,0,0,5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- DataGrid de Horarios -->
+                        <DataGrid Grid.Row="0" x:Name="dgHorariosDocente" 
+                                  Style="{StaticResource DataGridStyle}"
+                                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Hora" Binding="{Binding Hora}" Width="120"/>
+                                <DataGridTextColumn Header="Curso" Binding="{Binding NombreCurso}" Width="200"/>
+                                <DataGridTextColumn Header="Aula" Binding="{Binding Aula}" Width="100"/>
+                                <DataGridTextColumn Header="Día" Binding="{Binding Dia}" Width="100"/>
+                                <DataGridTextColumn Header="Sucursal" Binding="{Binding Sucursal}" Width="120"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <!-- Botón Aceptar -->
+                        <Button Grid.Row="1" Content="✅ Aceptar" 
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                HorizontalAlignment="Right"
+                                Margin="0,10,0,0"
+                                Width="100" Height="35"
+                                Click="BtnAceptarHorario_Click"/>
+                    </Grid>
+                </GroupBox>
+
+                <!-- Sección: Módulos a Asignar -->
+                <GroupBox Grid.Row="3" Header="Módulos Disponibles para Asignar" 
+                          Style="{StaticResource GroupBoxStyle}"
+                          Margin="0,5,0,0">
+                    <DataGrid x:Name="dgModulosDisponibles" 
+                              Style="{StaticResource DataGridStyle}"
+                              ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Hora" Binding="{Binding Hora}" Width="120"/>
+                            <DataGridTextColumn Header="Módulo" Binding="{Binding NombreModulo}" Width="200"/>
+                            <DataGridTextColumn Header="Aula" Binding="{Binding Aula}" Width="100"/>
+                            <DataGridTextColumn Header="Duración" Binding="{Binding Duracion}" Width="100"/>
+                            <DataGridTemplateColumn Header="Acción" Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="📅 Asignar" 
+                                                Style="{StaticResource PrimaryButtonStyle}"
+                                                Padding="5" Margin="2"
+                                                Click="BtnAsignarModulo_Click"
+                                                Width="80" Height="30"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+            </Grid>
+        </Border>
+
+        <!-- Panel Lateral Derecho -->
+        <Border Grid.Column="2" Background="{StaticResource LightPinkBrush}" 
+                Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título Seleccionar Docente -->
+                <Border Grid.Row="0" Background="{StaticResource PrimaryPinkBrush}" 
+                        CornerRadius="6" Padding="15,10" Margin="0,0,0,15">
+                    <TextBlock Text="Seleccione Docente" 
+                               Foreground="{StaticResource DarkTextBrush}"
+                               FontSize="18" FontWeight="Bold"
+                               HorizontalAlignment="Center"/>
+                </Border>
+
+                <!-- Formulario Docente -->
+                <GroupBox Grid.Row="1" Header="Datos del Docente" 
+                          Style="{StaticResource GroupBoxStyle}"
+                          Background="{StaticResource WhiteBrush}"
+                          Margin="0,0,0,15">
+                    <Grid Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Content="Docente:" 
+                               Style="{StaticResource FieldLabelStyle}"
+                               Margin="0,0,0,5"/>
+                        <ComboBox Grid.Row="1" 
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  x:Name="cmbDocenteSeleccionado"
+                                  Margin="0,0,0,0"/>
+                    </Grid>
+                </GroupBox>
+
+                <!-- Formulario Filtros -->
+                <GroupBox Grid.Row="2" Header="Filtrar" 
+                          Style="{StaticResource GroupBoxStyle}"
+                          Background="{StaticResource WhiteBrush}">
+                    <Grid Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Sucursal -->
+                        <Label Grid.Row="0" Content="Sucursal:" 
+                               Style="{StaticResource FieldLabelStyle}"
+                               Margin="0,0,0,5"/>
+                        <ComboBox Grid.Row="1" 
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  x:Name="cmbSucursalFiltro"
+                                  Margin="0,0,0,10"/>
+
+                        <!-- Curso -->
+                        <Label Grid.Row="2" Content="Curso:" 
+                               Style="{StaticResource FieldLabelStyle}"
+                               Margin="0,0,0,5"/>
+                        <ComboBox Grid.Row="3" 
+                                  Style="{StaticResource ComboBoxStyle}"
+                                  x:Name="cmbCursoFiltro"
+                                  Margin="0,0,0,15"/>
+
+                        <!-- Botón Aceptar Filtro -->
+                        <Button Grid.Row="4" Content="Aplicar Filtro" 
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                x:Name="btnAplicarFiltro"
+                                Click="BtnAplicarFiltro_Click"
+                                Height="40"
+                                HorizontalAlignment="Stretch"/>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

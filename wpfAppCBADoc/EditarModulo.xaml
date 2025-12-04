@@ -1,0 +1,386 @@
+﻿<Window x:Class="wpfAppCBADoc.EditarModulo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpfAppCBADoc"
+        mc:Ignorable="d"
+        Title="Información del Curso" 
+        Height="750" Width="1000"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BackgroundBrush}"
+        SizeToContent="WidthAndHeight"
+        MinWidth="900"
+        MinHeight="650">
+
+    <Window.Resources>
+        <Style x:Key="InfoTitleStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+
+        <Style x:Key="InfoValueStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <Style x:Key="InfoCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource WhiteBrush}"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{StaticResource LightGrayBrush}"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <Style x:Key="StudentCountStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource LightBlueBrush}"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBlueBrush}"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Título Principal -->
+        <Border Grid.Row="0" Background="{StaticResource LightBlueBrush}" 
+                CornerRadius="8" Padding="20,15" Margin="0,0,0,20"
+                BorderBrush="{StaticResource PrimaryBlueBrush}" 
+                BorderThickness="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="📚 Información del Curso" 
+                          Foreground="{StaticResource DarkTextBrush}"
+                          FontSize="24" FontWeight="Bold"
+                          VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Contenido Principal -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Sección Izquierda - Información Detallada -->
+            <ScrollViewer Grid.Column="0" 
+                         VerticalScrollBarVisibility="Auto" 
+                         HorizontalScrollBarVisibility="Disabled"
+                         Margin="0,0,15,0">
+                <StackPanel>
+                    <!-- Información General del Curso -->
+                    <Border Style="{StaticResource InfoCardStyle}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Título de la sección -->
+                            <Border Grid.Row="0" 
+                                    Background="{StaticResource LightGrayBrush}"
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,0,0,15">
+                                <TextBlock Text="Información General del Curso" 
+                                          FontWeight="Bold" 
+                                          FontSize="18"
+                                          Foreground="{StaticResource DarkTextBrush}"/>
+                            </Border>
+
+                            <!-- Nombre del Curso -->
+                            <Grid Grid.Row="1" Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" 
+                                          Text="Nombre del Curso:" 
+                                          Style="{StaticResource InfoTitleStyle}"/>
+                                <TextBlock Grid.Column="1" 
+                                          x:Name="txtNombreCurso" 
+                                          Style="{StaticResource InfoValueStyle}"
+                                          FontWeight="Bold"
+                                          FontSize="16"/>
+                            </Grid>
+
+                            <!-- Nombre del Módulo -->
+                            <Grid Grid.Row="2" Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" 
+                                          Text="Módulo:" 
+                                          Style="{StaticResource InfoTitleStyle}"/>
+                                <TextBlock Grid.Column="1" 
+                                          x:Name="txtModulo" 
+                                          Style="{StaticResource InfoValueStyle}"/>
+                            </Grid>
+
+                            <!-- Docente -->
+                            <Grid Grid.Row="3" Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" 
+                                          Text="Docente:" 
+                                          Style="{StaticResource InfoTitleStyle}"/>
+                                <TextBlock Grid.Column="1" 
+                                          x:Name="txtDocente" 
+                                          Style="{StaticResource InfoValueStyle}"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <!-- Información de Ubicación y Horario -->
+                    <Border Style="{StaticResource InfoCardStyle}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Título de la sección -->
+                            <Border Grid.Row="0" 
+                                    Background="{StaticResource LightGrayBrush}"
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,0,0,15">
+                                <TextBlock Text="Ubicación y Horario" 
+                                          FontWeight="Bold" 
+                                          FontSize="18"
+                                          Foreground="{StaticResource DarkTextBrush}"/>
+                            </Border>
+
+                            <!-- Sucursal -->
+                            <Grid Grid.Row="1" Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" 
+                                          Text="Sucursal:" 
+                                          Style="{StaticResource InfoTitleStyle}"/>
+                                <TextBlock Grid.Column="1" 
+                                          x:Name="txtSucursal" 
+                                          Style="{StaticResource InfoValueStyle}"/>
+                            </Grid>
+
+                            <!-- Aula -->
+                            <Grid Grid.Row="2" Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" 
+                                          Text="Aula:" 
+                                          Style="{StaticResource InfoTitleStyle}"/>
+                                <TextBlock Grid.Column="1" 
+                                          x:Name="txtAula" 
+                                          Style="{StaticResource InfoValueStyle}"/>
+                            </Grid>
+
+                            <!-- Horario -->
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" 
+                                          Text="Horario:" 
+                                          Style="{StaticResource InfoTitleStyle}"/>
+                                <TextBlock Grid.Column="1" 
+                                          x:Name="txtHorario" 
+                                          Style="{StaticResource InfoValueStyle}"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <!-- Información del Bimestre -->
+                    <Border Style="{StaticResource InfoCardStyle}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Título de la sección -->
+                            <Border Grid.Row="0" 
+                                    Background="{StaticResource LightGrayBrush}"
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,0,0,15">
+                                <TextBlock Text="Periodo Académico" 
+                                          FontWeight="Bold" 
+                                          FontSize="18"
+                                          Foreground="{StaticResource DarkTextBrush}"/>
+                            </Border>
+
+                            <!-- Bimestre -->
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" 
+                                          Text="Bimestre:" 
+                                          Style="{StaticResource InfoTitleStyle}"/>
+                                <TextBlock Grid.Column="1" 
+                                          x:Name="txtBimestre" 
+                                          Style="{StaticResource InfoValueStyle}"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Sección Derecha - Contador de Estudiantes -->
+            <Border Grid.Column="1" 
+                    Background="White" 
+                    CornerRadius="8" 
+                    Padding="20">
+                <StackPanel>
+                    <!-- Título -->
+                    <Border Background="{StaticResource PrimaryPinkBrush}" 
+                            CornerRadius="6" 
+                            Padding="15,10" 
+                            Margin="0,0,0,20">
+                        <TextBlock Text="📊 Estadísticas del Curso" 
+                                  Foreground="{StaticResource DarkTextBrush}"
+                                  FontSize="18" FontWeight="Bold"
+                                  HorizontalAlignment="Center"/>
+                    </Border>
+
+                    <!-- Contador de Estudiantes -->
+                    <Border Style="{StaticResource StudentCountStyle}">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="👥 Estudiantes Inscritos" 
+                                      FontSize="16" 
+                                      FontWeight="SemiBold"
+                                      Foreground="{StaticResource DarkTextBrush}"
+                                      HorizontalAlignment="Center"
+                                      Margin="0,0,0,10"/>
+
+                            <TextBlock x:Name="txtCantidadEstudiantes" 
+                                      Text="0"
+                                      FontSize="48" 
+                                      FontWeight="Bold"
+                                      Foreground="{StaticResource PrimaryBlueBrush}"
+                                      HorizontalAlignment="Center"/>
+
+                            <TextBlock Text="estudiantes" 
+                                      FontSize="14" 
+                                      Foreground="{StaticResource DarkTextBrush}"
+                                      HorizontalAlignment="Center"
+                                      Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Información de Capacidad -->
+                    <Border Background="{StaticResource WhiteBrush}" 
+                            CornerRadius="8" 
+                            Padding="15" 
+                            Margin="0,20,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Capacidad del Aula:" 
+                                      FontWeight="SemiBold"
+                                      FontSize="14"
+                                      Foreground="{StaticResource DarkTextBrush}"
+                                      Margin="0,0,0,10"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" 
+                                            HorizontalAlignment="Center">
+                                    <TextBlock x:Name="txtCapacidadAula" 
+                                              Text="30"
+                                              FontSize="24" 
+                                              FontWeight="Bold"
+                                              Foreground="{StaticResource DarkTextBrush}"
+                                              HorizontalAlignment="Center"/>
+                                    <TextBlock Text="capacidad" 
+                                              FontSize="12"
+                                              Foreground="{StaticResource DarkTextBrush}"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" 
+                                            HorizontalAlignment="Center">
+                                    <TextBlock x:Name="txtDisponibilidad" 
+                                              Text="Disponible"
+                                              FontSize="14" 
+                                              FontWeight="SemiBold"
+                                              Foreground="{StaticResource SuccessGreenBrush}"
+                                              HorizontalAlignment="Center"/>
+                                    <TextBlock Text="estado" 
+                                              FontSize="12"
+                                              Foreground="{StaticResource DarkTextBrush}"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Botón para ver lista de estudiantes -->
+                    <Button Content="👥 Ver Lista de Estudiantes" 
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Click="BtnVerEstudiantes_Click"
+                            Margin="0,20,0,0"
+                            Height="45"
+                            FontSize="14"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Botones de acción -->
+        <Border Grid.Row="2" 
+                Background="{StaticResource WhiteBrush}" 
+                CornerRadius="8" 
+                Padding="20" 
+                Margin="0,20,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="📅 Asignar Horario" 
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Click="BtnAsignarHorario_Click"
+                        Width="180" Height="45"
+                        Margin="0,0,10,0"
+                        FontSize="14"/>
+                <Button Content="📊 Reporte del Curso" 
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Click="BtnReporteCurso_Click"
+                        Width="180" Height="45"
+                        Margin="10,0,10,0"
+                        FontSize="14"/>
+                <Button Content="✏️ Editar Información" 
+                        Style="{StaticResource TertiaryButtonStyle}"
+                        Click="BtnEditarInfo_Click"
+                        Width="180" Height="45"
+                        Margin="10,0,0,0"
+                        FontSize="14"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
