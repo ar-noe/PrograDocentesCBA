@@ -57,6 +57,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Schedules.xaml.cs">
+      <DependentUpon>Schedules.xaml</DependentUpon>
+    </Compile>
     <Page Include="ClassroomState.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -70,6 +73,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LogInUsr.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainClassroom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -111,6 +118,9 @@
     <Compile Include="LogInUsr.xaml.cs">
       <DependentUpon>LogInUsr.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainClassroom.xaml.cs">
+      <DependentUpon>MainClassroom.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainDoc.xaml.cs">
       <DependentUpon>MainDoc.xaml</DependentUpon>
     </Compile>
@@ -122,6 +132,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ManagerMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Schedules.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
