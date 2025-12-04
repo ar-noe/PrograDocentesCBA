@@ -43,16 +43,13 @@
                         Style="{StaticResource MenuButtonStyle}"
                         Margin="0,2" Height="45"
                         Background="{StaticResource LightBlueBrush}"
-                        Foreground="{StaticResource DarkTextBrush}"
-                        Click="BtnAulas_Click"/>
+                        Foreground="{StaticResource DarkTextBrush}"/>
                     <Button x:Name="btnModulos" Content="📚 Módulos Impartidos" 
                         Style="{StaticResource MenuButtonStyle}"
-                        Margin="0,2" Height="45"
-                        Click="BtnModulos_Click"/>
+                        Margin="0,2" Height="45"/>
                     <Button x:Name="btnHorarios" Content="📅 Ver Horarios" 
                         Style="{StaticResource MenuButtonStyle}"
-                        Margin="0,2" Height="45"
-                        Click="BtnHorarios_Click"/>
+                        Margin="0,2" Height="45"/>
                 </StackPanel>
 
                 <!-- Footer -->
@@ -121,7 +118,7 @@
                                 <ComboBox x:Name="cmbSelectClassroom"
                                         Style="{StaticResource ComboBoxStyle}"
                                           Width="700"
-                                        Height="40" SelectionChanged="cmbSelectClassroom_SelectionChanged"/>
+                                        Height="40" />
                             </StackPanel>
 
                             <!-- Botones -->
@@ -166,7 +163,7 @@
                                 <ComboBox x:Name="cmbSelectState"
                                         Style="{StaticResource ComboBoxStyle}"
                                         Width="700"
-                                        Height="40" SelectionChanged="cmbSelectClassroom_SelectionChanged"/>
+                                        Height="40" />
                             </StackPanel>
 
                             <!-- State and Description -->

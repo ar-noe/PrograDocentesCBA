@@ -347,7 +347,6 @@
                     <!-- Botón para ver lista de estudiantes -->
                     <Button Content="👥 Ver Lista de Estudiantes" 
                             Style="{StaticResource PrimaryButtonStyle}"
-                            Click="BtnVerEstudiantes_Click"
                             Margin="0,20,0,0"
                             Height="45"
                             FontSize="14"/>
@@ -364,19 +363,16 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Content="📅 Asignar Horario" 
                         Style="{StaticResource PrimaryButtonStyle}"
-                        Click="BtnAsignarHorario_Click"
                         Width="180" Height="45"
                         Margin="0,0,10,0"
                         FontSize="14"/>
                 <Button Content="📊 Reporte del Curso" 
                         Style="{StaticResource SecondaryButtonStyle}"
-                        Click="BtnReporteCurso_Click"
                         Width="180" Height="45"
                         Margin="10,0,10,0"
                         FontSize="14"/>
                 <Button Content="✏️ Editar Información" 
                         Style="{StaticResource TertiaryButtonStyle}"
-                        Click="BtnEditarInfo_Click"
                         Width="180" Height="45"
                         Margin="10,0,0,0"
                         FontSize="14"/>

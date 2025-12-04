@@ -57,6 +57,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EditarModulo.xaml.cs">
+      <DependentUpon>EditarModulo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditHorarios.xaml.cs">
+      <DependentUpon>EditHorarios.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Schedules.xaml.cs">
       <DependentUpon>Schedules.xaml</DependentUpon>
     </Compile>
@@ -64,7 +70,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="EditarModulo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EditarModuloImpartido.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditHorarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

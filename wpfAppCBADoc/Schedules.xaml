@@ -47,8 +47,7 @@
                         Style="{StaticResource MenuButtonStyle}"
                         Background="{StaticResource LightBlueBrush}"
                         Foreground="{StaticResource DarkTextBrush}"
-                        Margin="0,2" Height="45"
-                        Click="BtnHorarios_Click"/>
+                        Margin="0,2" Height="45"/>
                 </StackPanel>
 
                 <!-- Footer -->

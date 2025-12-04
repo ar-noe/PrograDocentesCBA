@@ -42,23 +42,19 @@
                             Style="{StaticResource MenuButtonStyle}"
                             Margin="0,2" Height="45"
                             Background="{StaticResource LightBlueBrush}"
-                            Foreground="{StaticResource DarkTextBrush}"
-                            Click="BtnHorarios_Click"/>
+                            Foreground="{StaticResource DarkTextBrush}"/>
 
                     <Button x:Name="btnDocentes" Content="👨‍🏫 Ver Docentes" 
                             Style="{StaticResource MenuButtonStyle}"
-                            Margin="0,2" Height="45"
-                            Click="BtnDocentes_Click"/>
+                            Margin="0,2" Height="45"/>
 
                     <Button x:Name="btnModulos" Content="📚 Módulos Impartidos" 
                             Style="{StaticResource MenuButtonStyle}"
-                            Margin="0,2" Height="45"
-                            Click="BtnModulos_Click"/>
+                            Margin="0,2" Height="45"/>
 
                     <Button x:Name="btnAulas" Content="🏫 Gestión de Aulas" 
                             Style="{StaticResource MenuButtonStyle}"
-                            Margin="0,2" Height="45"
-                            Click="BtnAulas_Click"/>
+                            Margin="0,2" Height="45"/>
                 </StackPanel>
 
                 <!-- Footer -->
@@ -133,8 +129,7 @@
                                 Style="{StaticResource PrimaryButtonStyle}"
                                 HorizontalAlignment="Right"
                                 Margin="0,10,0,0"
-                                Width="100" Height="35"
-                                Click="BtnAceptarHorario_Click"/>
+                                Width="100" Height="35"/>
                     </Grid>
                 </GroupBox>
 
@@ -157,7 +152,6 @@
                                         <Button Content="📅 Asignar" 
                                                 Style="{StaticResource PrimaryButtonStyle}"
                                                 Padding="5" Margin="2"
-                                                Click="BtnAsignarModulo_Click"
                                                 Width="80" Height="30"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -179,7 +173,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- Título Seleccionar Docente -->
-                <Border Grid.Row="0" Background="{StaticResource PrimaryPinkBrush}" 
+                <Border Grid.Row="0" Background="White" 
                         CornerRadius="6" Padding="15,10" Margin="0,0,0,15">
                     <TextBlock Text="Seleccione Docente" 
                                Foreground="{StaticResource DarkTextBrush}"
@@ -243,7 +237,6 @@
                         <Button Grid.Row="4" Content="Aplicar Filtro" 
                                 Style="{StaticResource PrimaryButtonStyle}"
                                 x:Name="btnAplicarFiltro"
-                                Click="BtnAplicarFiltro_Click"
                                 Height="40"
                                 HorizontalAlignment="Stretch"/>
                     </Grid>

@@ -53,6 +53,8 @@ namespace wpfAppCBADoc
                     return;
                 }
 
+                MessageBox.Show("Bienvenido usuario: " + usuario.Correo);
+
                 // Redirigir según el rol
                 switch (usuario.IdRol)
                 {
@@ -62,7 +64,7 @@ namespace wpfAppCBADoc
                         this.Close();
                         break;
                     case 3: // Administrador
-                        ManagerMainWindow mainAdmin = new ManagerMainWindow();
+                        MainClassroom mainAdmin = new MainClassroom();
                         mainAdmin.Show();
                         this.Close();
                         break;
