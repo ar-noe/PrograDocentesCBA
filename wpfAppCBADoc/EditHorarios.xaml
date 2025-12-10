@@ -38,21 +38,21 @@
 
                 <!-- Opciones del Menú -->
                 <StackPanel Grid.Row="1" Margin="10,20">
-                    <Button x:Name="btnHorarios" Content="📅 Ver Horarios" 
+                    <Button x:Name="btnHorarios" Content="📅 Schedules" 
                             Style="{StaticResource MenuButtonStyle}"
                             Margin="0,2" Height="45"
                             Background="{StaticResource LightBlueBrush}"
                             Foreground="{StaticResource DarkTextBrush}"/>
 
-                    <Button x:Name="btnDocentes" Content="👨‍🏫 Ver Docentes" 
+                    <Button x:Name="btnDocentes" Content="👨‍🏫 Teachers" 
                             Style="{StaticResource MenuButtonStyle}"
                             Margin="0,2" Height="45"/>
 
-                    <Button x:Name="btnModulos" Content="📚 Módulos Impartidos" 
+                    <Button x:Name="btnModulos" Content="📚 Imparted Modules" 
                             Style="{StaticResource MenuButtonStyle}"
                             Margin="0,2" Height="45"/>
 
-                    <Button x:Name="btnAulas" Content="🏫 Gestión de Aulas" 
+                    <Button x:Name="btnAulas" Content="🏫 Classroom Management" 
                             Style="{StaticResource MenuButtonStyle}"
                             Margin="0,2" Height="45"/>
                 </StackPanel>
@@ -60,7 +60,7 @@
                 <!-- Footer -->
                 <Border Grid.Row="2" Background="{StaticResource DarkBlueBrush}" 
                         Height="50" Padding="10">
-                    <TextBlock Text="Sistema Académico CBA" 
+                    <TextBlock Text="CBA Management System" 
                                Foreground="{StaticResource WhiteBrush}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
@@ -85,7 +85,7 @@
                         CornerRadius="8" Padding="20,15" Margin="0,0,0,10"
                         BorderBrush="{StaticResource LightBlueBrush}" 
                         BorderThickness="2">
-                    <TextBlock Text="Asignación de Horarios" 
+                    <TextBlock Text="Schedule Management" 
                                Foreground="{StaticResource DarkTextBrush}"
                                FontSize="24" FontWeight="Bold"
                                VerticalAlignment="Center"/>
@@ -95,13 +95,13 @@
                 <Border Grid.Row="1" Background="{StaticResource LightGrayBrush}" 
                         CornerRadius="6" Padding="15,10" Margin="0,0,0,10">
                     <TextBlock x:Name="txtTituloHorarioDocente" 
-                               Text="Horario del docente: [Nombre del Docente]"
+                               Text="Teacher's work schedule: [Name]"
                                Foreground="{StaticResource DarkTextBrush}"
                                FontSize="16" FontWeight="SemiBold"/>
                 </Border>
 
                 <!-- Sección: Horarios Actuales -->
-                <GroupBox Grid.Row="2" Header="Horarios Asignados" 
+                <GroupBox Grid.Row="2" Header="Assigned Schedules" 
                           Style="{StaticResource GroupBoxStyle}" 
                           Margin="0,0,0,5">
                     <Grid>
@@ -116,16 +116,16 @@
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Hora" Binding="{Binding Hora}" Width="120"/>
-                                <DataGridTextColumn Header="Curso" Binding="{Binding NombreCurso}" Width="200"/>
-                                <DataGridTextColumn Header="Aula" Binding="{Binding Aula}" Width="100"/>
-                                <DataGridTextColumn Header="Día" Binding="{Binding Dia}" Width="100"/>
-                                <DataGridTextColumn Header="Sucursal" Binding="{Binding Sucursal}" Width="120"/>
+                                <DataGridTextColumn Header="Time" Binding="{Binding Hora}" Width="120"/>
+                                <DataGridTextColumn Header="Course" Binding="{Binding NombreCurso}" Width="200"/>
+                                <DataGridTextColumn Header="Classroom" Binding="{Binding Aula}" Width="100"/>
+                                <DataGridTextColumn Header="Day" Binding="{Binding Dia}" Width="100"/>
+                                <DataGridTextColumn Header="Branch" Binding="{Binding Sucursal}" Width="120"/>
                             </DataGrid.Columns>
                         </DataGrid>
 
                         <!-- Botón Aceptar -->
-                        <Button Grid.Row="1" Content="✅ Aceptar" 
+                        <Button Grid.Row="1" Content="✅ Accept" 
                                 Style="{StaticResource PrimaryButtonStyle}"
                                 HorizontalAlignment="Right"
                                 Margin="0,10,0,0"
@@ -134,7 +134,7 @@
                 </GroupBox>
 
                 <!-- Sección: Módulos a Asignar -->
-                <GroupBox Grid.Row="3" Header="Módulos Disponibles para Asignar" 
+                <GroupBox Grid.Row="3" Header="Available Modules to Assign" 
                           Style="{StaticResource GroupBoxStyle}"
                           Margin="0,5,0,0">
                     <DataGrid x:Name="dgModulosDisponibles" 
@@ -142,14 +142,14 @@
                               ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                               ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Hora" Binding="{Binding Hora}" Width="120"/>
-                            <DataGridTextColumn Header="Módulo" Binding="{Binding NombreModulo}" Width="200"/>
-                            <DataGridTextColumn Header="Aula" Binding="{Binding Aula}" Width="100"/>
-                            <DataGridTextColumn Header="Duración" Binding="{Binding Duracion}" Width="100"/>
-                            <DataGridTemplateColumn Header="Acción" Width="100">
+                            <DataGridTextColumn Header="Time" Binding="{Binding Hora}" Width="120"/>
+                            <DataGridTextColumn Header="Module" Binding="{Binding NombreModulo}" Width="200"/>
+                            <DataGridTextColumn Header="Classroom" Binding="{Binding Aula}" Width="100"/>
+                            <DataGridTextColumn Header="Duration" Binding="{Binding Duracion}" Width="100"/>
+                            <DataGridTemplateColumn Header="Action" Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="📅 Asignar" 
+                                        <Button Content="📅 Assign" 
                                                 Style="{StaticResource PrimaryButtonStyle}"
                                                 Padding="5" Margin="2"
                                                 Width="80" Height="30"/>
@@ -175,14 +175,14 @@
                 <!-- Título Seleccionar Docente -->
                 <Border Grid.Row="0" Background="White" 
                         CornerRadius="6" Padding="15,10" Margin="0,0,0,15">
-                    <TextBlock Text="Seleccione Docente" 
+                    <TextBlock Text="Select Teacher" 
                                Foreground="{StaticResource DarkTextBrush}"
                                FontSize="18" FontWeight="Bold"
                                HorizontalAlignment="Center"/>
                 </Border>
 
                 <!-- Formulario Docente -->
-                <GroupBox Grid.Row="1" Header="Datos del Docente" 
+                <GroupBox Grid.Row="1" Header="Data" 
                           Style="{StaticResource GroupBoxStyle}"
                           Background="{StaticResource WhiteBrush}"
                           Margin="0,0,0,15">
@@ -192,7 +192,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <Label Grid.Row="0" Content="Docente:" 
+                        <Label Grid.Row="0" Content="Teacher:" 
                                Style="{StaticResource FieldLabelStyle}"
                                Margin="0,0,0,5"/>
                         <ComboBox Grid.Row="1" 
@@ -216,7 +216,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Sucursal -->
-                        <Label Grid.Row="0" Content="Sucursal:" 
+                        <Label Grid.Row="0" Content="Branch:" 
                                Style="{StaticResource FieldLabelStyle}"
                                Margin="0,0,0,5"/>
                         <ComboBox Grid.Row="1" 
@@ -225,7 +225,7 @@
                                   Margin="0,0,0,10"/>
 
                         <!-- Curso -->
-                        <Label Grid.Row="2" Content="Curso:" 
+                        <Label Grid.Row="2" Content="Classroom:" 
                                Style="{StaticResource FieldLabelStyle}"
                                Margin="0,0,0,5"/>
                         <ComboBox Grid.Row="3" 
@@ -234,7 +234,7 @@
                                   Margin="0,0,0,15"/>
 
                         <!-- Botón Aceptar Filtro -->
-                        <Button Grid.Row="4" Content="Aplicar Filtro" 
+                        <Button Grid.Row="4" Content="Apply filter" 
                                 Style="{StaticResource PrimaryButtonStyle}"
                                 x:Name="btnAplicarFiltro"
                                 Height="40"

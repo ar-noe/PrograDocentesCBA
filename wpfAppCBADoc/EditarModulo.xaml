@@ -63,7 +63,7 @@
                 BorderBrush="{StaticResource PrimaryBlueBrush}" 
                 BorderThickness="2">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="📚 Información del Curso" 
+                <TextBlock Text="📚 Course Information" 
                           Foreground="{StaticResource DarkTextBrush}"
                           FontSize="24" FontWeight="Bold"
                           VerticalAlignment="Center"/>
@@ -99,7 +99,7 @@
                                     CornerRadius="6" 
                                     Padding="10" 
                                     Margin="0,0,0,15">
-                                <TextBlock Text="Información General del Curso" 
+                                <TextBlock Text="General information" 
                                           FontWeight="Bold" 
                                           FontSize="18"
                                           Foreground="{StaticResource DarkTextBrush}"/>
@@ -112,7 +112,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" 
-                                          Text="Nombre del Curso:" 
+                                          Text="Course Name:" 
                                           Style="{StaticResource InfoTitleStyle}"/>
                                 <TextBlock Grid.Column="1" 
                                           x:Name="txtNombreCurso" 
@@ -128,7 +128,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" 
-                                          Text="Módulo:" 
+                                          Text="Module:" 
                                           Style="{StaticResource InfoTitleStyle}"/>
                                 <TextBlock Grid.Column="1" 
                                           x:Name="txtModulo" 
@@ -142,7 +142,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" 
-                                          Text="Docente:" 
+                                          Text="Teacher:" 
                                           Style="{StaticResource InfoTitleStyle}"/>
                                 <TextBlock Grid.Column="1" 
                                           x:Name="txtDocente" 
@@ -167,7 +167,7 @@
                                     CornerRadius="6" 
                                     Padding="10" 
                                     Margin="0,0,0,15">
-                                <TextBlock Text="Ubicación y Horario" 
+                                <TextBlock Text="Location and Schedule" 
                                           FontWeight="Bold" 
                                           FontSize="18"
                                           Foreground="{StaticResource DarkTextBrush}"/>
@@ -180,7 +180,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" 
-                                          Text="Sucursal:" 
+                                          Text="Branch:" 
                                           Style="{StaticResource InfoTitleStyle}"/>
                                 <TextBlock Grid.Column="1" 
                                           x:Name="txtSucursal" 
@@ -194,7 +194,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" 
-                                          Text="Aula:" 
+                                          Text="Classroom:" 
                                           Style="{StaticResource InfoTitleStyle}"/>
                                 <TextBlock Grid.Column="1" 
                                           x:Name="txtAula" 
@@ -208,7 +208,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" 
-                                          Text="Horario:" 
+                                          Text="Schedule:" 
                                           Style="{StaticResource InfoTitleStyle}"/>
                                 <TextBlock Grid.Column="1" 
                                           x:Name="txtHorario" 
@@ -231,7 +231,7 @@
                                     CornerRadius="6" 
                                     Padding="10" 
                                     Margin="0,0,0,15">
-                                <TextBlock Text="Periodo Académico" 
+                                <TextBlock Text="Academic Management" 
                                           FontWeight="Bold" 
                                           FontSize="18"
                                           Foreground="{StaticResource DarkTextBrush}"/>
@@ -244,7 +244,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" 
-                                          Text="Bimestre:" 
+                                          Text="Bimester:" 
                                           Style="{StaticResource InfoTitleStyle}"/>
                                 <TextBlock Grid.Column="1" 
                                           x:Name="txtBimestre" 
@@ -266,7 +266,7 @@
                             CornerRadius="6" 
                             Padding="15,10" 
                             Margin="0,0,0,20">
-                        <TextBlock Text="📊 Estadísticas del Curso" 
+                        <TextBlock Text="📊 Course Statistics" 
                                   Foreground="{StaticResource DarkTextBrush}"
                                   FontSize="18" FontWeight="Bold"
                                   HorizontalAlignment="Center"/>
@@ -275,7 +275,7 @@
                     <!-- Contador de Estudiantes -->
                     <Border Style="{StaticResource StudentCountStyle}">
                         <StackPanel HorizontalAlignment="Center">
-                            <TextBlock Text="👥 Estudiantes Inscritos" 
+                            <TextBlock Text="👥 Enrolled Students" 
                                       FontSize="16" 
                                       FontWeight="SemiBold"
                                       Foreground="{StaticResource DarkTextBrush}"
@@ -289,7 +289,7 @@
                                       Foreground="{StaticResource PrimaryBlueBrush}"
                                       HorizontalAlignment="Center"/>
 
-                            <TextBlock Text="estudiantes" 
+                            <TextBlock Text="students" 
                                       FontSize="14" 
                                       Foreground="{StaticResource DarkTextBrush}"
                                       HorizontalAlignment="Center"
@@ -303,7 +303,7 @@
                             Padding="15" 
                             Margin="0,20,0,0">
                         <StackPanel>
-                            <TextBlock Text="Capacidad del Aula:" 
+                            <TextBlock Text="Classroom Capacity:" 
                                       FontWeight="SemiBold"
                                       FontSize="14"
                                       Foreground="{StaticResource DarkTextBrush}"
@@ -323,7 +323,7 @@
                                               FontWeight="Bold"
                                               Foreground="{StaticResource DarkTextBrush}"
                                               HorizontalAlignment="Center"/>
-                                    <TextBlock Text="capacidad" 
+                                    <TextBlock Text="of capacity" 
                                               FontSize="12"
                                               Foreground="{StaticResource DarkTextBrush}"/>
                                 </StackPanel>
@@ -331,12 +331,12 @@
                                 <StackPanel Grid.Column="1" 
                                             HorizontalAlignment="Center">
                                     <TextBlock x:Name="txtDisponibilidad" 
-                                              Text="Disponible"
+                                              Text="Available"
                                               FontSize="14" 
                                               FontWeight="SemiBold"
                                               Foreground="{StaticResource SuccessGreenBrush}"
                                               HorizontalAlignment="Center"/>
-                                    <TextBlock Text="estado" 
+                                    <TextBlock Text="state" 
                                               FontSize="12"
                                               Foreground="{StaticResource DarkTextBrush}"/>
                                 </StackPanel>
@@ -345,7 +345,7 @@
                     </Border>
 
                     <!-- Botón para ver lista de estudiantes -->
-                    <Button Content="👥 Ver Lista de Estudiantes" 
+                    <Button Content="👥 Student's list" 
                             Style="{StaticResource PrimaryButtonStyle}"
                             Margin="0,20,0,0"
                             Height="45"
@@ -361,17 +361,17 @@
                 Padding="20" 
                 Margin="0,20,0,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="📅 Asignar Horario" 
+                <Button Content="📅 Assign schedule" 
                         Style="{StaticResource PrimaryButtonStyle}"
                         Width="180" Height="45"
                         Margin="0,0,10,0"
                         FontSize="14"/>
-                <Button Content="📊 Reporte del Curso" 
+                <Button Content="📊 Course Report" 
                         Style="{StaticResource SecondaryButtonStyle}"
                         Width="180" Height="45"
                         Margin="10,0,10,0"
                         FontSize="14"/>
-                <Button Content="✏️ Editar Información" 
+                <Button Content="✏️ Edit Information" 
                         Style="{StaticResource TertiaryButtonStyle}"
                         Width="180" Height="45"
                         Margin="10,0,0,0"

@@ -39,15 +39,15 @@
 
                 <!-- Opciones del Menú -->
                 <StackPanel Grid.Row="1" Margin="10,20">
-                    <Button x:Name="btnAulas" Content="🏫 Ver Aulas" 
+                    <Button x:Name="btnAulas" Content="🏫 Classrooms" 
                         Style="{StaticResource MenuButtonStyle}"
                         Margin="0,2" Height="45"
                         Background="{StaticResource LightBlueBrush}"
                         Foreground="{StaticResource DarkTextBrush}"/>
-                    <Button x:Name="btnModulos" Content="📚 Módulos Impartidos" 
+                    <Button x:Name="btnModulos" Content="📚  Imparted Modules" 
                         Style="{StaticResource MenuButtonStyle}"
                         Margin="0,2" Height="45"/>
-                    <Button x:Name="btnHorarios" Content="📅 Ver Horarios" 
+                    <Button x:Name="btnHorarios" Content="📅 Schedules" 
                         Style="{StaticResource MenuButtonStyle}"
                         Margin="0,2" Height="45"/>
                 </StackPanel>
@@ -78,7 +78,7 @@
                     BorderBrush="{StaticResource LightBlueBrush}" 
                     BorderThickness="2">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Gestión de Módulos Impartidos" 
+                        <TextBlock Text="Imparted Module Management" 
                               Foreground="{StaticResource DarkTextBrush}"
                               FontSize="24" FontWeight="Bold"
                               VerticalAlignment="Center"/>
@@ -93,7 +93,7 @@
                     </Grid.RowDefinitions>
 
                     <!-- Formulario para agregar módulos -->
-                    <GroupBox Grid.Row="0" Header="Agregar Nuevo Módulo Impartido" 
+                    <GroupBox Grid.Row="0" Header="Add a new Imparted Module" 
                           Style="{StaticResource GroupBoxStyle}">
                         <Grid Margin="10">
                             <Grid.ColumnDefinitions>

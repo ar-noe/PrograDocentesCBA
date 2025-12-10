@@ -38,24 +38,24 @@
 
                     <!-- Opciones del Menú -->
                     <StackPanel Grid.Row="1" Margin="10,20">
-                        <Button x:Name="btnHorarios" Content="📅 Ver Horarios" 
+                        <Button x:Name="btnHorarios" Content="📅 Schedules" 
                             Style="{StaticResource MenuButtonStyle}"
                             Margin="0,2" Height="45"
                             Click="BtnHorarios_Click"/>
 
-                        <Button x:Name="btnDocentes" Content="👨‍🏫 Ver Docentes" 
+                        <Button x:Name="btnDocentes" Content="👨‍🏫 Professors" 
                             Style="{StaticResource MenuButtonStyle}"
                             Margin="0,2" Height="45"
                             Click="BtnDocentes_Click"/>
 
-                        <Button x:Name="btnModulos" Content="📚 Módulos Impartidos" 
+                        <Button x:Name="btnModulos" Content="📚 Imparted Modules" 
                             Style="{StaticResource MenuButtonStyle}"
                             Margin="0,2" Height="45"
                             Background="{StaticResource LightBlueBrush}"
                             Foreground="{StaticResource DarkTextBrush}"
                             Click="BtnModulos_Click"/>
 
-                        <Button x:Name="btnAulas" Content="🏫 Gestión de Aulas" 
+                        <Button x:Name="btnAulas" Content="🏫 Classroom Manager" 
                             Style="{StaticResource MenuButtonStyle}"
                             Margin="0,2" Height="45"
                             Click="BtnAulas_Click"/>
@@ -64,7 +64,7 @@
                     <!-- Footer -->
                     <Border Grid.Row="2" Background="{StaticResource DarkBlueBrush}" 
                         Height="50" Padding="10">
-                        <TextBlock Text="Sistema Académico CBA" 
+                        <TextBlock Text="CBA Academic System" 
                               Foreground="{StaticResource WhiteBrush}"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Center"
@@ -88,7 +88,7 @@
                         BorderBrush="{StaticResource LightBlueBrush}" 
                         BorderThickness="2">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Gestión de Módulos Impartidos" 
+                            <TextBlock Text="Imparted Modules Management" 
                                   Foreground="{StaticResource DarkTextBrush}"
                                   FontSize="24" FontWeight="Bold"
                                   VerticalAlignment="Center"/>
@@ -103,7 +103,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Formulario para agregar módulos -->
-                        <GroupBox Grid.Row="0" Header="Agregar Nuevo Módulo Impartido" 
+                        <GroupBox Grid.Row="0" Header="Add a new Imparted Module" 
                               Style="{StaticResource GroupBoxStyle}">
                             <Grid Margin="5">
                                 <Grid.ColumnDefinitions>
@@ -120,21 +120,21 @@
                                 </Grid.RowDefinitions>
 
                                 <!-- Fila 1 -->
-                                <Label Grid.Row="0" Grid.Column="0" Content="Docente:" 
+                                <Label Grid.Row="0" Grid.Column="0" Content="Professor:" 
                                    Style="{StaticResource FieldLabelStyle}"/>
                                 <ComboBox Grid.Row="1" Grid.Column="0" 
                                       Style="{StaticResource ComboBoxStyle}"
                                       x:Name="cmbDocente"
                                       Margin="0,0,5,15"/>
 
-                                <Label Grid.Row="0" Grid.Column="1" Content="Módulo:" 
+                                <Label Grid.Row="0" Grid.Column="1" Content="Module:" 
                                    Style="{StaticResource FieldLabelStyle}"/>
                                 <ComboBox Grid.Row="1" Grid.Column="1" 
                                       Style="{StaticResource ComboBoxStyle}"
                                       x:Name="cmbModulo"
                                       Margin="5,0,5,15"/>
 
-                                <Label Grid.Row="0" Grid.Column="3" Content="Sucursal:" 
+                                <Label Grid.Row="0" Grid.Column="3" Content="Branch:" 
                                    Style="{StaticResource FieldLabelStyle}"/>
                                 <ComboBox Grid.Row="1" Grid.Column="3" 
                                       Style="{StaticResource ComboBoxStyle}"
@@ -142,7 +142,7 @@
                                       Margin="5,0,5,15"
                                       SelectionChanged="CmbSucursal_SelectionChanged"/>
 
-                                <Label Grid.Row="0" Grid.Column="4" Content="Aula:" 
+                                <Label Grid.Row="0" Grid.Column="4" Content="Classroom:" 
                                    Style="{StaticResource FieldLabelStyle}"/>
                                 <ComboBox Grid.Row="1" Grid.Column="4" 
                                       Style="{StaticResource ComboBoxStyle}"
@@ -150,7 +150,7 @@
                                       Margin="5,0,0,15"/>
 
                                 <!-- Fila 2 -->
-                                <Label Grid.Row="2" Grid.Column="0" Content="Bimestre:" 
+                                <Label Grid.Row="2" Grid.Column="0" Content="Bimester:" 
                                    Style="{StaticResource FieldLabelStyle}"/>
                                 <ComboBox Grid.Row="3" Grid.Column="0" 
                                       Style="{StaticResource ComboBoxStyle}"
@@ -162,12 +162,12 @@
                                         Orientation="Horizontal" 
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom">
-                                    <Button Content="➕ Agregar Módulo" 
+                                    <Button Content="➕ Add Module" 
                                         Style="{StaticResource PrimaryButtonStyle}"
                                         Click="BtnAgregarModulo_Click"
                                         Margin="0,0,10,0"
                                         Width="160"/>
-                                    <Button Content="🔄 Limpiar" 
+                                    <Button Content="🔄 Clear" 
                                         Style="{StaticResource SecondaryButtonStyle}"
                                         Click="BtnLimpiarFormulario_Click"
                                         Width="100"/>
@@ -176,7 +176,7 @@
                         </GroupBox>
 
                         <!-- Lista de módulos existentes -->
-                        <GroupBox Grid.Row="1" Header="Módulos Impartidos Existentes" 
+                        <GroupBox Grid.Row="1" Header="Existing Imparted Modules" 
                               Style="{StaticResource GroupBoxStyle}" Margin="0,15,0,0">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -193,11 +193,11 @@
                                              Width="300" Margin="0,0,10,0"
                                              TextChanged="TxtBuscarModulo_TextChanged"
                                              Background="{StaticResource WhiteBrush}"/>
-                                        <Button Content="🔍 Buscar" 
+                                        <Button Content="🔍 Search" 
                                             Style="{StaticResource PrimaryButtonStyle}"
                                             Click="BtnBuscarModulo_Click"
                                             Padding="15,8"/>
-                                        <Button Content="🔄 Actualizar" 
+                                        <Button Content="🔄 Update" 
                                             Style="{StaticResource SecondaryButtonStyle}"
                                             Click="BtnActualizar_Click"
                                             Padding="15,8"
@@ -210,26 +210,26 @@
                                       Style="{StaticResource DataGridStyle}"
                                       ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="ID" Binding="{Binding IdModuloImp}" Width="60"/>
-                                        <DataGridTextColumn Header="Docente" Binding="{Binding Docente}" Width="200"/>
-                                        <DataGridTextColumn Header="Módulo" Binding="{Binding Modulo}" Width="180"/>
-                                        <DataGridTextColumn Header="Curso" Binding="{Binding Curso}" Width="150"/>
-                                        <DataGridTextColumn Header="Aula" Binding="{Binding Aula}" Width="100"/>
-                                        <DataGridTextColumn Header="Sucursal" Binding="{Binding Sucursal}" Width="120"/>
-                                        <DataGridTextColumn Header="Bimestre" Binding="{Binding Bimestre}" Width="100"/>
-                                        <DataGridTextColumn Header="Gestión" Binding="{Binding Gestion}" Width="80"/>
+                                        <DataGridTextColumn Header="ID -(?)" Binding="{Binding IdModuloImp}" Width="60"/>
+                                        <DataGridTextColumn Header="Professor" Binding="{Binding Docente}" Width="200"/>
+                                        <DataGridTextColumn Header="Module" Binding="{Binding Modulo}" Width="180"/>
+                                        <DataGridTextColumn Header="Course" Binding="{Binding Curso}" Width="150"/>
+                                        <DataGridTextColumn Header="Classroom" Binding="{Binding Aula}" Width="100"/>
+                                        <DataGridTextColumn Header="Branch" Binding="{Binding Sucursal}" Width="120"/>
+                                        <DataGridTextColumn Header="Bimester" Binding="{Binding Bimestre}" Width="100"/>
+                                        <DataGridTextColumn Header="Management" Binding="{Binding Gestion}" Width="80"/>
                                         <DataGridTemplateColumn Header="Acciones" Width="120">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal">
                                                         <Button Content="✏️" 
-                                                            ToolTip="Editar"
+                                                            ToolTip="Edit"
                                                             Style="{StaticResource PrimaryButtonStyle}"
                                                             Padding="8" Margin="2"
                                                             Click="BtnEditarModulo_Click"
                                                             Width="35" Height="30"/>
                                                         <Button Content="🗑️" 
-                                                            ToolTip="Eliminar"
+                                                            ToolTip="Delete"
                                                             Style="{StaticResource SecondaryButtonStyle}"
                                                             Padding="8" Margin="2"
                                                             Click="BtnEliminarModulo_Click"

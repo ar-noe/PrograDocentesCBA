@@ -43,7 +43,7 @@
                 <!-- Opciones del Menú -->
                 <StackPanel Grid.Row="1" Margin="10,20">
                     
-                    <Button x:Name="btnHorarios" Content="📅 Ver Horarios" 
+                    <Button x:Name="btnHorarios" Content="📅 Schedules" 
                         Style="{StaticResource MenuButtonStyle}"
                         Background="{StaticResource LightBlueBrush}"
                         Foreground="{StaticResource DarkTextBrush}"

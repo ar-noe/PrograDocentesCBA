@@ -49,7 +49,7 @@
                 BorderBrush="{StaticResource LightBlueBrush}" 
                 BorderThickness="2">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Editar Módulo Impartido" 
+                <TextBlock Text="Edit Imparted Module" 
                           Foreground="{StaticResource DarkTextBrush}"
                           FontSize="20" FontWeight="Bold"
                           VerticalAlignment="Center"/>
@@ -57,7 +57,7 @@
         </Border>
 
         <!-- Formulario de Edición -->
-        <GroupBox Grid.Row="1" Header="Datos del Módulo Impartido" 
+        <GroupBox Grid.Row="1" Header="Data" 
                   Style="{StaticResource GroupBoxStyle}">
             <ScrollViewer VerticalScrollBarVisibility="Auto" 
                           HorizontalScrollBarVisibility="Disabled"
@@ -82,7 +82,7 @@
                             Background="{StaticResource LightGrayBrush}"
                             CornerRadius="4" Padding="15" Margin="0,0,0,20">
                         <StackPanel>
-                            <TextBlock Text="Información Actual:" 
+                            <TextBlock Text="Current Information:" 
                                       FontWeight="Bold" 
                                       FontSize="16"
                                       Foreground="{StaticResource DarkTextBrush}"
@@ -96,7 +96,7 @@
                     </Border>
 
                     <!-- Fila 1 - Docente y Módulo -->
-                    <Label Grid.Row="1" Grid.Column="0" Content="Docente:" 
+                    <Label Grid.Row="1" Grid.Column="0" Content="Teacher:" 
                            Style="{StaticResource EditFieldLabelStyle}"/>
                     <ComboBox Grid.Row="2" Grid.Column="0" 
                               Style="{StaticResource EditComboBoxStyle}"
@@ -104,7 +104,7 @@
                               DisplayMemberPath="NombreCompleto"
                               SelectedValuePath="IdPersona"/>
 
-                    <Label Grid.Row="1" Grid.Column="2" Content="Módulo:" 
+                    <Label Grid.Row="1" Grid.Column="2" Content="Module:" 
                            Style="{StaticResource EditFieldLabelStyle}"/>
                     <ComboBox Grid.Row="2" Grid.Column="2" 
                               Style="{StaticResource EditComboBoxStyle}"
@@ -113,7 +113,7 @@
                               SelectedValuePath="IdModulo"/>
 
                     <!-- Fila 2 - Sucursal y Aula -->
-                    <Label Grid.Row="3" Grid.Column="0" Content="Sucursal:" 
+                    <Label Grid.Row="3" Grid.Column="0" Content="Branch:" 
                            Style="{StaticResource EditFieldLabelStyle}"/>
                     <ComboBox Grid.Row="4" Grid.Column="0" 
                               Style="{StaticResource EditComboBoxStyle}"
@@ -122,7 +122,7 @@
                               SelectedValuePath="IdSucursal"
                               SelectionChanged="CmbSucursalEdit_SelectionChanged"/>
 
-                    <Label Grid.Row="3" Grid.Column="2" Content="Aula:" 
+                    <Label Grid.Row="3" Grid.Column="2" Content="Classroom:" 
                            Style="{StaticResource EditFieldLabelStyle}"/>
                     <ComboBox Grid.Row="4" Grid.Column="2" 
                               Style="{StaticResource EditComboBoxStyle}"
@@ -131,9 +131,10 @@
                               SelectedValuePath="IdAula"/>
 
                     <!-- Fila 3 - Bimestre -->
-                    <Label Grid.Row="5" Grid.Column="0" Content="📅 Bimestre:" 
-                           Style="{StaticResource EditFieldLabelStyle}"/>
-                    <ComboBox Grid.Row="6" Grid.Column="0" 
+                    <Label Grid.Row="5" Grid.Column="0" Content="📅 Bimester:" 
+                           Style="{StaticResource EditFieldLabelStyle}"
+                           HorizontalAlignment="Right"/>
+                    <ComboBox Grid.Row="6" Grid.Column="7" 
                               Style="{StaticResource EditComboBoxStyle}"
                               x:Name="cmbBimestreEdit"
                               DisplayMemberPath="Descripcion"
@@ -170,13 +171,13 @@
         <Border Grid.Row="3" Background="{StaticResource WhiteBrush}" 
                 CornerRadius="8" Padding="20" Margin="0,20,0,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="💾 Guardar Cambios" 
+                <Button Content="💾 Save Changes" 
                         Style="{StaticResource PrimaryButtonStyle}"
                         Click="BtnGuardar_Click"
                         Width="180" Height="45"
                         Margin="0,0,20,0"
                         FontSize="14"/>
-                <Button Content="❌ Cancelar" 
+                <Button Content="❌ Cancel" 
                         Style="{StaticResource SecondaryButtonStyle}"
                         Click="BtnCancelar_Click"
                         Width="130" Height="45"
