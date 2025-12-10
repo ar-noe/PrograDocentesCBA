@@ -446,7 +446,7 @@ namespace wpfAppCBADoc
 
         private void BtnAulas_Click(object sender, RoutedEventArgs e)
         {
-            ManagerMainWindow aula = new ManagerMainWindow();
+            MainClassroom aula = new MainClassroom();
             aula.Show();
             this.Close();
         }

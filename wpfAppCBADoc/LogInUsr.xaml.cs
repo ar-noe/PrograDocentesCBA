@@ -136,7 +136,7 @@ namespace wpfAppCBADoc
                 }
                 else if (rolSeleccionado.IdRol == 3)//administrador
                 {
-                    ManagerMainWindow aulas = new ManagerMainWindow();
+                    MainClassroom aulas = new MainClassroom();
                     aulas.Show();
                     this.Close();
                 }

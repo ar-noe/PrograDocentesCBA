@@ -40,7 +40,6 @@ namespace wpfAppCBADoc
 
                 if (moduloActual != null)
                 {
-                    // Cargar información actual usando LINQ to SQL
                     var infoActual = (from mi in dcBd.ModuloImpartido
                                       join p in dcBd.Persona on mi.IdPersona equals p.IdPersona
                                       join m in dcBd.Modulo on mi.IdModulo equals m.IdModulo
