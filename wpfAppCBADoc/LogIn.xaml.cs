@@ -5,6 +5,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
+using System.Text.RegularExpressions;//para validaciones
+
 namespace wpfAppCBADoc
 {
     public partial class LogIn : Window
@@ -38,7 +40,10 @@ namespace wpfAppCBADoc
             try
             {
                 if (!ValidarDatosPersona())
+                {
                     return;
+                }
+                    
 
                 // Crear persona
                 PersonaCreada = new Persona
@@ -83,38 +88,68 @@ namespace wpfAppCBADoc
 
         private bool ValidarDatosPersona()
         {
-            if (string.IsNullOrEmpty(txtCI.Text.Trim()))
+
+            string ciR = txtCI.Text.Trim();
+            string namesR = txtNombres.Text.Trim();
+            string patLstName = txtApPat.Text.Trim();
+            string matLstName = txtApMat.Text.Trim();
+            var fechaR = dpFechaNac.SelectedDate;
+
+            string patronCi = @"^\d{7,8}-?\d{1}$";
+            string patronNameG = @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$";
+
+
+            if (string.IsNullOrEmpty(ciR))
             {
                 ShowMessage("Please enter ID number", true);
                 return false;
             }
+            else if (!Regex.IsMatch(ciR, patronCi))
+            {
+                ShowMessage("Please enter a valid ID number (only digits)", true);
+                return false;
+            }
 
-            if (string.IsNullOrEmpty(txtNombres.Text.Trim()))
+            if (string.IsNullOrEmpty(namesR))
             {
                 ShowMessage("Please enter names", true);
                 return false;
             }
-
-            if (string.IsNullOrEmpty(txtApPat.Text.Trim()))
+            else if (!Regex.IsMatch(namesR, patronNameG))
             {
-                ShowMessage("Please enter last name", true);
+                ShowMessage("Please enter valid names", true);
                 return false;
             }
 
-            if (string.IsNullOrEmpty(txtApMat.Text.Trim()))
+            if (string.IsNullOrEmpty(patLstName) && string.IsNullOrEmpty(matLstName))
             {
-                ShowMessage("Please enter mother's last name", true);
+                ShowMessage("Please enter at leat one last name", true);
+                return false;
+            }
+            else if (!Regex.IsMatch(patLstName, patronNameG))
+            {
+                ShowMessage("Please enter a valid last name", true);
+                return false;
+            }
+            else if (!Regex.IsMatch(matLstName, patronNameG))
+            {
+                ShowMessage("Please enter a valid mother's last name", true);
                 return false;
             }
 
-            if (dpFechaNac.SelectedDate == null)
+            if (fechaR == null)
             {
                 ShowMessage("Please select birth date", true);
                 return false;
             }
+            else if (fechaR > DateTime.Now)
+            {
+                ShowMessage("Please select a valid birth date", true);
+                return false;
+            }
 
-            // Eliminar validación de TipoPersona
-            return true;
+                // Eliminar validación de TipoPersona
+                return true;
         }
 
         public void ActualizarDatosPersona(Persona personaActualizada)

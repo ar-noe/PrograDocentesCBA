@@ -4,6 +4,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 
+using System.Text.RegularExpressions;//para validaciones
+
 namespace wpfAppCBADoc
 {
     public partial class LogInUsr : Window
@@ -60,9 +62,8 @@ namespace wpfAppCBADoc
                 string passwrdUsr = txtPassword.Password;
 
                 // Validaciones
-                if (string.IsNullOrEmpty(correoUsr) || string.IsNullOrEmpty(passwrdUsr))
+                if (!ValidarDatosUsuario())
                 {
-                    ShowMessage("Please enter both email and password", true);
                     return;
                 }
 
@@ -99,6 +100,39 @@ namespace wpfAppCBADoc
             {
                 ShowMessage("Registration error: " + ex.Message, true);
             }
+        }
+
+        public bool ValidarDatosUsuario()
+        {
+            string correoUsr = txtUsername.Text.Trim();
+            string passwrdUsr = txtPassword.Password;
+
+            string patronEmail = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            string patronPassword = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$";
+
+            if (string.IsNullOrEmpty(correoUsr))
+            {
+                ShowMessage("Please enter email", true);
+                return false;
+            }
+            else if (!Regex.IsMatch(correoUsr, patronEmail))
+            {
+                ShowMessage("Please enter a valid email", true);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(passwrdUsr))
+            {
+                ShowMessage("Please enter password", true);
+                return false;
+            }
+            else if (!Regex.IsMatch(passwrdUsr, patronPassword))
+            {
+                ShowMessage("Please enter a valid password (At least 8 characters, 1 number and 1 special character)", true);
+                return false;
+            }
+
+            return true;
         }
 
         private void CrearUsuario(string tipoPersona, string correo, string password, Rol rol)
