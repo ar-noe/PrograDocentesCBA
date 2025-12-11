@@ -23,5 +23,22 @@ namespace wpfAppCBADoc
         {
             InitializeComponent();
         }
+
+        //salir de la sesión
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow logIn = new MainWindow();
+            this.Close();
+        }
+
+
+
+        //mostrar mensajes de error u otros
+        private void ShowMessage(string message, bool isError)
+        {
+            MessageBox.Show(message, isError ? "Error" : "Información",
+                          MessageBoxButton.OK,
+                          isError ? MessageBoxImage.Error : MessageBoxImage.Information);
+        }
     }
 }

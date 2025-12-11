@@ -85,7 +85,7 @@ namespace wpfAppCBADoc
                 cmbSucursal.DisplayMemberPath = "Alias";
                 cmbSucursal.SelectedValuePath = "IdSucursal";
 
-                // Cargar bimestres - SIN ToString en la consulta
+                // Cargar bimestres 
                 var bimestres = (from b in dcBd.Bimestre
                                  select new
                                  {
@@ -428,20 +428,10 @@ namespace wpfAppCBADoc
             }
         }
 
-        // Métodos para navegación entre pestañas (placeholder)
+        // Métodos para navegación entre pestañas 
         private void BtnHorarios_Click(object sender, RoutedEventArgs e)
         {
             ShowMessage("Funcionalidad de Horarios en desarrollo", false);
-        }
-
-        private void BtnDocentes_Click(object sender, RoutedEventArgs e)
-        {
-            ShowMessage("Funcionalidad de Docentes en desarrollo", false);
-        }
-
-        private void BtnModulos_Click(object sender, RoutedEventArgs e)
-        {
-            // Ya estamos en esta pestaña
         }
 
         private void BtnAulas_Click(object sender, RoutedEventArgs e)
@@ -451,9 +441,10 @@ namespace wpfAppCBADoc
             this.Close();
         }
 
+
+        //mostrar mensajes de error u otros
         private void ShowMessage(string message, bool isError)
         {
-            // Puedes implementar un sistema de mensajes similar al que tienes en LogIn
             MessageBox.Show(message, isError ? "Error" : "Información",
                           MessageBoxButton.OK,
                           isError ? MessageBoxImage.Error : MessageBoxImage.Information);

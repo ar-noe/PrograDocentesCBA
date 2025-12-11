@@ -44,17 +44,13 @@
                             Background="{StaticResource LightBlueBrush}"
                             Foreground="{StaticResource DarkTextBrush}"/>
 
-                    <Button x:Name="btnDocentes" Content="👨‍🏫 Teachers" 
-                            Style="{StaticResource MenuButtonStyle}"
-                            Margin="0,2" Height="45"/>
-
                     <Button x:Name="btnModulos" Content="📚 Imparted Modules" 
                             Style="{StaticResource MenuButtonStyle}"
-                            Margin="0,2" Height="45"/>
+                            Margin="0,2" Height="45" Click="btnModulos_Click"/>
 
                     <Button x:Name="btnAulas" Content="🏫 Classroom Management" 
                             Style="{StaticResource MenuButtonStyle}"
-                            Margin="0,2" Height="45"/>
+                            Margin="0,2" Height="45" Click="btnAulas_Click"/>
                 </StackPanel>
 
                 <!-- Footer -->
@@ -142,8 +138,8 @@
                               ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                               ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Time" Binding="{Binding Hora}" Width="120"/>
-                            <DataGridTextColumn Header="Module" Binding="{Binding NombreModulo}" Width="200"/>
+                            <DataGridTextColumn Header="Time" Binding="{Binding Horario}" Width="120"/>
+                            <DataGridTextColumn Header="Module" Binding="{Binding Nombre}" Width="200"/>
                             <DataGridTextColumn Header="Classroom" Binding="{Binding Aula}" Width="100"/>
                             <DataGridTextColumn Header="Duration" Binding="{Binding Duracion}" Width="100"/>
                             <DataGridTemplateColumn Header="Action" Width="100">
@@ -203,7 +199,7 @@
                 </GroupBox>
 
                 <!-- Formulario Filtros -->
-                <GroupBox Grid.Row="2" Header="Filtrar" 
+                <GroupBox Grid.Row="2" Header="Filter" 
                           Style="{StaticResource GroupBoxStyle}"
                           Background="{StaticResource WhiteBrush}">
                     <Grid Margin="5">

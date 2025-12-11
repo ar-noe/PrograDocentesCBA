@@ -59,11 +59,11 @@ namespace wpfAppCBADoc
                 switch (usuario.IdRol)
                 {
                     case 2: // Docente
-                        MainDoc mainDoc = new MainDoc();
+                        Schedules mainDoc = new Schedules();
                         mainDoc.Show();
                         this.Close();
                         break;
-                    case 3: // Administrador
+                    case 1: // Administrador
                         MainClassroom mainAdmin = new MainClassroom();
                         mainAdmin.Show();
                         this.Close();
@@ -91,6 +91,11 @@ namespace wpfAppCBADoc
             {
                 Application.Current.Shutdown();
             }
+        }
+
+        private void btnExit_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

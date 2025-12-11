@@ -39,17 +39,17 @@
 
                 <!-- Opciones del Menú -->
                 <StackPanel Grid.Row="1" Margin="10,20">
-                    <Button x:Name="btnAulas" Content="🏫 Classrooms" 
-                        Style="{StaticResource MenuButtonStyle}"
-                        Margin="0,2" Height="45"
-                        Background="{StaticResource LightBlueBrush}"
-                        Foreground="{StaticResource DarkTextBrush}"/>
-                    <Button x:Name="btnModulos" Content="📚  Imparted Modules" 
-                        Style="{StaticResource MenuButtonStyle}"
-                        Margin="0,2" Height="45"/>
                     <Button x:Name="btnHorarios" Content="📅 Schedules" 
                         Style="{StaticResource MenuButtonStyle}"
-                        Margin="0,2" Height="45"/>
+                        Margin="0,2" Height="45" Click="btnHorarios_Click"/>
+                    <Button x:Name="btnModulos" Content="📚  Imparted Modules" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Margin="0,2" Height="45" Click="btnModulos_Click"/>
+                    <Button x:Name="btnAulas" Content="🏫 Classroom Manager" 
+                            Style="{StaticResource MenuButtonStyle}"
+                            Margin="0,2" Height="45"
+                            Background="{StaticResource LightBlueBrush}"
+                            Foreground="{StaticResource DarkTextBrush}" />
                 </StackPanel>
 
                 <!-- Footer -->

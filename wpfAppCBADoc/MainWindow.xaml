@@ -109,7 +109,7 @@
                         Style="{StaticResource SecondaryButtonStyle}"
                         Width="100"
                         Height="35"
-                        Margin="0,0,15,0"/>
+                        Margin="0,0,15,0" Click="btnExit_Click_1"/>
                 <Button x:Name="btnGoToSignUp" 
                         Content="LogIn"
                         Style="{StaticResource PrimaryButtonStyle}"

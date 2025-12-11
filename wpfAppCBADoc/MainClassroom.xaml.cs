@@ -23,5 +23,31 @@ namespace wpfAppCBADoc
         {
             InitializeComponent();
         }
+
+
+
+        // botones para la navegación entre pestañas 
+        private void btnHorarios_Click(object sender, RoutedEventArgs e)
+        {
+            EditHorarios horarios = new EditHorarios();
+            horarios.Show();
+            this.Close();
+        }
+
+        private void btnModulos_Click(object sender, RoutedEventArgs e)
+        {
+            MainModulosImp modulos = new MainModulosImp();
+            modulos.Show();
+            this.Close();
+        }
+
+        //mostrar mensajes de error u otros
+        private void ShowMessage(string message, bool isError)
+        {
+            MessageBox.Show(message, isError ? "Error" : "Información",
+                          MessageBoxButton.OK,
+                          isError ? MessageBoxImage.Error : MessageBoxImage.Information);
+        }
+
     }
 }

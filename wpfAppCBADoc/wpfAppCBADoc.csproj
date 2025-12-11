@@ -109,10 +109,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainDoc.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainModulosImp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -144,9 +140,6 @@
     </Compile>
     <Compile Include="MainClassroom.xaml.cs">
       <DependentUpon>MainClassroom.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainDoc.xaml.cs">
-      <DependentUpon>MainDoc.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainModulosImp.xaml.cs">
       <DependentUpon>MainModulosImp.xaml</DependentUpon>
