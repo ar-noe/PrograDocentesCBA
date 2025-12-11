@@ -140,7 +140,6 @@ namespace wpfAppCBADoc
             }
             catch (Exception ex)
             {
-                // Si hay error en la verificación, continuar de todos modos
                 System.Diagnostics.Debug.WriteLine("Error verificando estudiantes: " + ex.Message);
             }
         }
