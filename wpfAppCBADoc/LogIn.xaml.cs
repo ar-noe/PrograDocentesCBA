@@ -9,26 +9,23 @@ namespace wpfAppCBADoc
 {
     public partial class LogIn : Window
     {
-        private DataClassesDocentesBDDataContext dcBd;
+        private DataClassesDocentesCBA2DataContext dcBd;
         public Persona PersonaCreada { get; private set; }
+        private PersonaCreator personaFactory;
 
         public LogIn()
         {
             InitializeComponent();
             InitializeDatabaseConnection();
-
-            // También ocultar el label si existe
-            var labelTipoPersona = this.FindName("lblTipoPersona") as Label;
-            if (labelTipoPersona != null)
-                labelTipoPersona.Visibility = Visibility.Collapsed;
+            personaFactory = new PersonaCreator();
         }
 
         private void InitializeDatabaseConnection()
         {
             try
             {
-                string connStr = ConfigurationManager.ConnectionStrings["wpfAppCBADoc.Properties.Settings.CBADocentesConnectionString"].ConnectionString;
-                dcBd = new DataClassesDocentesBDDataContext(connStr);
+                string connStr = ConfigurationManager.ConnectionStrings["wpfAppCBADoc.Properties.Settings.PrograCBADocentesConnectionString"].ConnectionString;
+                dcBd = new DataClassesDocentesCBA2DataContext(connStr);
             }
             catch (Exception ex)
             {
@@ -40,37 +37,34 @@ namespace wpfAppCBADoc
         {
             try
             {
-                // Validar datos de persona
                 if (!ValidarDatosPersona())
                     return;
 
-                // CREAR NUEVA PERSONA - Sin IdTipoPersona
+                // Crear persona
                 PersonaCreada = new Persona
                 {
                     CI = txtCI.Text.Trim(),
                     Nombres = txtNombres.Text.Trim(),
                     ApPat = txtApPat.Text.Trim(),
                     ApMat = txtApMat.Text.Trim(),
-                    FechaNac = dpFechaNac.SelectedDate.Value
+                    FechaNac = dpFechaNac.SelectedDate.Value,
+                    TipoPersona = "" 
                 };
 
-                // Insertar persona en la base de datos
+                // Insertar persona
                 dcBd.Persona.InsertOnSubmit(PersonaCreada);
                 dcBd.SubmitChanges();
 
-                ShowMessage("Personal data saved successfully!", false);
+                ShowMessage("Datos personales guardados!", false);
 
-                // Abrir ventana de registro de usuario (ahora llamada LogInUsr)
-                LogInUsr logInUsr = new LogInUsr(PersonaCreada, this);
+                // Pasar el MISMO DataContext
+                LogInUsr logInUsr = new LogInUsr(PersonaCreada, this, dcBd);
                 logInUsr.Show();
-
-                // Ocultar esta ventana en lugar de cerrarla
                 this.Hide();
             }
             catch (Exception ex)
             {
-                ShowMessage("Error saving personal data: " + ex.Message, true);
-                PersonaCreada = null;
+                ShowMessage("Error: " + ex.Message, true);
             }
         }
 

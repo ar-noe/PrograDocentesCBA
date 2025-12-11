@@ -57,11 +57,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdministrativoFactory.cs" />
+    <Compile Include="DataClassesDocentesCBA2.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataClassesDocentesCBA2.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="DocenteFactory.cs" />
     <Compile Include="EditarModulo.xaml.cs">
       <DependentUpon>EditarModulo.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditHorarios.xaml.cs">
       <DependentUpon>EditHorarios.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IPersonaFactory.cs" />
+    <Compile Include="PersonaCreator.cs" />
+    <Compile Include="PersonaFactoryBase.cs" />
+    <Compile Include="PrograCBADocentesDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrograCBADocentesDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Schedules.xaml.cs">
       <DependentUpon>Schedules.xaml</DependentUpon>
@@ -117,11 +132,6 @@
     </Compile>
     <Compile Include="ClassroomState.xaml.cs">
       <DependentUpon>ClassroomState.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataClassesDocentesBD.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataClassesDocentesBD.dbml</DependentUpon>
     </Compile>
     <Compile Include="EditarModuloImpartido.xaml.cs">
       <DependentUpon>EditarModuloImpartido.xaml</DependentUpon>
@@ -179,13 +189,24 @@
     <None Include="CBADocentesDataSet.xss">
       <DependentUpon>CBADocentesDataSet.xsd</DependentUpon>
     </None>
-    <None Include="DataClassesDocentesBD.dbml">
+    <None Include="DataClassesDocentesCBA2.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DataClassesDocentesBD.designer.cs</LastGenOutput>
+      <LastGenOutput>DataClassesDocentesCBA2.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="DataClassesDocentesBD.dbml.layout">
-      <DependentUpon>DataClassesDocentesBD.dbml</DependentUpon>
+    <None Include="DataClassesDocentesCBA2.dbml.layout">
+      <DependentUpon>DataClassesDocentesCBA2.dbml</DependentUpon>
+    </None>
+    <None Include="PrograCBADocentesDataSet.xsc">
+      <DependentUpon>PrograCBADocentesDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="PrograCBADocentesDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PrograCBADocentesDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PrograCBADocentesDataSet.xss">
+      <DependentUpon>PrograCBADocentesDataSet.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

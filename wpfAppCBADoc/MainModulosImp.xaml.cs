@@ -20,7 +20,7 @@ namespace wpfAppCBADoc
     /// </summary>
     public partial class MainModulosImp : Window
     {
-        private DataClassesDocentesBDDataContext dcBd;
+        private DataClassesDocentesCBA2DataContext dcBd;
 
         public MainModulosImp()
         {
@@ -34,8 +34,8 @@ namespace wpfAppCBADoc
         {
             try
             {
-                string connStr = ConfigurationManager.ConnectionStrings["wpfAppCBADoc.Properties.Settings.CBADocentesConnectionString"].ConnectionString;
-                dcBd = new DataClassesDocentesBDDataContext(connStr);
+                string connStr = ConfigurationManager.ConnectionStrings["wpfAppCBADoc.Properties.Settings.PrograCBADocentesConnectionString"].ConnectionString;
+                dcBd = new DataClassesDocentesCBA2DataContext(connStr);
             }
             catch (Exception ex)
             {
@@ -141,7 +141,7 @@ namespace wpfAppCBADoc
             try
             {
                 var modulosImpartidos = (from mi in dcBd.ModuloImpartido
-                                         join p in dcBd.Persona on mi.IdPersona equals p.IdPersona
+                                         join p in dcBd.Persona on mi.IdDocente equals p.IdPersona
                                          join m in dcBd.Modulo on mi.IdModulo equals m.IdModulo
                                          join c in dcBd.Curso on m.IdCurso equals c.IdCurso
                                          join a in dcBd.Aula on mi.IdAula equals a.IdAula
@@ -192,7 +192,7 @@ namespace wpfAppCBADoc
                 var nuevoModuloImpartido = new ModuloImpartido
                 {
                     IdModulo = (int)cmbModulo.SelectedValue,
-                    IdPersona = (int)cmbDocente.SelectedValue,
+                    IdDocente = (int)cmbDocente.SelectedValue,
                     IdAula = (int)cmbAula.SelectedValue,
                     IdBimestre = (int)cmbBimestre.SelectedValue,
                     IdHorario = 0 // Siempre null como solicitaste
@@ -380,7 +380,7 @@ namespace wpfAppCBADoc
                 var textoBusqueda = txtBuscarModulo.Text.ToLower();
 
                 var modulosFiltrados = (from mi in dcBd.ModuloImpartido
-                                        join p in dcBd.Persona on mi.IdPersona equals p.IdPersona
+                                        join p in dcBd.Persona on mi.IdDocente equals p.IdPersona
                                         join m in dcBd.Modulo on mi.IdModulo equals m.IdModulo
                                         join c in dcBd.Curso on m.IdCurso equals c.IdCurso
                                         join a in dcBd.Aula on mi.IdAula equals a.IdAula

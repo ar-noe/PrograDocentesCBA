@@ -62,7 +62,7 @@
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"
                        Padding="0"/>
-                <Label Content="Sign Up"
+                <Label Content="Log In"
                        FontSize="16"
                        FontFamily="Arial"
                        FontWeight="SemiBold"
@@ -110,15 +110,15 @@
                         Width="100"
                         Height="35"
                         Margin="0,0,15,0"/>
-                <Button x:Name="btnGoToSignUp"
-                        Content="Sign Up"
+                <Button x:Name="btnGoToSignUp" 
+                        Content="LogIn"
                         Style="{StaticResource PrimaryButtonStyle}"
                         Click="btnGoToSignUp_Click"
                         Width="120"
                         Height="35"
                         Margin="0,0,15,0"/>
                 <Button x:Name="btnGoToLogin"
-                        Content="Log In"
+                        Content="Sign Up"
                         Style="{StaticResource PrimaryButtonStyle}"
                         Click="btnGoToLogin_Click"
                         Width="120"

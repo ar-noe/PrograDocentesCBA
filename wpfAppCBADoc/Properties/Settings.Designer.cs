@@ -34,5 +34,17 @@ namespace wpfAppCBADoc.Properties {
                 return ((string)(this["CBADocentesConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-MKEPTMM\\PROGRA3CBA;Initial Catalog=PrograCBADocentes;Persist " +
+            "Security Info=True;User ID=sa;Password=123456;Pooling=False;Encrypt=False;TrustS" +
+            "erverCertificate=False")]
+        public string PrograCBADocentesConnectionString {
+            get {
+                return ((string)(this["PrograCBADocentesConnectionString"]));
+            }
+        }
     }
 }

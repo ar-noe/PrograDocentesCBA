@@ -6,12 +6,12 @@ namespace wpfAppCBADoc
 {
     public partial class MainWindow : Window
     {
-        private DataClassesDocentesBDDataContext dcBd;
+        private DataClassesDocentesCBA2DataContext dcBd;
 
         public MainWindow()
         {
             InitializeComponent();
-            dcBd = new DataClassesDocentesBDDataContext();
+            dcBd = new DataClassesDocentesCBA2DataContext();
         }
 
         private void btnGoToLogin_Click(object sender, RoutedEventArgs e)

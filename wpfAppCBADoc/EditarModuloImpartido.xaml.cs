@@ -19,11 +19,11 @@ namespace wpfAppCBADoc
     /// </summary>
     public partial class EditarModuloImpartido : Window
     {
-        private DataClassesDocentesBDDataContext dcBd;
+        private DataClassesDocentesCBA2DataContext dcBd;
         private int idModuloImp;
         private ModuloImpartido moduloActual;
 
-        public EditarModuloImpartido(int idModuloImp, DataClassesDocentesBDDataContext dcBd)
+        public EditarModuloImpartido(int idModuloImp, DataClassesDocentesCBA2DataContext dcBd)
         {
             InitializeComponent();
             this.idModuloImp = idModuloImp;
@@ -41,7 +41,7 @@ namespace wpfAppCBADoc
                 if (moduloActual != null)
                 {
                     var infoActual = (from mi in dcBd.ModuloImpartido
-                                      join p in dcBd.Persona on mi.IdPersona equals p.IdPersona
+                                      join p in dcBd.Persona on mi.IdDocente equals p.IdPersona
                                       join m in dcBd.Modulo on mi.IdModulo equals m.IdModulo
                                       join c in dcBd.Curso on m.IdCurso equals c.IdCurso
                                       join a in dcBd.Aula on mi.IdAula equals a.IdAula
@@ -70,7 +70,7 @@ namespace wpfAppCBADoc
                                            $"Bimestre: {bimestreFormateado}";
 
                         // Establecer valores actuales en los comboboxes
-                        cmbDocenteEdit.SelectedValue = moduloActual.IdPersona;
+                        cmbDocenteEdit.SelectedValue = moduloActual.IdDocente;
                         cmbModuloEdit.SelectedValue = moduloActual.IdModulo;
                         cmbBimestreEdit.SelectedValue = moduloActual.IdBimestre;
 
@@ -294,7 +294,7 @@ namespace wpfAppCBADoc
                 }
 
                 // Actualizar datos
-                moduloActual.IdPersona = (int)cmbDocenteEdit.SelectedValue;
+                moduloActual.IdDocente = (int)cmbDocenteEdit.SelectedValue;
                 moduloActual.IdModulo = (int)cmbModuloEdit.SelectedValue;
                 moduloActual.IdAula = (int)cmbAulaEdit.SelectedValue;
                 moduloActual.IdBimestre = (int)cmbBimestreEdit.SelectedValue;

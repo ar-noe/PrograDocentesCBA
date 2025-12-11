@@ -8,40 +8,29 @@ namespace wpfAppCBADoc
 {
     public partial class LogInUsr : Window
     {
-        private DataClassesDocentesBDDataContext dcBd;
+        private DataClassesDocentesCBA2DataContext dcBd;
         private Persona persona;
         private LogIn ventanaAnterior;
 
-        // Constructor que recibe 2 argumentos: Persona y ventana anterior
-        public LogInUsr(Persona personaCreada, LogIn ventanaAnterior)
+
+        public LogInUsr(Persona personaCreada, LogIn ventanaAnterior, DataClassesDocentesCBA2DataContext dataContext)
         {
             InitializeComponent();
             this.persona = personaCreada;
             this.ventanaAnterior = ventanaAnterior;
-            InitializeDatabaseConnection();
+
+            this.dcBd = dataContext;
+
             LoadComboBoxData();
             MostrarInformacionPersona();
-        }
-
-        private void InitializeDatabaseConnection()
-        {
-            try
-            {
-                string connStr = ConfigurationManager.ConnectionStrings["wpfAppCBADoc.Properties.Settings.CBADocentesConnectionString"].ConnectionString;
-                dcBd = new DataClassesDocentesBDDataContext(connStr);
-            }
-            catch (Exception ex)
-            {
-                ShowMessage("Error connecting to database: " + ex.Message, true);
-            }
         }
 
         private void LoadComboBoxData()
         {
             try
             {
-                // Cargar tipos de roles usando sintaxis de consulta LINQ
                 var queryRoles = from rol in dcBd.Rol
+                                 where rol.Nombre != "Estudiante"
                                  select rol;
 
                 cmbUserType.ItemsSource = queryRoles.ToList();
@@ -70,7 +59,7 @@ namespace wpfAppCBADoc
                 string correoUsr = txtUsername.Text.Trim();
                 string passwrdUsr = txtPassword.Password;
 
-                // Validaciones de usuario
+                // Validaciones
                 if (string.IsNullOrEmpty(correoUsr) || string.IsNullOrEmpty(passwrdUsr))
                 {
                     ShowMessage("Please enter both email and password", true);
@@ -83,20 +72,15 @@ namespace wpfAppCBADoc
                     return;
                 }
 
-                // VERIFICAR si el usuario YA EXISTE usando sintaxis de consulta LINQ
-                var queryUsuarioExiste = from usr in dcBd.Usuario
-                                         where usr.Correo == correoUsr
-                                         select usr;
-
-                bool usuarioExiste = queryUsuarioExiste.Any();
-
+                // Verificar si usuario ya existe
+                var usuarioExiste = dcBd.Usuario.Any(usr => usr.Correo == correoUsr);
                 if (usuarioExiste)
                 {
-                    ShowMessage("This email is already registered. Please use a different email.", true);
+                    ShowMessage("This email is already registered", true);
                     return;
                 }
 
-                // Obtener el rol seleccionado
+                // Obtener rol seleccionado
                 var rolSeleccionado = cmbUserType.SelectedItem as Rol;
                 if (rolSeleccionado == null)
                 {
@@ -104,42 +88,11 @@ namespace wpfAppCBADoc
                     return;
                 }
 
-                // CREAR NUEVO USUARIO
-                Usuario nuevoUsuario = new Usuario
-                {
-                    Correo = correoUsr,
-                    Contrasenia = passwrdUsr,
-                    IdRol = rolSeleccionado.IdRol,
-                    IdPersona = persona.IdPersona
-                };
+                // se crea el registro segun el tipo de persona
+                string tipoPersona = rolSeleccionado.Nombre == "Docente" ? "Docente" : "Administrativo";
 
-                // Insertar usuario en la base de datos
-                dcBd.Usuario.InsertOnSubmit(nuevoUsuario);
-                dcBd.SubmitChanges();
-
-                ShowMessage($"User registered successfully! Welcome {correoUsr}", false);
-
-                MessageBox.Show("Registration completed successfully!", "Success",
-                              MessageBoxButton.OK, MessageBoxImage.Information);
-
-                // Cerrar ambas ventanas
-                this.Close();
-                if (ventanaAnterior != null)
-                    ventanaAnterior.Close();
-
-                //Abrir ventanas de inicio dependiendo del rol
-                if (rolSeleccionado.IdRol == 2) //docente
-                {
-                    Schedules schedules = new Schedules();
-                    schedules.Show();
-                    this.Close();
-                }
-                else if (rolSeleccionado.IdRol == 3)//administrador
-                {
-                    MainClassroom aulas = new MainClassroom();
-                    aulas.Show();
-                    this.Close();
-                }
+                // crear registro segun usr
+                CrearUsuario(tipoPersona, correoUsr, passwrdUsr, rolSeleccionado);
 
             }
             catch (Exception ex)
@@ -148,10 +101,120 @@ namespace wpfAppCBADoc
             }
         }
 
+        private void CrearUsuario(string tipoPersona, string correo, string password, Rol rol)
+        {
+            try
+            {
+                // obtener persona creada anteriormente
+                var personaEnBD = dcBd.Persona.FirstOrDefault(p => p.IdPersona == persona.IdPersona);
+                if (personaEnBD == null)
+                {
+                    ShowMessage("Error: Person not found", true);
+                    return;
+                }
+
+                // Actualizar TipoPersona
+                personaEnBD.TipoPersona = tipoPersona;
+
+                // Crear Usuario
+                Usuario nuevoUsuario = new Usuario
+                {
+                    Correo = correo,
+                    Contrasenia = password,
+                    IdRol = rol.IdRol,
+                    IdPersona = personaEnBD.IdPersona
+                };
+                dcBd.Usuario.InsertOnSubmit(nuevoUsuario);
+
+                // Usar Factory Method
+                CrearRegistroEspecificoFactory(tipoPersona, personaEnBD.IdPersona, rol);
+
+                // Guardar todo
+                dcBd.SubmitChanges();
+
+                // Actualizar la referencia local
+                persona = personaEnBD;
+
+                AbrirVentanaSegunRol(rol.IdRol);
+            }
+            catch (System.Data.SqlClient.SqlException sqlEx)
+            {
+                // **ERRORES ESPECÍFICOS DE SQL**
+                ShowMessage($"Error SQL: {sqlEx.Message}\nNúmero: {sqlEx.Number}", true);
+            }
+            catch (Exception ex)
+            {
+                ShowMessage("Error en Factory Method: " + ex.Message, true);
+            }
+        }
+
+        // Decidir  objeto crear basado en el tipoPersona
+        private void CrearRegistroEspecificoFactory(string tipoPersona, int idPersona, Rol rol)
+        {
+            // 
+            switch (tipoPersona)
+            {
+                case "Docente":
+                    // Crear Docente con configuración específica
+                    string[] especialidades = {
+                        "General English", "Pronunciation Training", "Listening Comprehension",
+                        "Teaching Advanced Levels", "TOEFL Preparation", "IELTS Preparation",
+                        "Business English", "Media Literacy"
+                    };
+                    var random = new Random();
+
+                    var docente = new Docente
+                    {
+                        IdPersona = idPersona,
+                        Especialidad = especialidades[random.Next(0, especialidades.Length)]
+                    };
+                    dcBd.Docente.InsertOnSubmit(docente);
+                    break;
+
+                case "Administrativo":
+                    // Crear Administrativo con configuración específica
+                    var administrativo = new Administrativo
+                    {
+                        IdPersona = idPersona,
+                        Cargo = rol.Nombre
+                    };
+                    dcBd.Administrativo.InsertOnSubmit(administrativo);
+                    break;
+
+                default:
+                    throw new ArgumentException($"Tipo de persona no soportado: {tipoPersona}");
+            }
+        }
+
+        private void AbrirVentanaSegunRol(int idRol)
+        {
+            if (ventanaAnterior != null)
+                ventanaAnterior.Close();
+
+            switch (idRol)
+            {
+                case 2: // Docente
+                    Schedules schedules = new Schedules();
+                    schedules.Show();
+                    break;
+
+                case 1: // Administrador
+                    MainClassroom aulas = new MainClassroom();
+                    aulas.Show();
+                    break;
+
+                default:
+                    MainWindow signUp = new MainWindow();
+                    signUp.Show();
+                    break;
+            }
+            this.Close();
+        }
+
         private void btnRetroceder_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Do you want to go back to modify personal data?",
-                                       "Modify Personal Data",
+            var result = MessageBox.Show("¿Desea volver para modificar datos personales?",
+                                       "Modificar Datos Personales",
                                        MessageBoxButton.YesNo,
                                        MessageBoxImage.Question);
 
@@ -159,18 +222,16 @@ namespace wpfAppCBADoc
             {
                 try
                 {
-                    // Mostrar la ventana anterior
                     if (ventanaAnterior != null)
                     {
                         ventanaAnterior.ActualizarDatosPersona(persona);
                         ventanaAnterior.Show();
                     }
-
                     this.Close();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error returning to previous window: " + ex.Message,
+                    MessageBox.Show("Error al volver: " + ex.Message,
                                   "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
@@ -178,15 +239,14 @@ namespace wpfAppCBADoc
 
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Are you sure you want to cancel account creation?\n" +
-                                       "The personal data will be deleted.",
-                                       "Confirm Cancellation",
+            var result = MessageBox.Show("¿Está seguro de cancelar la creación de cuenta?\n" +
+                                       "Los datos personales serán eliminados.",
+                                       "Confirmar Cancelación",
                                        MessageBoxButton.YesNo,
                                        MessageBoxImage.Warning);
 
             if (result == MessageBoxResult.Yes)
             {
-                // Eliminar la persona creada usando sintaxis de consulta LINQ
                 try
                 {
                     var queryPersona = from p in dcBd.Persona
@@ -203,11 +263,10 @@ namespace wpfAppCBADoc
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error deleting personal data: " + ex.Message,
-                                  "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Error al eliminar datos: " + ex.Message,
+                                  "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
 
-                // Mostrar ventana anterior y cerrar esta
                 if (ventanaAnterior != null)
                     ventanaAnterior.Show();
 

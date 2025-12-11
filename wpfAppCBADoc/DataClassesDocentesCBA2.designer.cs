@@ -22,56 +22,50 @@ namespace wpfAppCBADoc
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="CBADocentes")]
-	public partial class DataClassesDocentesBDDataContext : System.Data.Linq.DataContext
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="PrograCBADocentes")]
+	public partial class DataClassesDocentesCBA2DataContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnCreated();
-    partial void InsertAula(Aula instance);
-    partial void UpdateAula(Aula instance);
-    partial void DeleteAula(Aula instance);
+    partial void InsertAdministrativo(Administrativo instance);
+    partial void UpdateAdministrativo(Administrativo instance);
+    partial void DeleteAdministrativo(Administrativo instance);
     partial void InsertUsuario(Usuario instance);
     partial void UpdateUsuario(Usuario instance);
     partial void DeleteUsuario(Usuario instance);
-    partial void InsertBeca(Beca instance);
-    partial void UpdateBeca(Beca instance);
-    partial void DeleteBeca(Beca instance);
+    partial void InsertAula(Aula instance);
+    partial void UpdateAula(Aula instance);
+    partial void DeleteAula(Aula instance);
     partial void InsertBimestre(Bimestre instance);
     partial void UpdateBimestre(Bimestre instance);
     partial void DeleteBimestre(Bimestre instance);
     partial void InsertCurso(Curso instance);
     partial void UpdateCurso(Curso instance);
     partial void DeleteCurso(Curso instance);
+    partial void InsertDocente(Docente instance);
+    partial void UpdateDocente(Docente instance);
+    partial void DeleteDocente(Docente instance);
     partial void InsertEstadoAula(EstadoAula instance);
     partial void UpdateEstadoAula(EstadoAula instance);
     partial void DeleteEstadoAula(EstadoAula instance);
-    partial void InsertEstadoPago(EstadoPago instance);
-    partial void UpdateEstadoPago(EstadoPago instance);
-    partial void DeleteEstadoPago(EstadoPago instance);
+    partial void InsertEstudiante(Estudiante instance);
+    partial void UpdateEstudiante(Estudiante instance);
+    partial void DeleteEstudiante(Estudiante instance);
     partial void InsertEstudianteInscrito(EstudianteInscrito instance);
     partial void UpdateEstudianteInscrito(EstudianteInscrito instance);
     partial void DeleteEstudianteInscrito(EstudianteInscrito instance);
     partial void InsertHorario(Horario instance);
     partial void UpdateHorario(Horario instance);
     partial void DeleteHorario(Horario instance);
-    partial void InsertLibro(Libro instance);
-    partial void UpdateLibro(Libro instance);
-    partial void DeleteLibro(Libro instance);
     partial void InsertModulo(Modulo instance);
     partial void UpdateModulo(Modulo instance);
     partial void DeleteModulo(Modulo instance);
     partial void InsertModuloImpartido(ModuloImpartido instance);
     partial void UpdateModuloImpartido(ModuloImpartido instance);
     partial void DeleteModuloImpartido(ModuloImpartido instance);
-    partial void InsertNotaCurso(NotaCurso instance);
-    partial void UpdateNotaCurso(NotaCurso instance);
-    partial void DeleteNotaCurso(NotaCurso instance);
-    partial void InsertPago(Pago instance);
-    partial void UpdatePago(Pago instance);
-    partial void DeletePago(Pago instance);
     partial void InsertPersona(Persona instance);
     partial void UpdatePersona(Persona instance);
     partial void DeletePersona(Persona instance);
@@ -83,41 +77,41 @@ namespace wpfAppCBADoc
     partial void DeleteSucursal(Sucursal instance);
     #endregion
 		
-		public DataClassesDocentesBDDataContext() : 
-				base(global::wpfAppCBADoc.Properties.Settings.Default.CBADocentesConnectionString, mappingSource)
+		public DataClassesDocentesCBA2DataContext() : 
+				base(global::wpfAppCBADoc.Properties.Settings.Default.PrograCBADocentesConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClassesDocentesBDDataContext(string connection) : 
+		public DataClassesDocentesCBA2DataContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClassesDocentesBDDataContext(System.Data.IDbConnection connection) : 
+		public DataClassesDocentesCBA2DataContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClassesDocentesBDDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public DataClassesDocentesCBA2DataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClassesDocentesBDDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public DataClassesDocentesCBA2DataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Aula> Aula
+		public System.Data.Linq.Table<Administrativo> Administrativo
 		{
 			get
 			{
-				return this.GetTable<Aula>();
+				return this.GetTable<Administrativo>();
 			}
 		}
 		
@@ -129,11 +123,11 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		public System.Data.Linq.Table<Beca> Beca
+		public System.Data.Linq.Table<Aula> Aula
 		{
 			get
 			{
-				return this.GetTable<Beca>();
+				return this.GetTable<Aula>();
 			}
 		}
 		
@@ -153,6 +147,14 @@ namespace wpfAppCBADoc
 			}
 		}
 		
+		public System.Data.Linq.Table<Docente> Docente
+		{
+			get
+			{
+				return this.GetTable<Docente>();
+			}
+		}
+		
 		public System.Data.Linq.Table<EstadoAula> EstadoAula
 		{
 			get
@@ -161,11 +163,11 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		public System.Data.Linq.Table<EstadoPago> EstadoPago
+		public System.Data.Linq.Table<Estudiante> Estudiante
 		{
 			get
 			{
-				return this.GetTable<EstadoPago>();
+				return this.GetTable<Estudiante>();
 			}
 		}
 		
@@ -185,14 +187,6 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		public System.Data.Linq.Table<Libro> Libro
-		{
-			get
-			{
-				return this.GetTable<Libro>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Modulo> Modulo
 		{
 			get
@@ -206,22 +200,6 @@ namespace wpfAppCBADoc
 			get
 			{
 				return this.GetTable<ModuloImpartido>();
-			}
-		}
-		
-		public System.Data.Linq.Table<NotaCurso> NotaCurso
-		{
-			get
-			{
-				return this.GetTable<NotaCurso>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Pago> Pago
-		{
-			get
-			{
-				return this.GetTable<Pago>();
 			}
 		}
 		
@@ -246,6 +224,397 @@ namespace wpfAppCBADoc
 			get
 			{
 				return this.GetTable<Sucursal>();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Administrativo")]
+	public partial class Administrativo : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdAdministrativo;
+		
+		private int _IdPersona;
+		
+		private string _Cargo;
+		
+		private EntityRef<Persona> _Persona;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdAdministrativoChanging(int value);
+    partial void OnIdAdministrativoChanged();
+    partial void OnIdPersonaChanging(int value);
+    partial void OnIdPersonaChanged();
+    partial void OnCargoChanging(string value);
+    partial void OnCargoChanged();
+    #endregion
+		
+		public Administrativo()
+		{
+			this._Persona = default(EntityRef<Persona>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdAdministrativo", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdAdministrativo
+		{
+			get
+			{
+				return this._IdAdministrativo;
+			}
+			set
+			{
+				if ((this._IdAdministrativo != value))
+				{
+					this.OnIdAdministrativoChanging(value);
+					this.SendPropertyChanging();
+					this._IdAdministrativo = value;
+					this.SendPropertyChanged("IdAdministrativo");
+					this.OnIdAdministrativoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPersona", DbType="Int NOT NULL")]
+		public int IdPersona
+		{
+			get
+			{
+				return this._IdPersona;
+			}
+			set
+			{
+				if ((this._IdPersona != value))
+				{
+					if (this._Persona.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdPersonaChanging(value);
+					this.SendPropertyChanging();
+					this._IdPersona = value;
+					this.SendPropertyChanged("IdPersona");
+					this.OnIdPersonaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cargo", DbType="NVarChar(100)")]
+		public string Cargo
+		{
+			get
+			{
+				return this._Cargo;
+			}
+			set
+			{
+				if ((this._Cargo != value))
+				{
+					this.OnCargoChanging(value);
+					this.SendPropertyChanging();
+					this._Cargo = value;
+					this.SendPropertyChanged("Cargo");
+					this.OnCargoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_Administrativo", Storage="_Persona", ThisKey="IdPersona", OtherKey="IdPersona", IsForeignKey=true)]
+		public Persona Persona
+		{
+			get
+			{
+				return this._Persona.Entity;
+			}
+			set
+			{
+				Persona previousValue = this._Persona.Entity;
+				if (((previousValue != value) 
+							|| (this._Persona.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Persona.Entity = null;
+						previousValue.Administrativo.Remove(this);
+					}
+					this._Persona.Entity = value;
+					if ((value != null))
+					{
+						value.Administrativo.Add(this);
+						this._IdPersona = value.IdPersona;
+					}
+					else
+					{
+						this._IdPersona = default(int);
+					}
+					this.SendPropertyChanged("Persona");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Usuario")]
+	public partial class Usuario : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdUsuario;
+		
+		private string _Correo;
+		
+		private string _Contrasenia;
+		
+		private int _IdRol;
+		
+		private int _IdPersona;
+		
+		private EntityRef<Persona> _Persona;
+		
+		private EntityRef<Rol> _Rol;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdUsuarioChanging(int value);
+    partial void OnIdUsuarioChanged();
+    partial void OnCorreoChanging(string value);
+    partial void OnCorreoChanged();
+    partial void OnContraseniaChanging(string value);
+    partial void OnContraseniaChanged();
+    partial void OnIdRolChanging(int value);
+    partial void OnIdRolChanged();
+    partial void OnIdPersonaChanging(int value);
+    partial void OnIdPersonaChanged();
+    #endregion
+		
+		public Usuario()
+		{
+			this._Persona = default(EntityRef<Persona>);
+			this._Rol = default(EntityRef<Rol>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuario", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdUsuario
+		{
+			get
+			{
+				return this._IdUsuario;
+			}
+			set
+			{
+				if ((this._IdUsuario != value))
+				{
+					this.OnIdUsuarioChanging(value);
+					this.SendPropertyChanging();
+					this._IdUsuario = value;
+					this.SendPropertyChanged("IdUsuario");
+					this.OnIdUsuarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Correo", DbType="NVarChar(70) NOT NULL", CanBeNull=false)]
+		public string Correo
+		{
+			get
+			{
+				return this._Correo;
+			}
+			set
+			{
+				if ((this._Correo != value))
+				{
+					this.OnCorreoChanging(value);
+					this.SendPropertyChanging();
+					this._Correo = value;
+					this.SendPropertyChanged("Correo");
+					this.OnCorreoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Contrasenia", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Contrasenia
+		{
+			get
+			{
+				return this._Contrasenia;
+			}
+			set
+			{
+				if ((this._Contrasenia != value))
+				{
+					this.OnContraseniaChanging(value);
+					this.SendPropertyChanging();
+					this._Contrasenia = value;
+					this.SendPropertyChanged("Contrasenia");
+					this.OnContraseniaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRol", DbType="Int NOT NULL")]
+		public int IdRol
+		{
+			get
+			{
+				return this._IdRol;
+			}
+			set
+			{
+				if ((this._IdRol != value))
+				{
+					if (this._Rol.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdRolChanging(value);
+					this.SendPropertyChanging();
+					this._IdRol = value;
+					this.SendPropertyChanged("IdRol");
+					this.OnIdRolChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPersona", DbType="Int NOT NULL")]
+		public int IdPersona
+		{
+			get
+			{
+				return this._IdPersona;
+			}
+			set
+			{
+				if ((this._IdPersona != value))
+				{
+					if (this._Persona.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdPersonaChanging(value);
+					this.SendPropertyChanging();
+					this._IdPersona = value;
+					this.SendPropertyChanged("IdPersona");
+					this.OnIdPersonaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_Usuario", Storage="_Persona", ThisKey="IdPersona", OtherKey="IdPersona", IsForeignKey=true)]
+		public Persona Persona
+		{
+			get
+			{
+				return this._Persona.Entity;
+			}
+			set
+			{
+				Persona previousValue = this._Persona.Entity;
+				if (((previousValue != value) 
+							|| (this._Persona.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Persona.Entity = null;
+						previousValue.Usuario.Remove(this);
+					}
+					this._Persona.Entity = value;
+					if ((value != null))
+					{
+						value.Usuario.Add(this);
+						this._IdPersona = value.IdPersona;
+					}
+					else
+					{
+						this._IdPersona = default(int);
+					}
+					this.SendPropertyChanged("Persona");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rol_Usuario", Storage="_Rol", ThisKey="IdRol", OtherKey="IdRol", IsForeignKey=true)]
+		public Rol Rol
+		{
+			get
+			{
+				return this._Rol.Entity;
+			}
+			set
+			{
+				Rol previousValue = this._Rol.Entity;
+				if (((previousValue != value) 
+							|| (this._Rol.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Rol.Entity = null;
+						previousValue.Usuario.Remove(this);
+					}
+					this._Rol.Entity = value;
+					if ((value != null))
+					{
+						value.Usuario.Add(this);
+						this._IdRol = value.IdRol;
+					}
+					else
+					{
+						this._IdRol = default(int);
+					}
+					this.SendPropertyChanged("Rol");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -518,384 +887,6 @@ namespace wpfAppCBADoc
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Usuario")]
-	public partial class Usuario : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdUsuario;
-		
-		private string _Correo;
-		
-		private string _Contrasenia;
-		
-		private int _IdRol;
-		
-		private int _IdPersona;
-		
-		private EntityRef<Persona> _Persona;
-		
-		private EntityRef<Rol> _Rol;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdUsuarioChanging(int value);
-    partial void OnIdUsuarioChanged();
-    partial void OnCorreoChanging(string value);
-    partial void OnCorreoChanged();
-    partial void OnContraseniaChanging(string value);
-    partial void OnContraseniaChanged();
-    partial void OnIdRolChanging(int value);
-    partial void OnIdRolChanged();
-    partial void OnIdPersonaChanging(int value);
-    partial void OnIdPersonaChanged();
-    #endregion
-		
-		public Usuario()
-		{
-			this._Persona = default(EntityRef<Persona>);
-			this._Rol = default(EntityRef<Rol>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuario", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdUsuario
-		{
-			get
-			{
-				return this._IdUsuario;
-			}
-			set
-			{
-				if ((this._IdUsuario != value))
-				{
-					this.OnIdUsuarioChanging(value);
-					this.SendPropertyChanging();
-					this._IdUsuario = value;
-					this.SendPropertyChanged("IdUsuario");
-					this.OnIdUsuarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Correo", DbType="NVarChar(70) NOT NULL", CanBeNull=false)]
-		public string Correo
-		{
-			get
-			{
-				return this._Correo;
-			}
-			set
-			{
-				if ((this._Correo != value))
-				{
-					this.OnCorreoChanging(value);
-					this.SendPropertyChanging();
-					this._Correo = value;
-					this.SendPropertyChanged("Correo");
-					this.OnCorreoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Contrasenia", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Contrasenia
-		{
-			get
-			{
-				return this._Contrasenia;
-			}
-			set
-			{
-				if ((this._Contrasenia != value))
-				{
-					this.OnContraseniaChanging(value);
-					this.SendPropertyChanging();
-					this._Contrasenia = value;
-					this.SendPropertyChanged("Contrasenia");
-					this.OnContraseniaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRol", DbType="Int NOT NULL")]
-		public int IdRol
-		{
-			get
-			{
-				return this._IdRol;
-			}
-			set
-			{
-				if ((this._IdRol != value))
-				{
-					if (this._Rol.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdRolChanging(value);
-					this.SendPropertyChanging();
-					this._IdRol = value;
-					this.SendPropertyChanged("IdRol");
-					this.OnIdRolChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPersona", DbType="Int NOT NULL")]
-		public int IdPersona
-		{
-			get
-			{
-				return this._IdPersona;
-			}
-			set
-			{
-				if ((this._IdPersona != value))
-				{
-					if (this._Persona.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdPersonaChanging(value);
-					this.SendPropertyChanging();
-					this._IdPersona = value;
-					this.SendPropertyChanged("IdPersona");
-					this.OnIdPersonaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_Usuario", Storage="_Persona", ThisKey="IdPersona", OtherKey="IdPersona", IsForeignKey=true)]
-		public Persona Persona
-		{
-			get
-			{
-				return this._Persona.Entity;
-			}
-			set
-			{
-				Persona previousValue = this._Persona.Entity;
-				if (((previousValue != value) 
-							|| (this._Persona.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Persona.Entity = null;
-						previousValue.Usuario.Remove(this);
-					}
-					this._Persona.Entity = value;
-					if ((value != null))
-					{
-						value.Usuario.Add(this);
-						this._IdPersona = value.IdPersona;
-					}
-					else
-					{
-						this._IdPersona = default(int);
-					}
-					this.SendPropertyChanged("Persona");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rol_Usuario", Storage="_Rol", ThisKey="IdRol", OtherKey="IdRol", IsForeignKey=true)]
-		public Rol Rol
-		{
-			get
-			{
-				return this._Rol.Entity;
-			}
-			set
-			{
-				Rol previousValue = this._Rol.Entity;
-				if (((previousValue != value) 
-							|| (this._Rol.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Rol.Entity = null;
-						previousValue.Usuario.Remove(this);
-					}
-					this._Rol.Entity = value;
-					if ((value != null))
-					{
-						value.Usuario.Add(this);
-						this._IdRol = value.IdRol;
-					}
-					else
-					{
-						this._IdRol = default(int);
-					}
-					this.SendPropertyChanged("Rol");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Beca")]
-	public partial class Beca : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdBeca;
-		
-		private string _Nombre;
-		
-		private decimal _Descuento;
-		
-		private EntitySet<Persona> _Persona;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdBecaChanging(int value);
-    partial void OnIdBecaChanged();
-    partial void OnNombreChanging(string value);
-    partial void OnNombreChanged();
-    partial void OnDescuentoChanging(decimal value);
-    partial void OnDescuentoChanged();
-    #endregion
-		
-		public Beca()
-		{
-			this._Persona = new EntitySet<Persona>(new Action<Persona>(this.attach_Persona), new Action<Persona>(this.detach_Persona));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdBeca", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdBeca
-		{
-			get
-			{
-				return this._IdBeca;
-			}
-			set
-			{
-				if ((this._IdBeca != value))
-				{
-					this.OnIdBecaChanging(value);
-					this.SendPropertyChanging();
-					this._IdBeca = value;
-					this.SendPropertyChanged("IdBeca");
-					this.OnIdBecaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(30) NOT NULL", CanBeNull=false)]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this.OnNombreChanging(value);
-					this.SendPropertyChanging();
-					this._Nombre = value;
-					this.SendPropertyChanged("Nombre");
-					this.OnNombreChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Descuento", DbType="Decimal(8,2) NOT NULL")]
-		public decimal Descuento
-		{
-			get
-			{
-				return this._Descuento;
-			}
-			set
-			{
-				if ((this._Descuento != value))
-				{
-					this.OnDescuentoChanging(value);
-					this.SendPropertyChanging();
-					this._Descuento = value;
-					this.SendPropertyChanged("Descuento");
-					this.OnDescuentoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Beca_Persona", Storage="_Persona", ThisKey="IdBeca", OtherKey="IdBeca")]
-		public EntitySet<Persona> Persona
-		{
-			get
-			{
-				return this._Persona;
-			}
-			set
-			{
-				this._Persona.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Persona(Persona entity)
-		{
-			this.SendPropertyChanging();
-			entity.Beca = this;
-		}
-		
-		private void detach_Persona(Persona entity)
-		{
-			this.SendPropertyChanging();
-			entity.Beca = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Bimestre")]
 	public partial class Bimestre : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1068,8 +1059,6 @@ namespace wpfAppCBADoc
 		
 		private string _Nombre;
 		
-		private EntitySet<Libro> _Libro;
-		
 		private EntitySet<Modulo> _Modulo;
 		
     #region Definiciones de métodos de extensibilidad
@@ -1084,7 +1073,6 @@ namespace wpfAppCBADoc
 		
 		public Curso()
 		{
-			this._Libro = new EntitySet<Libro>(new Action<Libro>(this.attach_Libro), new Action<Libro>(this.detach_Libro));
 			this._Modulo = new EntitySet<Modulo>(new Action<Modulo>(this.attach_Modulo), new Action<Modulo>(this.detach_Modulo));
 			OnCreated();
 		}
@@ -1129,19 +1117,6 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Curso_Libro", Storage="_Libro", ThisKey="IdCurso", OtherKey="IdCurso")]
-		public EntitySet<Libro> Libro
-		{
-			get
-			{
-				return this._Libro;
-			}
-			set
-			{
-				this._Libro.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Curso_Modulo", Storage="_Modulo", ThisKey="IdCurso", OtherKey="IdCurso")]
 		public EntitySet<Modulo> Modulo
 		{
@@ -1175,18 +1150,6 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		private void attach_Libro(Libro entity)
-		{
-			this.SendPropertyChanging();
-			entity.Curso = this;
-		}
-		
-		private void detach_Libro(Libro entity)
-		{
-			this.SendPropertyChanging();
-			entity.Curso = null;
-		}
-		
 		private void attach_Modulo(Modulo entity)
 		{
 			this.SendPropertyChanging();
@@ -1197,6 +1160,185 @@ namespace wpfAppCBADoc
 		{
 			this.SendPropertyChanging();
 			entity.Curso = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Docente")]
+	public partial class Docente : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdDocente;
+		
+		private int _IdPersona;
+		
+		private string _Especialidad;
+		
+		private EntitySet<ModuloImpartido> _ModuloImpartido;
+		
+		private EntityRef<Persona> _Persona;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdDocenteChanging(int value);
+    partial void OnIdDocenteChanged();
+    partial void OnIdPersonaChanging(int value);
+    partial void OnIdPersonaChanged();
+    partial void OnEspecialidadChanging(string value);
+    partial void OnEspecialidadChanged();
+    #endregion
+		
+		public Docente()
+		{
+			this._ModuloImpartido = new EntitySet<ModuloImpartido>(new Action<ModuloImpartido>(this.attach_ModuloImpartido), new Action<ModuloImpartido>(this.detach_ModuloImpartido));
+			this._Persona = default(EntityRef<Persona>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdDocente", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdDocente
+		{
+			get
+			{
+				return this._IdDocente;
+			}
+			set
+			{
+				if ((this._IdDocente != value))
+				{
+					this.OnIdDocenteChanging(value);
+					this.SendPropertyChanging();
+					this._IdDocente = value;
+					this.SendPropertyChanged("IdDocente");
+					this.OnIdDocenteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPersona", DbType="Int NOT NULL")]
+		public int IdPersona
+		{
+			get
+			{
+				return this._IdPersona;
+			}
+			set
+			{
+				if ((this._IdPersona != value))
+				{
+					if (this._Persona.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdPersonaChanging(value);
+					this.SendPropertyChanging();
+					this._IdPersona = value;
+					this.SendPropertyChanged("IdPersona");
+					this.OnIdPersonaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Especialidad", DbType="NVarChar(100)")]
+		public string Especialidad
+		{
+			get
+			{
+				return this._Especialidad;
+			}
+			set
+			{
+				if ((this._Especialidad != value))
+				{
+					this.OnEspecialidadChanging(value);
+					this.SendPropertyChanging();
+					this._Especialidad = value;
+					this.SendPropertyChanged("Especialidad");
+					this.OnEspecialidadChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Docente_ModuloImpartido", Storage="_ModuloImpartido", ThisKey="IdDocente", OtherKey="IdDocente")]
+		public EntitySet<ModuloImpartido> ModuloImpartido
+		{
+			get
+			{
+				return this._ModuloImpartido;
+			}
+			set
+			{
+				this._ModuloImpartido.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_Docente", Storage="_Persona", ThisKey="IdPersona", OtherKey="IdPersona", IsForeignKey=true)]
+		public Persona Persona
+		{
+			get
+			{
+				return this._Persona.Entity;
+			}
+			set
+			{
+				Persona previousValue = this._Persona.Entity;
+				if (((previousValue != value) 
+							|| (this._Persona.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Persona.Entity = null;
+						previousValue.Docente.Remove(this);
+					}
+					this._Persona.Entity = value;
+					if ((value != null))
+					{
+						value.Docente.Add(this);
+						this._IdPersona = value.IdPersona;
+					}
+					else
+					{
+						this._IdPersona = default(int);
+					}
+					this.SendPropertyChanged("Persona");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_ModuloImpartido(ModuloImpartido entity)
+		{
+			this.SendPropertyChanging();
+			entity.Docente = this;
+		}
+		
+		private void detach_ModuloImpartido(ModuloImpartido entity)
+		{
+			this.SendPropertyChanging();
+			entity.Docente = null;
 		}
 	}
 	
@@ -1314,84 +1456,125 @@ namespace wpfAppCBADoc
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EstadoPago")]
-	public partial class EstadoPago : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Estudiante")]
+	public partial class Estudiante : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _IdEstadoP;
+		private int _IdEstudiante;
 		
-		private string _Estado;
+		private int _IdPersona;
 		
-		private EntitySet<Pago> _Pago;
+		private EntitySet<EstudianteInscrito> _EstudianteInscrito;
+		
+		private EntityRef<Persona> _Persona;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnIdEstadoPChanging(int value);
-    partial void OnIdEstadoPChanged();
-    partial void OnEstadoChanging(string value);
-    partial void OnEstadoChanged();
+    partial void OnIdEstudianteChanging(int value);
+    partial void OnIdEstudianteChanged();
+    partial void OnIdPersonaChanging(int value);
+    partial void OnIdPersonaChanged();
     #endregion
 		
-		public EstadoPago()
+		public Estudiante()
 		{
-			this._Pago = new EntitySet<Pago>(new Action<Pago>(this.attach_Pago), new Action<Pago>(this.detach_Pago));
+			this._EstudianteInscrito = new EntitySet<EstudianteInscrito>(new Action<EstudianteInscrito>(this.attach_EstudianteInscrito), new Action<EstudianteInscrito>(this.detach_EstudianteInscrito));
+			this._Persona = default(EntityRef<Persona>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEstadoP", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdEstadoP
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEstudiante", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdEstudiante
 		{
 			get
 			{
-				return this._IdEstadoP;
+				return this._IdEstudiante;
 			}
 			set
 			{
-				if ((this._IdEstadoP != value))
+				if ((this._IdEstudiante != value))
 				{
-					this.OnIdEstadoPChanging(value);
+					this.OnIdEstudianteChanging(value);
 					this.SendPropertyChanging();
-					this._IdEstadoP = value;
-					this.SendPropertyChanged("IdEstadoP");
-					this.OnIdEstadoPChanged();
+					this._IdEstudiante = value;
+					this.SendPropertyChanged("IdEstudiante");
+					this.OnIdEstudianteChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Estado", DbType="NVarChar(50)")]
-		public string Estado
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPersona", DbType="Int NOT NULL")]
+		public int IdPersona
 		{
 			get
 			{
-				return this._Estado;
+				return this._IdPersona;
 			}
 			set
 			{
-				if ((this._Estado != value))
+				if ((this._IdPersona != value))
 				{
-					this.OnEstadoChanging(value);
+					if (this._Persona.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdPersonaChanging(value);
 					this.SendPropertyChanging();
-					this._Estado = value;
-					this.SendPropertyChanged("Estado");
-					this.OnEstadoChanged();
+					this._IdPersona = value;
+					this.SendPropertyChanged("IdPersona");
+					this.OnIdPersonaChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstadoPago_Pago", Storage="_Pago", ThisKey="IdEstadoP", OtherKey="IdEstadoP")]
-		public EntitySet<Pago> Pago
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Estudiante_EstudianteInscrito", Storage="_EstudianteInscrito", ThisKey="IdEstudiante", OtherKey="IdEstudiante")]
+		public EntitySet<EstudianteInscrito> EstudianteInscrito
 		{
 			get
 			{
-				return this._Pago;
+				return this._EstudianteInscrito;
 			}
 			set
 			{
-				this._Pago.Assign(value);
+				this._EstudianteInscrito.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_Estudiante", Storage="_Persona", ThisKey="IdPersona", OtherKey="IdPersona", IsForeignKey=true)]
+		public Persona Persona
+		{
+			get
+			{
+				return this._Persona.Entity;
+			}
+			set
+			{
+				Persona previousValue = this._Persona.Entity;
+				if (((previousValue != value) 
+							|| (this._Persona.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Persona.Entity = null;
+						previousValue.Estudiante.Remove(this);
+					}
+					this._Persona.Entity = value;
+					if ((value != null))
+					{
+						value.Estudiante.Add(this);
+						this._IdPersona = value.IdPersona;
+					}
+					else
+					{
+						this._IdPersona = default(int);
+					}
+					this.SendPropertyChanged("Persona");
+				}
 			}
 		}
 		
@@ -1415,16 +1598,16 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		private void attach_Pago(Pago entity)
+		private void attach_EstudianteInscrito(EstudianteInscrito entity)
 		{
 			this.SendPropertyChanging();
-			entity.EstadoPago = this;
+			entity.Estudiante = this;
 		}
 		
-		private void detach_Pago(Pago entity)
+		private void detach_EstudianteInscrito(EstudianteInscrito entity)
 		{
 			this.SendPropertyChanging();
-			entity.EstadoPago = null;
+			entity.Estudiante = null;
 		}
 	}
 	
@@ -1438,17 +1621,13 @@ namespace wpfAppCBADoc
 		
 		private int _IdModuloImp;
 		
-		private int _IdPersona;
+		private int _IdEstudiante;
 		
 		private System.DateTime _Fecha_Inscripcion;
 		
-		private EntitySet<NotaCurso> _NotaCurso;
-		
-		private EntitySet<Pago> _Pago;
+		private EntityRef<Estudiante> _Estudiante;
 		
 		private EntityRef<ModuloImpartido> _ModuloImpartido;
-		
-		private EntityRef<Persona> _Persona;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -1458,18 +1637,16 @@ namespace wpfAppCBADoc
     partial void OnIdEstInscChanged();
     partial void OnIdModuloImpChanging(int value);
     partial void OnIdModuloImpChanged();
-    partial void OnIdPersonaChanging(int value);
-    partial void OnIdPersonaChanged();
+    partial void OnIdEstudianteChanging(int value);
+    partial void OnIdEstudianteChanged();
     partial void OnFecha_InscripcionChanging(System.DateTime value);
     partial void OnFecha_InscripcionChanged();
     #endregion
 		
 		public EstudianteInscrito()
 		{
-			this._NotaCurso = new EntitySet<NotaCurso>(new Action<NotaCurso>(this.attach_NotaCurso), new Action<NotaCurso>(this.detach_NotaCurso));
-			this._Pago = new EntitySet<Pago>(new Action<Pago>(this.attach_Pago), new Action<Pago>(this.detach_Pago));
+			this._Estudiante = default(EntityRef<Estudiante>);
 			this._ModuloImpartido = default(EntityRef<ModuloImpartido>);
-			this._Persona = default(EntityRef<Persona>);
 			OnCreated();
 		}
 		
@@ -1517,26 +1694,26 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPersona", DbType="Int NOT NULL")]
-		public int IdPersona
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEstudiante", DbType="Int NOT NULL")]
+		public int IdEstudiante
 		{
 			get
 			{
-				return this._IdPersona;
+				return this._IdEstudiante;
 			}
 			set
 			{
-				if ((this._IdPersona != value))
+				if ((this._IdEstudiante != value))
 				{
-					if (this._Persona.HasLoadedOrAssignedValue)
+					if (this._Estudiante.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnIdPersonaChanging(value);
+					this.OnIdEstudianteChanging(value);
 					this.SendPropertyChanging();
-					this._IdPersona = value;
-					this.SendPropertyChanged("IdPersona");
-					this.OnIdPersonaChanged();
+					this._IdEstudiante = value;
+					this.SendPropertyChanged("IdEstudiante");
+					this.OnIdEstudianteChanged();
 				}
 			}
 		}
@@ -1561,29 +1738,37 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstudianteInscrito_NotaCurso", Storage="_NotaCurso", ThisKey="IdEstInsc", OtherKey="IdEstInsc")]
-		public EntitySet<NotaCurso> NotaCurso
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Estudiante_EstudianteInscrito", Storage="_Estudiante", ThisKey="IdEstudiante", OtherKey="IdEstudiante", IsForeignKey=true)]
+		public Estudiante Estudiante
 		{
 			get
 			{
-				return this._NotaCurso;
+				return this._Estudiante.Entity;
 			}
 			set
 			{
-				this._NotaCurso.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstudianteInscrito_Pago", Storage="_Pago", ThisKey="IdEstInsc", OtherKey="IdEstInsc")]
-		public EntitySet<Pago> Pago
-		{
-			get
-			{
-				return this._Pago;
-			}
-			set
-			{
-				this._Pago.Assign(value);
+				Estudiante previousValue = this._Estudiante.Entity;
+				if (((previousValue != value) 
+							|| (this._Estudiante.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Estudiante.Entity = null;
+						previousValue.EstudianteInscrito.Remove(this);
+					}
+					this._Estudiante.Entity = value;
+					if ((value != null))
+					{
+						value.EstudianteInscrito.Add(this);
+						this._IdEstudiante = value.IdEstudiante;
+					}
+					else
+					{
+						this._IdEstudiante = default(int);
+					}
+					this.SendPropertyChanged("Estudiante");
+				}
 			}
 		}
 		
@@ -1621,40 +1806,6 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_EstudianteInscrito", Storage="_Persona", ThisKey="IdPersona", OtherKey="IdPersona", IsForeignKey=true)]
-		public Persona Persona
-		{
-			get
-			{
-				return this._Persona.Entity;
-			}
-			set
-			{
-				Persona previousValue = this._Persona.Entity;
-				if (((previousValue != value) 
-							|| (this._Persona.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Persona.Entity = null;
-						previousValue.EstudianteInscrito.Remove(this);
-					}
-					this._Persona.Entity = value;
-					if ((value != null))
-					{
-						value.EstudianteInscrito.Add(this);
-						this._IdPersona = value.IdPersona;
-					}
-					else
-					{
-						this._IdPersona = default(int);
-					}
-					this.SendPropertyChanged("Persona");
-				}
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1673,30 +1824,6 @@ namespace wpfAppCBADoc
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_NotaCurso(NotaCurso entity)
-		{
-			this.SendPropertyChanging();
-			entity.EstudianteInscrito = this;
-		}
-		
-		private void detach_NotaCurso(NotaCurso entity)
-		{
-			this.SendPropertyChanging();
-			entity.EstudianteInscrito = null;
-		}
-		
-		private void attach_Pago(Pago entity)
-		{
-			this.SendPropertyChanging();
-			entity.EstudianteInscrito = this;
-		}
-		
-		private void detach_Pago(Pago entity)
-		{
-			this.SendPropertyChanging();
-			entity.EstudianteInscrito = null;
 		}
 	}
 	
@@ -1835,229 +1962,6 @@ namespace wpfAppCBADoc
 		{
 			this.SendPropertyChanging();
 			entity.Horario = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Libro")]
-	public partial class Libro : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdLibro;
-		
-		private string _ISBN;
-		
-		private string _Nombre;
-		
-		private string _Descripcion;
-		
-		private decimal _Costo;
-		
-		private System.Nullable<int> _IdCurso;
-		
-		private EntityRef<Curso> _Curso;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdLibroChanging(int value);
-    partial void OnIdLibroChanged();
-    partial void OnISBNChanging(string value);
-    partial void OnISBNChanged();
-    partial void OnNombreChanging(string value);
-    partial void OnNombreChanged();
-    partial void OnDescripcionChanging(string value);
-    partial void OnDescripcionChanged();
-    partial void OnCostoChanging(decimal value);
-    partial void OnCostoChanged();
-    partial void OnIdCursoChanging(System.Nullable<int> value);
-    partial void OnIdCursoChanged();
-    #endregion
-		
-		public Libro()
-		{
-			this._Curso = default(EntityRef<Curso>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdLibro", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdLibro
-		{
-			get
-			{
-				return this._IdLibro;
-			}
-			set
-			{
-				if ((this._IdLibro != value))
-				{
-					this.OnIdLibroChanging(value);
-					this.SendPropertyChanging();
-					this._IdLibro = value;
-					this.SendPropertyChanged("IdLibro");
-					this.OnIdLibroChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ISBN", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string ISBN
-		{
-			get
-			{
-				return this._ISBN;
-			}
-			set
-			{
-				if ((this._ISBN != value))
-				{
-					this.OnISBNChanging(value);
-					this.SendPropertyChanging();
-					this._ISBN = value;
-					this.SendPropertyChanged("ISBN");
-					this.OnISBNChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this.OnNombreChanging(value);
-					this.SendPropertyChanging();
-					this._Nombre = value;
-					this.SendPropertyChanged("Nombre");
-					this.OnNombreChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Descripcion", DbType="Text NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
-		public string Descripcion
-		{
-			get
-			{
-				return this._Descripcion;
-			}
-			set
-			{
-				if ((this._Descripcion != value))
-				{
-					this.OnDescripcionChanging(value);
-					this.SendPropertyChanging();
-					this._Descripcion = value;
-					this.SendPropertyChanged("Descripcion");
-					this.OnDescripcionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Costo", DbType="Decimal(8,2) NOT NULL")]
-		public decimal Costo
-		{
-			get
-			{
-				return this._Costo;
-			}
-			set
-			{
-				if ((this._Costo != value))
-				{
-					this.OnCostoChanging(value);
-					this.SendPropertyChanging();
-					this._Costo = value;
-					this.SendPropertyChanged("Costo");
-					this.OnCostoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdCurso", DbType="Int")]
-		public System.Nullable<int> IdCurso
-		{
-			get
-			{
-				return this._IdCurso;
-			}
-			set
-			{
-				if ((this._IdCurso != value))
-				{
-					if (this._Curso.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdCursoChanging(value);
-					this.SendPropertyChanging();
-					this._IdCurso = value;
-					this.SendPropertyChanged("IdCurso");
-					this.OnIdCursoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Curso_Libro", Storage="_Curso", ThisKey="IdCurso", OtherKey="IdCurso", IsForeignKey=true)]
-		public Curso Curso
-		{
-			get
-			{
-				return this._Curso.Entity;
-			}
-			set
-			{
-				Curso previousValue = this._Curso.Entity;
-				if (((previousValue != value) 
-							|| (this._Curso.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Curso.Entity = null;
-						previousValue.Libro.Remove(this);
-					}
-					this._Curso.Entity = value;
-					if ((value != null))
-					{
-						value.Libro.Add(this);
-						this._IdCurso = value.IdCurso;
-					}
-					else
-					{
-						this._IdCurso = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Curso");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	
@@ -2252,7 +2156,7 @@ namespace wpfAppCBADoc
 		
 		private int _IdAula;
 		
-		private int _IdPersona;
+		private int _IdDocente;
 		
 		private int _IdHorario;
 		
@@ -2264,11 +2168,11 @@ namespace wpfAppCBADoc
 		
 		private EntityRef<Bimestre> _Bimestre;
 		
+		private EntityRef<Docente> _Docente;
+		
 		private EntityRef<Horario> _Horario;
 		
 		private EntityRef<Modulo> _Modulo;
-		
-		private EntityRef<Persona> _Persona;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -2280,8 +2184,8 @@ namespace wpfAppCBADoc
     partial void OnIdModuloChanged();
     partial void OnIdAulaChanging(int value);
     partial void OnIdAulaChanged();
-    partial void OnIdPersonaChanging(int value);
-    partial void OnIdPersonaChanged();
+    partial void OnIdDocenteChanging(int value);
+    partial void OnIdDocenteChanged();
     partial void OnIdHorarioChanging(int value);
     partial void OnIdHorarioChanged();
     partial void OnIdBimestreChanging(int value);
@@ -2293,9 +2197,9 @@ namespace wpfAppCBADoc
 			this._EstudianteInscrito = new EntitySet<EstudianteInscrito>(new Action<EstudianteInscrito>(this.attach_EstudianteInscrito), new Action<EstudianteInscrito>(this.detach_EstudianteInscrito));
 			this._Aula = default(EntityRef<Aula>);
 			this._Bimestre = default(EntityRef<Bimestre>);
+			this._Docente = default(EntityRef<Docente>);
 			this._Horario = default(EntityRef<Horario>);
 			this._Modulo = default(EntityRef<Modulo>);
-			this._Persona = default(EntityRef<Persona>);
 			OnCreated();
 		}
 		
@@ -2367,26 +2271,26 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPersona", DbType="Int NOT NULL")]
-		public int IdPersona
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdDocente", DbType="Int NOT NULL")]
+		public int IdDocente
 		{
 			get
 			{
-				return this._IdPersona;
+				return this._IdDocente;
 			}
 			set
 			{
-				if ((this._IdPersona != value))
+				if ((this._IdDocente != value))
 				{
-					if (this._Persona.HasLoadedOrAssignedValue)
+					if (this._Docente.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnIdPersonaChanging(value);
+					this.OnIdDocenteChanging(value);
 					this.SendPropertyChanging();
-					this._IdPersona = value;
-					this.SendPropertyChanged("IdPersona");
-					this.OnIdPersonaChanged();
+					this._IdDocente = value;
+					this.SendPropertyChanged("IdDocente");
+					this.OnIdDocenteChanged();
 				}
 			}
 		}
@@ -2520,6 +2424,40 @@ namespace wpfAppCBADoc
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Docente_ModuloImpartido", Storage="_Docente", ThisKey="IdDocente", OtherKey="IdDocente", IsForeignKey=true)]
+		public Docente Docente
+		{
+			get
+			{
+				return this._Docente.Entity;
+			}
+			set
+			{
+				Docente previousValue = this._Docente.Entity;
+				if (((previousValue != value) 
+							|| (this._Docente.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Docente.Entity = null;
+						previousValue.ModuloImpartido.Remove(this);
+					}
+					this._Docente.Entity = value;
+					if ((value != null))
+					{
+						value.ModuloImpartido.Add(this);
+						this._IdDocente = value.IdDocente;
+					}
+					else
+					{
+						this._IdDocente = default(int);
+					}
+					this.SendPropertyChanged("Docente");
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Horario_ModuloImpartido", Storage="_Horario", ThisKey="IdHorario", OtherKey="IdHorario", IsForeignKey=true)]
 		public Horario Horario
 		{
@@ -2588,40 +2526,6 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_ModuloImpartido", Storage="_Persona", ThisKey="IdPersona", OtherKey="IdPersona", IsForeignKey=true)]
-		public Persona Persona
-		{
-			get
-			{
-				return this._Persona.Entity;
-			}
-			set
-			{
-				Persona previousValue = this._Persona.Entity;
-				if (((previousValue != value) 
-							|| (this._Persona.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Persona.Entity = null;
-						previousValue.ModuloImpartido.Remove(this);
-					}
-					this._Persona.Entity = value;
-					if ((value != null))
-					{
-						value.ModuloImpartido.Add(this);
-						this._IdPersona = value.IdPersona;
-					}
-					else
-					{
-						this._IdPersona = default(int);
-					}
-					this.SendPropertyChanged("Persona");
-				}
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2655,493 +2559,6 @@ namespace wpfAppCBADoc
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NotaCurso")]
-	public partial class NotaCurso : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdNota;
-		
-		private decimal _NotaListening;
-		
-		private decimal _NotaWritting;
-		
-		private decimal _NotaReading;
-		
-		private decimal _NotaSpeaking;
-		
-		private System.Nullable<int> _IdEstInsc;
-		
-		private EntityRef<EstudianteInscrito> _EstudianteInscrito;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdNotaChanging(int value);
-    partial void OnIdNotaChanged();
-    partial void OnNotaListeningChanging(decimal value);
-    partial void OnNotaListeningChanged();
-    partial void OnNotaWrittingChanging(decimal value);
-    partial void OnNotaWrittingChanged();
-    partial void OnNotaReadingChanging(decimal value);
-    partial void OnNotaReadingChanged();
-    partial void OnNotaSpeakingChanging(decimal value);
-    partial void OnNotaSpeakingChanged();
-    partial void OnIdEstInscChanging(System.Nullable<int> value);
-    partial void OnIdEstInscChanged();
-    #endregion
-		
-		public NotaCurso()
-		{
-			this._EstudianteInscrito = default(EntityRef<EstudianteInscrito>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdNota", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdNota
-		{
-			get
-			{
-				return this._IdNota;
-			}
-			set
-			{
-				if ((this._IdNota != value))
-				{
-					this.OnIdNotaChanging(value);
-					this.SendPropertyChanging();
-					this._IdNota = value;
-					this.SendPropertyChanged("IdNota");
-					this.OnIdNotaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NotaListening", DbType="Decimal(3,2) NOT NULL")]
-		public decimal NotaListening
-		{
-			get
-			{
-				return this._NotaListening;
-			}
-			set
-			{
-				if ((this._NotaListening != value))
-				{
-					this.OnNotaListeningChanging(value);
-					this.SendPropertyChanging();
-					this._NotaListening = value;
-					this.SendPropertyChanged("NotaListening");
-					this.OnNotaListeningChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NotaWritting", DbType="Decimal(3,2) NOT NULL")]
-		public decimal NotaWritting
-		{
-			get
-			{
-				return this._NotaWritting;
-			}
-			set
-			{
-				if ((this._NotaWritting != value))
-				{
-					this.OnNotaWrittingChanging(value);
-					this.SendPropertyChanging();
-					this._NotaWritting = value;
-					this.SendPropertyChanged("NotaWritting");
-					this.OnNotaWrittingChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NotaReading", DbType="Decimal(3,2) NOT NULL")]
-		public decimal NotaReading
-		{
-			get
-			{
-				return this._NotaReading;
-			}
-			set
-			{
-				if ((this._NotaReading != value))
-				{
-					this.OnNotaReadingChanging(value);
-					this.SendPropertyChanging();
-					this._NotaReading = value;
-					this.SendPropertyChanged("NotaReading");
-					this.OnNotaReadingChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NotaSpeaking", DbType="Decimal(3,2) NOT NULL")]
-		public decimal NotaSpeaking
-		{
-			get
-			{
-				return this._NotaSpeaking;
-			}
-			set
-			{
-				if ((this._NotaSpeaking != value))
-				{
-					this.OnNotaSpeakingChanging(value);
-					this.SendPropertyChanging();
-					this._NotaSpeaking = value;
-					this.SendPropertyChanged("NotaSpeaking");
-					this.OnNotaSpeakingChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEstInsc", DbType="Int")]
-		public System.Nullable<int> IdEstInsc
-		{
-			get
-			{
-				return this._IdEstInsc;
-			}
-			set
-			{
-				if ((this._IdEstInsc != value))
-				{
-					if (this._EstudianteInscrito.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdEstInscChanging(value);
-					this.SendPropertyChanging();
-					this._IdEstInsc = value;
-					this.SendPropertyChanged("IdEstInsc");
-					this.OnIdEstInscChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstudianteInscrito_NotaCurso", Storage="_EstudianteInscrito", ThisKey="IdEstInsc", OtherKey="IdEstInsc", IsForeignKey=true)]
-		public EstudianteInscrito EstudianteInscrito
-		{
-			get
-			{
-				return this._EstudianteInscrito.Entity;
-			}
-			set
-			{
-				EstudianteInscrito previousValue = this._EstudianteInscrito.Entity;
-				if (((previousValue != value) 
-							|| (this._EstudianteInscrito.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._EstudianteInscrito.Entity = null;
-						previousValue.NotaCurso.Remove(this);
-					}
-					this._EstudianteInscrito.Entity = value;
-					if ((value != null))
-					{
-						value.NotaCurso.Add(this);
-						this._IdEstInsc = value.IdEstInsc;
-					}
-					else
-					{
-						this._IdEstInsc = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("EstudianteInscrito");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Pago")]
-	public partial class Pago : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdPago;
-		
-		private decimal _Monto;
-		
-		private System.DateTime _FechaSugerida;
-		
-		private string _TipoPago;
-		
-		private int _IdEstadoP;
-		
-		private int _IdEstInsc;
-		
-		private EntityRef<EstadoPago> _EstadoPago;
-		
-		private EntityRef<EstudianteInscrito> _EstudianteInscrito;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdPagoChanging(int value);
-    partial void OnIdPagoChanged();
-    partial void OnMontoChanging(decimal value);
-    partial void OnMontoChanged();
-    partial void OnFechaSugeridaChanging(System.DateTime value);
-    partial void OnFechaSugeridaChanged();
-    partial void OnTipoPagoChanging(string value);
-    partial void OnTipoPagoChanged();
-    partial void OnIdEstadoPChanging(int value);
-    partial void OnIdEstadoPChanged();
-    partial void OnIdEstInscChanging(int value);
-    partial void OnIdEstInscChanged();
-    #endregion
-		
-		public Pago()
-		{
-			this._EstadoPago = default(EntityRef<EstadoPago>);
-			this._EstudianteInscrito = default(EntityRef<EstudianteInscrito>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPago", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdPago
-		{
-			get
-			{
-				return this._IdPago;
-			}
-			set
-			{
-				if ((this._IdPago != value))
-				{
-					this.OnIdPagoChanging(value);
-					this.SendPropertyChanging();
-					this._IdPago = value;
-					this.SendPropertyChanged("IdPago");
-					this.OnIdPagoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Monto", DbType="Decimal(3,2) NOT NULL")]
-		public decimal Monto
-		{
-			get
-			{
-				return this._Monto;
-			}
-			set
-			{
-				if ((this._Monto != value))
-				{
-					this.OnMontoChanging(value);
-					this.SendPropertyChanging();
-					this._Monto = value;
-					this.SendPropertyChanged("Monto");
-					this.OnMontoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaSugerida", DbType="Date NOT NULL")]
-		public System.DateTime FechaSugerida
-		{
-			get
-			{
-				return this._FechaSugerida;
-			}
-			set
-			{
-				if ((this._FechaSugerida != value))
-				{
-					this.OnFechaSugeridaChanging(value);
-					this.SendPropertyChanging();
-					this._FechaSugerida = value;
-					this.SendPropertyChanged("FechaSugerida");
-					this.OnFechaSugeridaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TipoPago", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string TipoPago
-		{
-			get
-			{
-				return this._TipoPago;
-			}
-			set
-			{
-				if ((this._TipoPago != value))
-				{
-					this.OnTipoPagoChanging(value);
-					this.SendPropertyChanging();
-					this._TipoPago = value;
-					this.SendPropertyChanged("TipoPago");
-					this.OnTipoPagoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEstadoP", DbType="Int NOT NULL")]
-		public int IdEstadoP
-		{
-			get
-			{
-				return this._IdEstadoP;
-			}
-			set
-			{
-				if ((this._IdEstadoP != value))
-				{
-					if (this._EstadoPago.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdEstadoPChanging(value);
-					this.SendPropertyChanging();
-					this._IdEstadoP = value;
-					this.SendPropertyChanged("IdEstadoP");
-					this.OnIdEstadoPChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEstInsc", DbType="Int NOT NULL")]
-		public int IdEstInsc
-		{
-			get
-			{
-				return this._IdEstInsc;
-			}
-			set
-			{
-				if ((this._IdEstInsc != value))
-				{
-					if (this._EstudianteInscrito.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdEstInscChanging(value);
-					this.SendPropertyChanging();
-					this._IdEstInsc = value;
-					this.SendPropertyChanged("IdEstInsc");
-					this.OnIdEstInscChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstadoPago_Pago", Storage="_EstadoPago", ThisKey="IdEstadoP", OtherKey="IdEstadoP", IsForeignKey=true)]
-		public EstadoPago EstadoPago
-		{
-			get
-			{
-				return this._EstadoPago.Entity;
-			}
-			set
-			{
-				EstadoPago previousValue = this._EstadoPago.Entity;
-				if (((previousValue != value) 
-							|| (this._EstadoPago.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._EstadoPago.Entity = null;
-						previousValue.Pago.Remove(this);
-					}
-					this._EstadoPago.Entity = value;
-					if ((value != null))
-					{
-						value.Pago.Add(this);
-						this._IdEstadoP = value.IdEstadoP;
-					}
-					else
-					{
-						this._IdEstadoP = default(int);
-					}
-					this.SendPropertyChanged("EstadoPago");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstudianteInscrito_Pago", Storage="_EstudianteInscrito", ThisKey="IdEstInsc", OtherKey="IdEstInsc", IsForeignKey=true)]
-		public EstudianteInscrito EstudianteInscrito
-		{
-			get
-			{
-				return this._EstudianteInscrito.Entity;
-			}
-			set
-			{
-				EstudianteInscrito previousValue = this._EstudianteInscrito.Entity;
-				if (((previousValue != value) 
-							|| (this._EstudianteInscrito.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._EstudianteInscrito.Entity = null;
-						previousValue.Pago.Remove(this);
-					}
-					this._EstudianteInscrito.Entity = value;
-					if ((value != null))
-					{
-						value.Pago.Add(this);
-						this._IdEstInsc = value.IdEstInsc;
-					}
-					else
-					{
-						this._IdEstInsc = default(int);
-					}
-					this.SendPropertyChanged("EstudianteInscrito");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Persona")]
 	public partial class Persona : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3160,15 +2577,15 @@ namespace wpfAppCBADoc
 		
 		private System.DateTime _FechaNac;
 		
-		private System.Nullable<int> _IdBeca;
+		private string _TipoPersona;
+		
+		private EntitySet<Administrativo> _Administrativo;
 		
 		private EntitySet<Usuario> _Usuario;
 		
-		private EntitySet<EstudianteInscrito> _EstudianteInscrito;
+		private EntitySet<Docente> _Docente;
 		
-		private EntitySet<ModuloImpartido> _ModuloImpartido;
-		
-		private EntityRef<Beca> _Beca;
+		private EntitySet<Estudiante> _Estudiante;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -3186,16 +2603,16 @@ namespace wpfAppCBADoc
     partial void OnApMatChanged();
     partial void OnFechaNacChanging(System.DateTime value);
     partial void OnFechaNacChanged();
-    partial void OnIdBecaChanging(System.Nullable<int> value);
-    partial void OnIdBecaChanged();
+    partial void OnTipoPersonaChanging(string value);
+    partial void OnTipoPersonaChanged();
     #endregion
 		
 		public Persona()
 		{
+			this._Administrativo = new EntitySet<Administrativo>(new Action<Administrativo>(this.attach_Administrativo), new Action<Administrativo>(this.detach_Administrativo));
 			this._Usuario = new EntitySet<Usuario>(new Action<Usuario>(this.attach_Usuario), new Action<Usuario>(this.detach_Usuario));
-			this._EstudianteInscrito = new EntitySet<EstudianteInscrito>(new Action<EstudianteInscrito>(this.attach_EstudianteInscrito), new Action<EstudianteInscrito>(this.detach_EstudianteInscrito));
-			this._ModuloImpartido = new EntitySet<ModuloImpartido>(new Action<ModuloImpartido>(this.attach_ModuloImpartido), new Action<ModuloImpartido>(this.detach_ModuloImpartido));
-			this._Beca = default(EntityRef<Beca>);
+			this._Docente = new EntitySet<Docente>(new Action<Docente>(this.attach_Docente), new Action<Docente>(this.detach_Docente));
+			this._Estudiante = new EntitySet<Estudiante>(new Action<Estudiante>(this.attach_Estudiante), new Action<Estudiante>(this.detach_Estudiante));
 			OnCreated();
 		}
 		
@@ -3319,27 +2736,36 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdBeca", DbType="Int")]
-		public System.Nullable<int> IdBeca
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TipoPersona", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string TipoPersona
 		{
 			get
 			{
-				return this._IdBeca;
+				return this._TipoPersona;
 			}
 			set
 			{
-				if ((this._IdBeca != value))
+				if ((this._TipoPersona != value))
 				{
-					if (this._Beca.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdBecaChanging(value);
+					this.OnTipoPersonaChanging(value);
 					this.SendPropertyChanging();
-					this._IdBeca = value;
-					this.SendPropertyChanged("IdBeca");
-					this.OnIdBecaChanged();
+					this._TipoPersona = value;
+					this.SendPropertyChanged("TipoPersona");
+					this.OnTipoPersonaChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_Administrativo", Storage="_Administrativo", ThisKey="IdPersona", OtherKey="IdPersona")]
+		public EntitySet<Administrativo> Administrativo
+		{
+			get
+			{
+				return this._Administrativo;
+			}
+			set
+			{
+				this._Administrativo.Assign(value);
 			}
 		}
 		
@@ -3356,63 +2782,29 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_EstudianteInscrito", Storage="_EstudianteInscrito", ThisKey="IdPersona", OtherKey="IdPersona")]
-		public EntitySet<EstudianteInscrito> EstudianteInscrito
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_Docente", Storage="_Docente", ThisKey="IdPersona", OtherKey="IdPersona")]
+		public EntitySet<Docente> Docente
 		{
 			get
 			{
-				return this._EstudianteInscrito;
+				return this._Docente;
 			}
 			set
 			{
-				this._EstudianteInscrito.Assign(value);
+				this._Docente.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_ModuloImpartido", Storage="_ModuloImpartido", ThisKey="IdPersona", OtherKey="IdPersona")]
-		public EntitySet<ModuloImpartido> ModuloImpartido
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_Estudiante", Storage="_Estudiante", ThisKey="IdPersona", OtherKey="IdPersona")]
+		public EntitySet<Estudiante> Estudiante
 		{
 			get
 			{
-				return this._ModuloImpartido;
+				return this._Estudiante;
 			}
 			set
 			{
-				this._ModuloImpartido.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Beca_Persona", Storage="_Beca", ThisKey="IdBeca", OtherKey="IdBeca", IsForeignKey=true)]
-		public Beca Beca
-		{
-			get
-			{
-				return this._Beca.Entity;
-			}
-			set
-			{
-				Beca previousValue = this._Beca.Entity;
-				if (((previousValue != value) 
-							|| (this._Beca.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Beca.Entity = null;
-						previousValue.Persona.Remove(this);
-					}
-					this._Beca.Entity = value;
-					if ((value != null))
-					{
-						value.Persona.Add(this);
-						this._IdBeca = value.IdBeca;
-					}
-					else
-					{
-						this._IdBeca = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Beca");
-				}
+				this._Estudiante.Assign(value);
 			}
 		}
 		
@@ -3436,6 +2828,18 @@ namespace wpfAppCBADoc
 			}
 		}
 		
+		private void attach_Administrativo(Administrativo entity)
+		{
+			this.SendPropertyChanging();
+			entity.Persona = this;
+		}
+		
+		private void detach_Administrativo(Administrativo entity)
+		{
+			this.SendPropertyChanging();
+			entity.Persona = null;
+		}
+		
 		private void attach_Usuario(Usuario entity)
 		{
 			this.SendPropertyChanging();
@@ -3448,25 +2852,25 @@ namespace wpfAppCBADoc
 			entity.Persona = null;
 		}
 		
-		private void attach_EstudianteInscrito(EstudianteInscrito entity)
+		private void attach_Docente(Docente entity)
 		{
 			this.SendPropertyChanging();
 			entity.Persona = this;
 		}
 		
-		private void detach_EstudianteInscrito(EstudianteInscrito entity)
+		private void detach_Docente(Docente entity)
 		{
 			this.SendPropertyChanging();
 			entity.Persona = null;
 		}
 		
-		private void attach_ModuloImpartido(ModuloImpartido entity)
+		private void attach_Estudiante(Estudiante entity)
 		{
 			this.SendPropertyChanging();
 			entity.Persona = this;
 		}
 		
-		private void detach_ModuloImpartido(ModuloImpartido entity)
+		private void detach_Estudiante(Estudiante entity)
 		{
 			this.SendPropertyChanging();
 			entity.Persona = null;
