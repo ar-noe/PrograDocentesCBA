@@ -47,20 +47,6 @@ namespace wpfAppCBADoc
         {
             try
             {
-                // Cargar docentes (solo aquellos con rol de Docente)
-                var docentes = (from p in dcBd.Persona
-                                join u in dcBd.Usuario on p.IdPersona equals u.IdPersona
-                                join r in dcBd.Rol on u.IdRol equals r.IdRol
-                                where r.Nombre == "Docente"
-                                select new
-                                {
-                                    IdPersona = p.IdPersona,
-                                    NombreCompleto = p.Nombres + " " + p.ApPat + " " + p.ApMat
-                                }).ToList();
-                cmbDocente.ItemsSource = docentes;
-                cmbDocente.DisplayMemberPath = "NombreCompleto";
-                cmbDocente.SelectedValuePath = "IdPersona";
-
                 // Cargar módulos
                 var modulos = (from m in dcBd.Modulo
                                join c in dcBd.Curso on m.IdCurso equals c.IdCurso
@@ -106,6 +92,41 @@ namespace wpfAppCBADoc
                 cmbBimestre.DisplayMemberPath = "Descripcion";
                 cmbBimestre.SelectedValuePath = "IdBimestre";
 
+                // Cargar horarios disponibles (solo el 0 que es placeholder)
+                var horarios = (from h in dcBd.Horario
+                                where h.IdHorario == 0
+                                select new
+                                {
+                                    IdHorario = h.IdHorario,
+                                    Descripcion = "Sin horario asignado"
+                                }).ToList();
+
+                // Si no existe el horario 0, crearlo
+                if (!horarios.Any())
+                {
+                    try
+                    {
+                        // Crear horario placeholder
+                        var horarioPlaceholder = new Horario
+                        {
+                            IdHorario = 0,
+                            HoraInicio = DateTime.Parse("00:00:00"),
+                            HoraFinal = DateTime.Parse("00:00:01")
+                        };
+
+                        // Habilitar IDENTITY_INSERT para poder insertar el valor 0
+                        dcBd.ExecuteCommand("SET IDENTITY_INSERT Horario ON");
+                        dcBd.Horario.InsertOnSubmit(horarioPlaceholder);
+                        dcBd.SubmitChanges();
+                        dcBd.ExecuteCommand("SET IDENTITY_INSERT Horario OFF");
+
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
             }
             catch (Exception ex)
             {
@@ -141,12 +162,14 @@ namespace wpfAppCBADoc
             try
             {
                 var modulosImpartidos = (from mi in dcBd.ModuloImpartido
-                                         join p in dcBd.Persona on mi.IdDocente equals p.IdPersona
+                                         join d in dcBd.Docente on mi.IdDocente equals d.IdDocente
+                                         join p in dcBd.Persona on d.IdPersona equals p.IdPersona
                                          join m in dcBd.Modulo on mi.IdModulo equals m.IdModulo
                                          join c in dcBd.Curso on m.IdCurso equals c.IdCurso
                                          join a in dcBd.Aula on mi.IdAula equals a.IdAula
                                          join s in dcBd.Sucursal on a.IdSucursal equals s.IdSucursal
                                          join b in dcBd.Bimestre on mi.IdBimestre equals b.IdBimestre
+                                         join h in dcBd.Horario on mi.IdHorario equals h.IdHorario
                                          select new
                                          {
                                              IdModuloImp = mi.IdModuloImp,
@@ -157,7 +180,9 @@ namespace wpfAppCBADoc
                                              Sucursal = s.Alias,
                                              Bimestre = b.Gestion,
                                              FechaInicio = b.FechaInicio,
-                                             Gestion = b.Gestion
+                                             Gestion = b.Gestion,
+                                             Horario = h.IdHorario == 0 ? "Sin horario" :
+                                                      $"{h.HoraInicio:HH:mm} - {h.HoraFinal:HH:mm}"
                                          }).ToList();
 
                 // Formatear después de traer los datos
@@ -170,7 +195,8 @@ namespace wpfAppCBADoc
                     m.Aula,
                     m.Sucursal,
                     Bimestre = $"{m.Bimestre} - {m.FechaInicio:MMM/yyyy}",
-                    m.Gestion
+                    m.Gestion,
+                    m.Horario
                 }).ToList();
 
                 dgModulos.ItemsSource = modulosFormateados;
@@ -192,10 +218,9 @@ namespace wpfAppCBADoc
                 var nuevoModuloImpartido = new ModuloImpartido
                 {
                     IdModulo = (int)cmbModulo.SelectedValue,
-                    IdDocente = (int)cmbDocente.SelectedValue,
                     IdAula = (int)cmbAula.SelectedValue,
                     IdBimestre = (int)cmbBimestre.SelectedValue,
-                    IdHorario = 0 // Siempre null como solicitaste
+                    IdHorario = 0 // Usar el horario placeholder
                 };
 
                 // Insertar en la base de datos
@@ -214,11 +239,6 @@ namespace wpfAppCBADoc
 
         private bool ValidarFormulario()
         {
-            if (cmbDocente.SelectedValue == null)
-            {
-                ShowMessage("Seleccione un docente", true);
-                return false;
-            }
 
             if (cmbModulo.SelectedValue == null)
             {
@@ -254,7 +274,6 @@ namespace wpfAppCBADoc
 
         private void LimpiarFormulario()
         {
-            cmbDocente.SelectedIndex = -1;
             cmbModulo.SelectedIndex = -1;
             cmbSucursal.SelectedIndex = -1;
             cmbAula.SelectedIndex = -1;
@@ -380,7 +399,8 @@ namespace wpfAppCBADoc
                 var textoBusqueda = txtBuscarModulo.Text.ToLower();
 
                 var modulosFiltrados = (from mi in dcBd.ModuloImpartido
-                                        join p in dcBd.Persona on mi.IdDocente equals p.IdPersona
+                                        join d in dcBd.Docente on mi.IdDocente equals d.IdDocente
+                                        join p in dcBd.Persona on d.IdPersona equals p.IdPersona
                                         join m in dcBd.Modulo on mi.IdModulo equals m.IdModulo
                                         join c in dcBd.Curso on m.IdCurso equals c.IdCurso
                                         join a in dcBd.Aula on mi.IdAula equals a.IdAula
@@ -440,7 +460,6 @@ namespace wpfAppCBADoc
             aula.Show();
             this.Close();
         }
-
 
         //mostrar mensajes de error u otros
         private void ShowMessage(string message, bool isError)
