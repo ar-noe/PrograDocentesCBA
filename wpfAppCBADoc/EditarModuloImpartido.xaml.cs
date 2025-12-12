@@ -1,22 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace wpfAppCBADoc
 {
-    /// <summary>
-    /// Interaction logic for EditarModuloImpartido.xaml
-    /// </summary>
     public partial class EditarModuloImpartido : Window
     {
         private DataClassesDocentesCBA2DataContext dcBd;
@@ -28,8 +17,8 @@ namespace wpfAppCBADoc
             InitializeComponent();
             this.idModuloImp = idModuloImp;
             this.dcBd = dcBd;
-            CargarDatosModulo();
             CargarComboboxes();
+            CargarDatosModulo();
         }
 
         private void CargarDatosModulo()
@@ -40,8 +29,12 @@ namespace wpfAppCBADoc
 
                 if (moduloActual != null)
                 {
+                    // Obtener información actual usando LINQ con relaciones correctas
                     var infoActual = (from mi in dcBd.ModuloImpartido
-                                      join p in dcBd.Persona on mi.IdDocente equals p.IdPersona
+                                      join d in dcBd.Docente on mi.IdDocente equals d.IdDocente into docenteJoin
+                                      from d in docenteJoin.DefaultIfEmpty() // LEFT JOIN
+                                      join p in dcBd.Persona on (d != null ? d.IdPersona : 0) equals p.IdPersona into personaJoin
+                                      from p in personaJoin.DefaultIfEmpty() // LEFT JOIN
                                       join m in dcBd.Modulo on mi.IdModulo equals m.IdModulo
                                       join c in dcBd.Curso on m.IdCurso equals c.IdCurso
                                       join a in dcBd.Aula on mi.IdAula equals a.IdAula
@@ -50,13 +43,18 @@ namespace wpfAppCBADoc
                                       where mi.IdModuloImp == idModuloImp
                                       select new
                                       {
-                                          Docente = p.Nombres + " " + p.ApPat + " " + p.ApMat,
+                                          Docente = p != null ? p.Nombres + " " + p.ApPat + " " + p.ApMat : "Por asignar",
                                           Modulo = m.Nombre,
                                           Curso = c.Nombre,
                                           Aula = a.NumeroAula,
                                           Sucursal = s.Alias,
                                           Bimestre = b.Gestion,
-                                          FechaInicio = b.FechaInicio
+                                          FechaInicio = b.FechaInicio,
+                                          IdDocente = mi.IdDocente,
+                                          IdModulo = mi.IdModulo,
+                                          IdAula = mi.IdAula,
+                                          IdBimestre = mi.IdBimestre,
+                                          IdSucursal = a.IdSucursal
                                       }).FirstOrDefault();
 
                     if (infoActual != null)
@@ -70,19 +68,22 @@ namespace wpfAppCBADoc
                                            $"Bimestre: {bimestreFormateado}";
 
                         // Establecer valores actuales en los comboboxes
-                        cmbDocenteEdit.SelectedValue = moduloActual.IdDocente;
-                        cmbModuloEdit.SelectedValue = moduloActual.IdModulo;
-                        cmbBimestreEdit.SelectedValue = moduloActual.IdBimestre;
+                        cmbModuloEdit.SelectedValue = infoActual.IdModulo;
+                        cmbBimestreEdit.SelectedValue = infoActual.IdBimestre;
 
                         // Cargar sucursal y aula actual
-                        var aulaActual = dcBd.Aula.FirstOrDefault(a => a.IdAula == moduloActual.IdAula);
-                        if (aulaActual != null)
-                        {
-                            cmbSucursalEdit.SelectedValue = aulaActual.IdSucursal;
-                            // El combobox de aulas se cargará automáticamente por el SelectionChanged
-                            CmbSucursalEdit_SelectionChanged(null, null); // Forzar carga inicial
-                            cmbAulaEdit.SelectedValue = moduloActual.IdAula;
-                        }
+                        cmbSucursalEdit.SelectedValue = infoActual.IdSucursal;
+
+                        // Forzar carga inicial de aulas
+                        CmbSucursalEdit_SelectionChanged(null, null);
+
+                        // Esperar un momento para que se carguen las aulas
+                        System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(
+                            System.Windows.Threading.DispatcherPriority.Background,
+                            new Action(() =>
+                            {
+                                cmbAulaEdit.SelectedValue = infoActual.IdAula;
+                            }));
                     }
 
                     // Verificar si hay estudiantes inscritos
@@ -116,10 +117,10 @@ namespace wpfAppCBADoc
                     cmbModuloEdit.IsEnabled = false;
                     cmbBimestreEdit.IsEnabled = false;
 
-                    // Mostrar advertencia
-                    var borderInfo = ((Grid)((GroupBox)Content).Content).Children
+                    // Mostrar advertencia en el border de información
+                    var borderInfo = ((Grid)Content).Children
                         .OfType<Border>()
-                        .FirstOrDefault(b => b.Background.ToString().Contains("LightPinkBrush"));
+                        .FirstOrDefault(b => b.Background?.ToString()?.Contains("LightPinkBrush") == true);
 
                     if (borderInfo != null)
                     {
@@ -148,21 +149,7 @@ namespace wpfAppCBADoc
         {
             try
             {
-                // Cargar docentes usando LINQ to SQL
-                var docentes = (from p in dcBd.Persona
-                                join u in dcBd.Usuario on p.IdPersona equals u.IdPersona
-                                join r in dcBd.Rol on u.IdRol equals r.IdRol
-                                where r.Nombre == "Docente"
-                                select new
-                                {
-                                    IdPersona = p.IdPersona,
-                                    NombreCompleto = p.Nombres + " " + p.ApPat + " " + p.ApMat
-                                }).ToList();
-                cmbDocenteEdit.ItemsSource = docentes;
-                cmbDocenteEdit.DisplayMemberPath = "NombreCompleto";
-                cmbDocenteEdit.SelectedValuePath = "IdPersona";
-
-                // Cargar módulos usando LINQ to SQL
+                // Cargar módulos
                 var modulos = (from m in dcBd.Modulo
                                join c in dcBd.Curso on m.IdCurso equals c.IdCurso
                                select new
@@ -175,7 +162,7 @@ namespace wpfAppCBADoc
                 cmbModuloEdit.DisplayMemberPath = "NombreModulo";
                 cmbModuloEdit.SelectedValuePath = "IdModulo";
 
-                // Cargar sucursales usando LINQ to SQL
+                // Cargar sucursales
                 var sucursales = (from s in dcBd.Sucursal
                                   select new
                                   {
@@ -186,7 +173,7 @@ namespace wpfAppCBADoc
                 cmbSucursalEdit.DisplayMemberPath = "Alias";
                 cmbSucursalEdit.SelectedValuePath = "IdSucursal";
 
-                // Cargar bimestres usando LINQ to SQL - SIN ToString en la consulta
+                // Cargar bimestres
                 var bimestres = (from b in dcBd.Bimestre
                                  select new
                                  {
@@ -223,16 +210,14 @@ namespace wpfAppCBADoc
                 {
                     int idSucursal = (int)cmbSucursalEdit.SelectedValue;
 
-                    // Cargar aulas usando LINQ to SQL con join
+                    // Cargar aulas de la sucursal seleccionada
                     var aulas = (from a in dcBd.Aula
-                                 join ea in dcBd.EstadoAula on a.IdEstadoA equals ea.IdEstadoA
                                  where a.IdSucursal == idSucursal && a.IdEstadoA == 1 // 1 = Activo
                                  select new
                                  {
                                      IdAula = a.IdAula,
                                      NumeroAula = a.NumeroAula,
-                                     Capacidad = a.Capacidad,
-                                     Estado = ea.Estado
+                                     Capacidad = a.Capacidad
                                  }).ToList();
 
                     cmbAulaEdit.ItemsSource = aulas;
@@ -240,7 +225,7 @@ namespace wpfAppCBADoc
                     cmbAulaEdit.SelectedValuePath = "IdAula";
 
                     // Si solo hay un aula disponible, seleccionarla automáticamente
-                    if (aulas.Count == 1)
+                    if (aulas.Count == 1 && cmbAulaEdit.SelectedIndex == -1)
                     {
                         cmbAulaEdit.SelectedIndex = 0;
                     }
@@ -265,10 +250,9 @@ namespace wpfAppCBADoc
                 if (!ValidarFormulario())
                     return;
 
-                // Verificar si el módulo impartido aún existe usando LINQ to SQL
-                moduloActual = (from mi in dcBd.ModuloImpartido
-                                where mi.IdModuloImp == idModuloImp
-                                select mi).FirstOrDefault();
+                // Verificar si el módulo impartido aún existe
+                moduloActual = dcBd.ModuloImpartido
+                    .FirstOrDefault(mi => mi.IdModuloImp == idModuloImp);
 
                 if (moduloActual == null)
                 {
@@ -278,12 +262,33 @@ namespace wpfAppCBADoc
                     return;
                 }
 
-                // Verificar que no haya conflictos de horario/aula usando LINQ to SQL
-                bool existeConflicto = (from mi in dcBd.ModuloImpartido
-                                        where mi.IdAula == (int)cmbAulaEdit.SelectedValue &&
-                                              mi.IdBimestre == (int)cmbBimestreEdit.SelectedValue &&
-                                              mi.IdModuloImp != idModuloImp // Excluir el actual
-                                        select mi).Any();
+                // Verificar si hay estudiantes inscritos (para validar cambios)
+                bool tieneEstudiantes = dcBd.EstudianteInscrito
+                    .Any(ei => ei.IdModuloImp == idModuloImp);
+
+                // Si hay estudiantes, no permitir cambios en módulo o bimestre
+                if (tieneEstudiantes)
+                {
+                    if (moduloActual.IdModulo != (int)cmbModuloEdit.SelectedValue)
+                    {
+                        MessageBox.Show("No se puede cambiar el módulo porque hay estudiantes inscritos",
+                                      "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    if (moduloActual.IdBimestre != (int)cmbBimestreEdit.SelectedValue)
+                    {
+                        MessageBox.Show("No se puede cambiar el bimestre porque hay estudiantes inscritos",
+                                      "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+
+                // Verificar que no haya conflictos de aula/bimestre
+                bool existeConflicto = dcBd.ModuloImpartido
+                    .Any(mi => mi.IdAula == (int)cmbAulaEdit.SelectedValue &&
+                               mi.IdBimestre == (int)cmbBimestreEdit.SelectedValue &&
+                               mi.IdModuloImp != idModuloImp);
 
                 if (existeConflicto)
                 {
@@ -292,12 +297,12 @@ namespace wpfAppCBADoc
                     return;
                 }
 
-                // Actualizar datos
-                moduloActual.IdDocente = (int)cmbDocenteEdit.SelectedValue;
+                // Actualizar datos (NOTA: no actualizamos IdDocente porque no tenemos el combo)
                 moduloActual.IdModulo = (int)cmbModuloEdit.SelectedValue;
                 moduloActual.IdAula = (int)cmbAulaEdit.SelectedValue;
                 moduloActual.IdBimestre = (int)cmbBimestreEdit.SelectedValue;
-                // IdHorario se mantiene como null
+                // IdHorario se mantiene como 0 (placeholder)
+                // IdDocente se mantiene como 0 (placeholder)
 
                 // Guardar cambios
                 dcBd.SubmitChanges();
@@ -317,14 +322,6 @@ namespace wpfAppCBADoc
 
         private bool ValidarFormulario()
         {
-            if (cmbDocenteEdit.SelectedValue == null)
-            {
-                MessageBox.Show("Seleccione un docente", "Validación",
-                              MessageBoxButton.OK, MessageBoxImage.Warning);
-                cmbDocenteEdit.Focus();
-                return false;
-            }
-
             if (cmbModuloEdit.SelectedValue == null)
             {
                 MessageBox.Show("Seleccione un módulo", "Validación",
@@ -368,7 +365,6 @@ namespace wpfAppCBADoc
 
         protected override void OnClosed(EventArgs e)
         {
-            // Asegurarse de que DialogResult tenga un valor si se cierra la ventana
             if (this.DialogResult == null)
             {
                 this.DialogResult = false;

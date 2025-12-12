@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data.SqlClient;
 
 namespace wpfAppCBADoc
 {
@@ -21,11 +22,13 @@ namespace wpfAppCBADoc
     public partial class MainModulosImp : Window
     {
         private DataClassesDocentesCBA2DataContext dcBd;
+        private string connectionString;
 
         public MainModulosImp()
         {
             InitializeComponent();
             InitializeDatabaseConnection();
+            CrearDatosPlaceholderSiNoExisten();
             LoadComboBoxData();
             LoadModulosImpartidos();
         }
@@ -34,12 +37,46 @@ namespace wpfAppCBADoc
         {
             try
             {
-                string connStr = ConfigurationManager.ConnectionStrings["wpfAppCBADoc.Properties.Settings.PrograCBADocentesConnectionString"].ConnectionString;
-                dcBd = new DataClassesDocentesCBA2DataContext(connStr);
+                connectionString = ConfigurationManager.ConnectionStrings["wpfAppCBADoc.Properties.Settings.PrograCBADocentesConnectionString"].ConnectionString;
+                dcBd = new DataClassesDocentesCBA2DataContext(connectionString);
             }
             catch (Exception ex)
             {
                 ShowMessage("Error conectando a la base de datos: " + ex.Message, true);
+            }
+        }
+
+        private void CrearDatosPlaceholderSiNoExisten()
+        {
+            try
+            {
+                // Verificar y crear placeholder para Horario
+                if (!dcBd.Horario.Any(h => h.IdHorario == 0))
+                {
+                    dcBd.ExecuteCommand("SET IDENTITY_INSERT Horario ON");
+                    dcBd.ExecuteCommand("INSERT INTO Horario (IdHorario, HoraInicio, HoraFinal) VALUES (0, '00:00:00', '00:00:01')");
+                    dcBd.ExecuteCommand("SET IDENTITY_INSERT Horario OFF");
+                }
+
+                // Verificar y crear placeholder para Persona
+                if (!dcBd.Persona.Any(p => p.IdPersona == 0))
+                {
+                    dcBd.ExecuteCommand("SET IDENTITY_INSERT Persona ON");
+                    dcBd.ExecuteCommand("INSERT INTO Persona (IdPersona, CI, Nombres, ApPat, ApMat, FechaNac, TipoPersona) VALUES (0, '0000000', 'Sin', 'Asignar', 'Profesor', '2000-01-01', 'Docente')");
+                    dcBd.ExecuteCommand("SET IDENTITY_INSERT Persona OFF");
+                }
+
+                // Verificar y crear placeholder para Docente
+                if (!dcBd.Docente.Any(d => d.IdDocente == 0))
+                {
+                    dcBd.ExecuteCommand("SET IDENTITY_INSERT Docente ON");
+                    dcBd.ExecuteCommand("INSERT INTO Docente (IdDocente, IdPersona, Especialidad) VALUES (0, 0, 'Pending')");
+                    dcBd.ExecuteCommand("SET IDENTITY_INSERT Docente OFF");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Advertencia al crear datos placeholder: " + ex.Message);
             }
         }
 
@@ -92,41 +129,6 @@ namespace wpfAppCBADoc
                 cmbBimestre.DisplayMemberPath = "Descripcion";
                 cmbBimestre.SelectedValuePath = "IdBimestre";
 
-                // Cargar horarios disponibles (solo el 0 que es placeholder)
-                var horarios = (from h in dcBd.Horario
-                                where h.IdHorario == 0
-                                select new
-                                {
-                                    IdHorario = h.IdHorario,
-                                    Descripcion = "Sin horario asignado"
-                                }).ToList();
-
-                // Si no existe el horario 0, crearlo
-                if (!horarios.Any())
-                {
-                    try
-                    {
-                        // Crear horario placeholder
-                        var horarioPlaceholder = new Horario
-                        {
-                            IdHorario = 0,
-                            HoraInicio = DateTime.Parse("00:00:00"),
-                            HoraFinal = DateTime.Parse("00:00:01")
-                        };
-
-                        // Habilitar IDENTITY_INSERT para poder insertar el valor 0
-                        dcBd.ExecuteCommand("SET IDENTITY_INSERT Horario ON");
-                        dcBd.Horario.InsertOnSubmit(horarioPlaceholder);
-                        dcBd.SubmitChanges();
-                        dcBd.ExecuteCommand("SET IDENTITY_INSERT Horario OFF");
-
-                    }
-                    catch
-                    {
-
-                    }
-                }
-
             }
             catch (Exception ex)
             {
@@ -161,45 +163,61 @@ namespace wpfAppCBADoc
         {
             try
             {
-                var modulosImpartidos = (from mi in dcBd.ModuloImpartido
-                                         join d in dcBd.Docente on mi.IdDocente equals d.IdDocente
-                                         join p in dcBd.Persona on d.IdPersona equals p.IdPersona
-                                         join m in dcBd.Modulo on mi.IdModulo equals m.IdModulo
-                                         join c in dcBd.Curso on m.IdCurso equals c.IdCurso
-                                         join a in dcBd.Aula on mi.IdAula equals a.IdAula
-                                         join s in dcBd.Sucursal on a.IdSucursal equals s.IdSucursal
-                                         join b in dcBd.Bimestre on mi.IdBimestre equals b.IdBimestre
-                                         join h in dcBd.Horario on mi.IdHorario equals h.IdHorario
-                                         select new
-                                         {
-                                             IdModuloImp = mi.IdModuloImp,
-                                             Docente = p.Nombres + " " + p.ApPat + " " + p.ApMat,
-                                             Modulo = m.Nombre,
-                                             Curso = c.Nombre,
-                                             Aula = a.NumeroAula,
-                                             Sucursal = s.Alias,
-                                             Bimestre = b.Gestion,
-                                             FechaInicio = b.FechaInicio,
-                                             Gestion = b.Gestion,
-                                             Horario = h.IdHorario == 0 ? "Sin horario" :
-                                                      $"{h.HoraInicio:HH:mm} - {h.HoraFinal:HH:mm}"
-                                         }).ToList();
+                // Usar SQL directo para evitar problemas de LINQ
+                string query = @"
+                    SELECT 
+                        mi.IdModuloImp,
+                        CASE 
+                            WHEN p.IdPersona IS NULL OR p.IdPersona = 0 THEN 'Pending'
+                            ELSE p.Nombres + ' ' + ISNULL(p.ApPat, '') + ' ' + ISNULL(p.ApMat, '') 
+                        END AS Docente,
+                        m.Nombre AS Modulo,
+                        c.Nombre AS Curso,
+                        a.NumeroAula AS Aula,
+                        s.Alias AS Sucursal,
+                        b.Gestion,
+                        b.FechaInicio,
+                        CASE 
+                            WHEN h.IdHorario = 0 THEN 'Sin horario'
+                            ELSE CONVERT(varchar(5), h.HoraInicio, 108) + ' - ' + CONVERT(varchar(5), h.HoraFinal, 108)
+                        END AS Horario
+                    FROM ModuloImpartido mi
+                    LEFT JOIN Docente d ON mi.IdDocente = d.IdDocente
+                    LEFT JOIN Persona p ON d.IdPersona = p.IdPersona
+                    LEFT JOIN Modulo m ON mi.IdModulo = m.IdModulo
+                    LEFT JOIN Curso c ON m.IdCurso = c.IdCurso
+                    LEFT JOIN Aula a ON mi.IdAula = a.IdAula
+                    LEFT JOIN Sucursal s ON a.IdSucursal = s.IdSucursal
+                    LEFT JOIN Bimestre b ON mi.IdBimestre = b.IdBimestre
+                    LEFT JOIN Horario h ON mi.IdHorario = h.IdHorario";
 
-                // Formatear después de traer los datos
-                var modulosFormateados = modulosImpartidos.Select(m => new
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    m.IdModuloImp,
-                    m.Docente,
-                    m.Modulo,
-                    m.Curso,
-                    m.Aula,
-                    m.Sucursal,
-                    Bimestre = $"{m.Bimestre} - {m.FechaInicio:MMM/yyyy}",
-                    m.Gestion,
-                    m.Horario
-                }).ToList();
-
-                dgModulos.ItemsSource = modulosFormateados;
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            var resultado = new List<object>();
+                            while (reader.Read())
+                            {
+                                resultado.Add(new
+                                {
+                                    IdModuloImp = reader["IdModuloImp"],
+                                    Docente = reader["Docente"],
+                                    Modulo = reader["Modulo"],
+                                    Curso = reader["Curso"],
+                                    Aula = reader["Aula"],
+                                    Sucursal = reader["Sucursal"],
+                                    Bimestre = $"{reader["Gestion"]} - {Convert.ToDateTime(reader["FechaInicio"]):MMM/yyyy}",
+                                    Gestion = reader["Gestion"],
+                                    Horario = reader["Horario"]
+                                });
+                            }
+                            dgModulos.ItemsSource = resultado;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -214,13 +232,20 @@ namespace wpfAppCBADoc
                 if (!ValidarFormulario())
                     return;
 
+                // Verificar que el horario 0 existe
+                if (!dcBd.Horario.Any(h => h.IdHorario == 0))
+                {
+                    CrearDatosPlaceholderSiNoExisten();
+                }
+
                 // Crear nuevo módulo impartido
                 var nuevoModuloImpartido = new ModuloImpartido
                 {
                     IdModulo = (int)cmbModulo.SelectedValue,
+                    IdDocente = 0, // Docente placeholder
                     IdAula = (int)cmbAula.SelectedValue,
                     IdBimestre = (int)cmbBimestre.SelectedValue,
-                    IdHorario = 0 // Usar el horario placeholder
+                    IdHorario = 0 // Horario placeholder
                 };
 
                 // Insertar en la base de datos
@@ -239,7 +264,6 @@ namespace wpfAppCBADoc
 
         private bool ValidarFormulario()
         {
-
             if (cmbModulo.SelectedValue == null)
             {
                 ShowMessage("Seleccione un módulo", true);
@@ -398,49 +422,63 @@ namespace wpfAppCBADoc
             {
                 var textoBusqueda = txtBuscarModulo.Text.ToLower();
 
-                var modulosFiltrados = (from mi in dcBd.ModuloImpartido
-                                        join d in dcBd.Docente on mi.IdDocente equals d.IdDocente
-                                        join p in dcBd.Persona on d.IdPersona equals p.IdPersona
-                                        join m in dcBd.Modulo on mi.IdModulo equals m.IdModulo
-                                        join c in dcBd.Curso on m.IdCurso equals c.IdCurso
-                                        join a in dcBd.Aula on mi.IdAula equals a.IdAula
-                                        join s in dcBd.Sucursal on a.IdSucursal equals s.IdSucursal
-                                        join b in dcBd.Bimestre on mi.IdBimestre equals b.IdBimestre
-                                        where p.Nombres.ToLower().Contains(textoBusqueda) ||
-                                              p.ApPat.ToLower().Contains(textoBusqueda) ||
-                                              p.ApMat.ToLower().Contains(textoBusqueda) ||
-                                              m.Nombre.ToLower().Contains(textoBusqueda) ||
-                                              c.Nombre.ToLower().Contains(textoBusqueda) ||
-                                              a.NumeroAula.ToLower().Contains(textoBusqueda) ||
-                                              s.Alias.ToLower().Contains(textoBusqueda) ||
-                                              b.Gestion.ToLower().Contains(textoBusqueda)
-                                        select new
-                                        {
-                                            IdModuloImp = mi.IdModuloImp,
-                                            Docente = p.Nombres + " " + p.ApPat + " " + p.ApMat,
-                                            Modulo = m.Nombre,
-                                            Curso = c.Nombre,
-                                            Aula = a.NumeroAula,
-                                            Sucursal = s.Alias,
-                                            Bimestre = b.Gestion,
-                                            FechaInicio = b.FechaInicio,
-                                            Gestion = b.Gestion
-                                        }).ToList();
+                string query = @"
+                    SELECT 
+                        mi.IdModuloImp,
+                        CASE 
+                            WHEN p.IdPersona IS NULL OR p.IdPersona = 0 THEN 'Pending'
+                            ELSE p.Nombres + ' ' + ISNULL(p.ApPat, '') + ' ' + ISNULL(p.ApMat, '') 
+                        END AS Docente,
+                        m.Nombre AS Modulo,
+                        c.Nombre AS Curso,
+                        a.NumeroAula AS Aula,
+                        s.Alias AS Sucursal,
+                        b.Gestion,
+                        b.FechaInicio
+                    FROM ModuloImpartido mi
+                    LEFT JOIN Docente d ON mi.IdDocente = d.IdDocente
+                    LEFT JOIN Persona p ON d.IdPersona = p.IdPersona
+                    LEFT JOIN Modulo m ON mi.IdModulo = m.IdModulo
+                    LEFT JOIN Curso c ON m.IdCurso = c.IdCurso
+                    LEFT JOIN Aula a ON mi.IdAula = a.IdAula
+                    LEFT JOIN Sucursal s ON a.IdSucursal = s.IdSucursal
+                    LEFT JOIN Bimestre b ON mi.IdBimestre = b.IdBimestre
+                    WHERE 
+                        (CASE WHEN p.IdPersona IS NULL OR p.IdPersona = 0 THEN 'Pending' ELSE p.Nombres + ' ' + ISNULL(p.ApPat, '') + ' ' + ISNULL(p.ApMat, '') END LIKE '%' + @busqueda + '%') OR
+                        m.Nombre LIKE '%' + @busqueda + '%' OR
+                        c.Nombre LIKE '%' + @busqueda + '%' OR
+                        a.NumeroAula LIKE '%' + @busqueda + '%' OR
+                        s.Alias LIKE '%' + @busqueda + '%' OR
+                        b.Gestion LIKE '%' + @busqueda + '%'";
 
-                // Formatear después de traer los datos
-                var modulosFormateados = modulosFiltrados.Select(m => new
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    m.IdModuloImp,
-                    m.Docente,
-                    m.Modulo,
-                    m.Curso,
-                    m.Aula,
-                    m.Sucursal,
-                    Bimestre = $"{m.Bimestre} - {m.FechaInicio:MMM/yyyy}",
-                    m.Gestion
-                }).ToList();
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@busqueda", textoBusqueda);
 
-                dgModulos.ItemsSource = modulosFormateados;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            var resultado = new List<object>();
+                            while (reader.Read())
+                            {
+                                resultado.Add(new
+                                {
+                                    IdModuloImp = reader["IdModuloImp"],
+                                    Docente = reader["Docente"],
+                                    Modulo = reader["Modulo"],
+                                    Curso = reader["Curso"],
+                                    Aula = reader["Aula"],
+                                    Sucursal = reader["Sucursal"],
+                                    Bimestre = $"{reader["Gestion"]} - {Convert.ToDateTime(reader["FechaInicio"]):MMM/yyyy}",
+                                    Gestion = reader["Gestion"]
+                                });
+                            }
+                            dgModulos.ItemsSource = resultado;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -451,7 +489,9 @@ namespace wpfAppCBADoc
         // Métodos para navegación entre pestañas 
         private void BtnHorarios_Click(object sender, RoutedEventArgs e)
         {
-            ShowMessage("Funcionalidad de Horarios en desarrollo", false);
+            Schedules horarios = new Schedules();
+            horarios.Show();
+            this.Close();
         }
 
         private void BtnAulas_Click(object sender, RoutedEventArgs e)
@@ -467,6 +507,13 @@ namespace wpfAppCBADoc
             MessageBox.Show(message, isError ? "Error" : "Información",
                           MessageBoxButton.OK,
                           isError ? MessageBoxImage.Error : MessageBoxImage.Information);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow signUp = new MainWindow();
+            signUp.Show();
+            this.Close();
         }
     }
 }

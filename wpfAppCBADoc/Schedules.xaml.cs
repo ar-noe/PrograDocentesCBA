@@ -27,7 +27,8 @@ namespace wpfAppCBADoc
         //salir de la sesión
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow logIn = new MainWindow();
+            MainWindow signUp = new MainWindow();
+            signUp.Show();
             this.Close();
         }
 

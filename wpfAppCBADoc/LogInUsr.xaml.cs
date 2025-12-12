@@ -301,9 +301,8 @@ namespace wpfAppCBADoc
                                   "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
 
-                if (ventanaAnterior != null)
-                    ventanaAnterior.Show();
-
+                MainWindow signUp = new MainWindow();
+                signUp.Show();
                 this.Close();
             }
         }

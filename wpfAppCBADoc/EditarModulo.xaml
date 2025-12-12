@@ -266,7 +266,7 @@
                             CornerRadius="6" 
                             Padding="15,10" 
                             Margin="0,0,0,20">
-                        <TextBlock Text="📊 Course Statistics" 
+                        <TextBlock Text="Course Statistics" 
                                   Foreground="{StaticResource DarkTextBrush}"
                                   FontSize="18" FontWeight="Bold"
                                   HorizontalAlignment="Center"/>
@@ -344,39 +344,11 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- Botón para ver lista de estudiantes -->
-                    <Button Content="👥 Student's list" 
-                            Style="{StaticResource PrimaryButtonStyle}"
-                            Margin="0,20,0,0"
-                            Height="45"
-                            FontSize="14"/>
+                   
                 </StackPanel>
             </Border>
         </Grid>
 
-        <!-- Botones de acción -->
-        <Border Grid.Row="2" 
-                Background="{StaticResource WhiteBrush}" 
-                CornerRadius="8" 
-                Padding="20" 
-                Margin="0,20,0,0">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="📅 Assign schedule" 
-                        Style="{StaticResource PrimaryButtonStyle}"
-                        Width="180" Height="45"
-                        Margin="0,0,10,0"
-                        FontSize="14"/>
-                <Button Content="📊 Course Report" 
-                        Style="{StaticResource SecondaryButtonStyle}"
-                        Width="180" Height="45"
-                        Margin="10,0,10,0"
-                        FontSize="14"/>
-                <Button Content="✏️ Edit Information" 
-                        Style="{StaticResource TertiaryButtonStyle}"
-                        Width="180" Height="45"
-                        Margin="10,0,0,0"
-                        FontSize="14"/>
-            </StackPanel>
-        </Border>
+       
     </Grid>
 </Window>

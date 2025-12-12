@@ -96,14 +96,6 @@
                     </Border>
 
                     <!-- Fila 1 - Docente y Módulo -->
-                    <Label Grid.Row="1" Grid.Column="0" Content="Teacher:" 
-                           Style="{StaticResource EditFieldLabelStyle}"/>
-                    <ComboBox Grid.Row="2" Grid.Column="0" 
-                              Style="{StaticResource EditComboBoxStyle}"
-                              x:Name="cmbDocenteEdit"
-                              DisplayMemberPath="NombreCompleto"
-                              SelectedValuePath="IdPersona"/>
-
                     <Label Grid.Row="1" Grid.Column="2" Content="Module:" 
                            Style="{StaticResource EditFieldLabelStyle}"/>
                     <ComboBox Grid.Row="2" Grid.Column="2" 
@@ -131,10 +123,10 @@
                               SelectedValuePath="IdAula"/>
 
                     <!-- Fila 3 - Bimestre -->
-                    <Label Grid.Row="5" Grid.Column="0" Content="📅 Bimester:" 
+                    <Label Grid.Row="1" Grid.Column="0" Content="Bimester:" 
                            Style="{StaticResource EditFieldLabelStyle}"
-                           HorizontalAlignment="Right"/>
-                    <ComboBox Grid.Row="6" Grid.Column="7" 
+                           HorizontalAlignment="Left"/>
+                    <ComboBox Grid.Row="2" Grid.Column="0" 
                               Style="{StaticResource EditComboBoxStyle}"
                               x:Name="cmbBimestreEdit"
                               DisplayMemberPath="Descripcion"

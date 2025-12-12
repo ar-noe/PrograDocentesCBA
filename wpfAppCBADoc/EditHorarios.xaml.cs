@@ -49,5 +49,12 @@ namespace wpfAppCBADoc
                           MessageBoxButton.OK,
                           isError ? MessageBoxImage.Error : MessageBoxImage.Information);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow signUp = new MainWindow();
+            signUp.Show();
+            this.Close();
+        }
     }
 }

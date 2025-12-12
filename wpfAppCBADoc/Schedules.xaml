@@ -51,13 +51,24 @@
                 </StackPanel>
 
                 <!-- Footer -->
-                <StackPanel x:Name="btnExit" Grid.Row="2" VerticalAlignment="Center">
+                <StackPanel x:Name="btnExit" Grid.Row="2" VerticalAlignment="Bottom">
                     <Button Content="➜] Exit" 
                         Style="{StaticResource SecondaryButtonStyle}"
                             
-                        Margin="0,0,0,0"
+                        Margin="0,0,0,30"
                         Width="150" Click="Button_Click"/>
+                    <Border Grid.Row="2" Background="{StaticResource DarkBlueBrush}">
+                        <StackPanel VerticalAlignment="Bottom"  Margin="10">
+                            <!-- Texto del sistema abajo -->
+                            <TextBlock Text="CBA Management System v1.0" 
+                                        Foreground="{StaticResource WhiteBrush}"
+                                        HorizontalAlignment="Center"
+                                        FontSize="10"
+                                        TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
                 </StackPanel>
+                
 
             </Grid>
         </Border>

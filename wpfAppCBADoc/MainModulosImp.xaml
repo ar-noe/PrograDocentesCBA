@@ -56,15 +56,24 @@
                     </StackPanel>
 
                     <!-- Footer -->
-                    <Border Grid.Row="2" Background="{StaticResource DarkBlueBrush}" 
-                        Height="50" Padding="10">
-                        <TextBlock Text="CBA Academic System" 
-                              Foreground="{StaticResource WhiteBrush}"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Center"
-                              FontSize="12"/>
+                <StackPanel Grid.Row="2" VerticalAlignment="Bottom">
+                    <Button Content="➜] Exit"  x:Name="btnExit"
+        Style="{StaticResource SecondaryButtonStyle}"
+            
+        Margin="0,0,0,30"
+        Width="150" Click="Button_Click"/>
+                    <Border Grid.Row="2" Background="{StaticResource DarkBlueBrush}">
+                        <StackPanel VerticalAlignment="Bottom"  Margin="10">
+                            <!-- Texto del sistema abajo -->
+                            <TextBlock Text="CBA Management System v1.0" 
+                        Foreground="{StaticResource WhiteBrush}"
+                        HorizontalAlignment="Center"
+                        FontSize="10"
+                        TextAlignment="Center"/>
+                        </StackPanel>
                     </Border>
-                </Grid>
+                </StackPanel>
+            </Grid>
             </Border>
 
             <!-- Área de Contenido Principal -->

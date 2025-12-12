@@ -82,6 +82,8 @@ namespace wpfAppCBADoc
 
             if (result == MessageBoxResult.Yes)
             {
+                MainWindow signUp = new MainWindow();
+                signUp.Show();
                 this.Close();
             }
         }
