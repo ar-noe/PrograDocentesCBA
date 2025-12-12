@@ -59,7 +59,8 @@ namespace wpfAppCBADoc
                 switch (usuario.IdRol)
                 {
                     case 2: // Docente
-                        Schedules mainDoc = new Schedules();
+                        int idProfessor = usuario.IdPersona;
+                        Schedules mainDoc = new Schedules(idProfessor);
                         mainDoc.Show();
                         this.Close();
                         break;

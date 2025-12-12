@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,19 @@ namespace wpfAppCBADoc
     /// </summary>
     public partial class Schedules : Window
     {
-        public Schedules()
+
+        DataClassesDocentesCBA2DataContext dcDB;
+        int idP;
+        public Schedules(int idProfessor)
         {
             InitializeComponent();
+            string connStr = ConfigurationManager.ConnectionStrings["WpfAppDBLingP3.Properties.Settings.ConnectionString"].ConnectionString;
+
+            dcDB = new DataClassesDocentesCBA2DataContext(connStr);
+
+            idP = idProfessor;
+
+            loadDataDB(idP);
         }
 
         //salir de la sesión
@@ -40,6 +51,30 @@ namespace wpfAppCBADoc
             MessageBox.Show(message, isError ? "Error" : "Información",
                           MessageBoxButton.OK,
                           isError ? MessageBoxImage.Error : MessageBoxImage.Information);
+        }
+
+        private void loadDataDB(int idP)
+        {
+            try
+            {
+                var searchQuery = (from personId in dcDB.Docente
+                                          where personId.IdPersona == idP
+                                          select personId).ToList();
+
+                foreach (var prof in searchQuery)
+                {
+                    var profFound = (from professor in dcDB.ModuloImpartido
+                                       where professor.IdDocente == prof.IdDocente
+                                       select professor).ToList();
+                    dgModulos.ItemsSource = profFound;
+                }
+            }
+            catch (Exception e)
+            {
+                {
+                    MessageBox.Show("Error: " + e.Message);
+                }
+            }
         }
     }
 }
