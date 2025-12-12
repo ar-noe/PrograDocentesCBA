@@ -16,9 +16,6 @@ using System.Data.SqlClient;
 
 namespace wpfAppCBADoc
 {
-    /// <summary>
-    /// Lógica de interacción para MainModulosImp.xaml
-    /// </summary>
     public partial class MainModulosImp : Window
     {
         private DataClassesDocentesCBA2DataContext dcBd;
@@ -84,18 +81,16 @@ namespace wpfAppCBADoc
         {
             try
             {
-                // Cargar módulos
-                var modulos = (from m in dcBd.Modulo
-                               join c in dcBd.Curso on m.IdCurso equals c.IdCurso
-                               select new
-                               {
-                                   IdModulo = m.IdModulo,
-                                   NombreModulo = m.Nombre,
-                                   Curso = c.Nombre
-                               }).ToList();
-                cmbModulo.ItemsSource = modulos;
-                cmbModulo.DisplayMemberPath = "NombreModulo";
-                cmbModulo.SelectedValuePath = "IdModulo";
+                // Cargar cursos
+                var cursos = (from c in dcBd.Curso
+                              select new
+                              {
+                                  IdCurso = c.IdCurso,
+                                  Nombre = c.Nombre
+                              }).ToList();
+                cmbCurso.ItemsSource = cursos;
+                cmbCurso.DisplayMemberPath = "Nombre";
+                cmbCurso.SelectedValuePath = "IdCurso";
 
                 // Cargar sucursales
                 var sucursales = (from s in dcBd.Sucursal
@@ -129,10 +124,44 @@ namespace wpfAppCBADoc
                 cmbBimestre.DisplayMemberPath = "Descripcion";
                 cmbBimestre.SelectedValuePath = "IdBimestre";
 
+                // Inicialmente deshabilitar combobox dependientes
+                cmbModulo.IsEnabled = false;
+                cmbAula.IsEnabled = false;
+
             }
             catch (Exception ex)
             {
                 ShowMessage("Error cargando datos: " + ex.Message, true);
+            }
+        }
+
+        private void LoadModulosByCurso(int idCurso)
+        {
+            try
+            {
+                var modulos = (from m in dcBd.Modulo
+                               where m.IdCurso == idCurso
+                               select new
+                               {
+                                   IdModulo = m.IdModulo,
+                                   Nombre = m.Nombre
+                               }).ToList();
+
+                cmbModulo.ItemsSource = modulos;
+                cmbModulo.DisplayMemberPath = "Nombre";
+                cmbModulo.SelectedValuePath = "IdModulo";
+                cmbModulo.IsEnabled = true;
+
+                // Limpiar selección si no hay módulos
+                if (modulos.Count == 0)
+                {
+                    cmbModulo.SelectedIndex = -1;
+                    cmbModulo.IsEnabled = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowMessage("Error cargando módulos: " + ex.Message, true);
             }
         }
 
@@ -152,6 +181,14 @@ namespace wpfAppCBADoc
                 cmbAula.ItemsSource = aulas;
                 cmbAula.DisplayMemberPath = "NumeroAula";
                 cmbAula.SelectedValuePath = "IdAula";
+                cmbAula.IsEnabled = true;
+
+                // Limpiar selección si no hay aulas
+                if (aulas.Count == 0)
+                {
+                    cmbAula.SelectedIndex = -1;
+                    cmbAula.IsEnabled = false;
+                }
             }
             catch (Exception ex)
             {
@@ -225,6 +262,36 @@ namespace wpfAppCBADoc
             }
         }
 
+        // Evento cuando se selecciona un curso
+        private void CmbCurso_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbCurso.SelectedValue != null)
+            {
+                int idCurso = (int)cmbCurso.SelectedValue;
+                LoadModulosByCurso(idCurso);
+            }
+            else
+            {
+                cmbModulo.ItemsSource = null;
+                cmbModulo.IsEnabled = false;
+            }
+        }
+
+        // Evento cuando se selecciona una sucursal
+        private void CmbSucursal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbSucursal.SelectedValue != null)
+            {
+                int idSucursal = (int)cmbSucursal.SelectedValue;
+                LoadAulasBySucursal(idSucursal);
+            }
+            else
+            {
+                cmbAula.ItemsSource = null;
+                cmbAula.IsEnabled = false;
+            }
+        }
+
         private void BtnAgregarModulo_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -264,6 +331,12 @@ namespace wpfAppCBADoc
 
         private bool ValidarFormulario()
         {
+            if (cmbCurso.SelectedValue == null)
+            {
+                ShowMessage("Seleccione un curso", true);
+                return false;
+            }
+
             if (cmbModulo.SelectedValue == null)
             {
                 ShowMessage("Seleccione un módulo", true);
@@ -298,23 +371,15 @@ namespace wpfAppCBADoc
 
         private void LimpiarFormulario()
         {
+            cmbCurso.SelectedIndex = -1;
             cmbModulo.SelectedIndex = -1;
             cmbSucursal.SelectedIndex = -1;
             cmbAula.SelectedIndex = -1;
             cmbBimestre.SelectedIndex = -1;
-        }
 
-        private void CmbSucursal_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cmbSucursal.SelectedValue != null)
-            {
-                int idSucursal = (int)cmbSucursal.SelectedValue;
-                LoadAulasBySucursal(idSucursal);
-            }
-            else
-            {
-                cmbAula.ItemsSource = null;
-            }
+            // Deshabilitar combobox dependientes
+            cmbModulo.IsEnabled = false;
+            cmbAula.IsEnabled = false;
         }
 
         private void BtnEditarModulo_Click(object sender, RoutedEventArgs e)

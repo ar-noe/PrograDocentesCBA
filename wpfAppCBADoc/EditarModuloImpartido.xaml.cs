@@ -32,9 +32,9 @@ namespace wpfAppCBADoc
                     // Obtener información actual usando LINQ con relaciones correctas
                     var infoActual = (from mi in dcBd.ModuloImpartido
                                       join d in dcBd.Docente on mi.IdDocente equals d.IdDocente into docenteJoin
-                                      from d in docenteJoin.DefaultIfEmpty() // LEFT JOIN
+                                      from d in docenteJoin.DefaultIfEmpty()
                                       join p in dcBd.Persona on (d != null ? d.IdPersona : 0) equals p.IdPersona into personaJoin
-                                      from p in personaJoin.DefaultIfEmpty() // LEFT JOIN
+                                      from p in personaJoin.DefaultIfEmpty()
                                       join m in dcBd.Modulo on mi.IdModulo equals m.IdModulo
                                       join c in dcBd.Curso on m.IdCurso equals c.IdCurso
                                       join a in dcBd.Aula on mi.IdAula equals a.IdAula
@@ -46,6 +46,7 @@ namespace wpfAppCBADoc
                                           Docente = p != null ? p.Nombres + " " + p.ApPat + " " + p.ApMat : "Por asignar",
                                           Modulo = m.Nombre,
                                           Curso = c.Nombre,
+                                          CursoId = c.IdCurso, // Nuevo: ID del curso
                                           Aula = a.NumeroAula,
                                           Sucursal = s.Alias,
                                           Bimestre = b.Gestion,
@@ -68,21 +69,26 @@ namespace wpfAppCBADoc
                                            $"Bimestre: {bimestreFormateado}";
 
                         // Establecer valores actuales en los comboboxes
-                        cmbModuloEdit.SelectedValue = infoActual.IdModulo;
-                        cmbBimestreEdit.SelectedValue = infoActual.IdBimestre;
+                        cmbCursoEdit.SelectedValue = infoActual.CursoId;
+                        // Esto activará automáticamente la carga de módulos
 
                         // Cargar sucursal y aula actual
                         cmbSucursalEdit.SelectedValue = infoActual.IdSucursal;
+                        cmbBimestreEdit.SelectedValue = infoActual.IdBimestre;
 
-                        // Forzar carga inicial de aulas
-                        CmbSucursalEdit_SelectionChanged(null, null);
-
-                        // Esperar un momento para que se carguen las aulas
+                        // Esperar un momento para que se carguen los datos dependientes
                         System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(
                             System.Windows.Threading.DispatcherPriority.Background,
                             new Action(() =>
                             {
-                                cmbAulaEdit.SelectedValue = infoActual.IdAula;
+                                if (cmbModuloEdit.IsEnabled)
+                                {
+                                    cmbModuloEdit.SelectedValue = infoActual.IdModulo;
+                                }
+                                if (cmbAulaEdit.IsEnabled)
+                                {
+                                    cmbAulaEdit.SelectedValue = infoActual.IdAula;
+                                }
                             }));
                     }
 
@@ -114,6 +120,7 @@ namespace wpfAppCBADoc
                 if (tieneEstudiantes)
                 {
                     // Deshabilitar algunos campos si hay estudiantes inscritos
+                    cmbCursoEdit.IsEnabled = false;
                     cmbModuloEdit.IsEnabled = false;
                     cmbBimestreEdit.IsEnabled = false;
 
@@ -129,7 +136,7 @@ namespace wpfAppCBADoc
                         {
                             stackPanel.Children.Add(new TextBlock
                             {
-                                Text = "• Módulo y bimestre bloqueados por estudiantes inscritos",
+                                Text = "• Curso, módulo y bimestre bloqueados por estudiantes inscritos",
                                 Foreground = System.Windows.Media.Brushes.DarkRed,
                                 FontSize = 12,
                                 FontWeight = FontWeights.Bold,
@@ -149,18 +156,16 @@ namespace wpfAppCBADoc
         {
             try
             {
-                // Cargar módulos
-                var modulos = (from m in dcBd.Modulo
-                               join c in dcBd.Curso on m.IdCurso equals c.IdCurso
-                               select new
-                               {
-                                   IdModulo = m.IdModulo,
-                                   NombreModulo = m.Nombre,
-                                   Curso = c.Nombre
-                               }).ToList();
-                cmbModuloEdit.ItemsSource = modulos;
-                cmbModuloEdit.DisplayMemberPath = "NombreModulo";
-                cmbModuloEdit.SelectedValuePath = "IdModulo";
+                // Cargar cursos
+                var cursos = (from c in dcBd.Curso
+                              select new
+                              {
+                                  IdCurso = c.IdCurso,
+                                  Nombre = c.Nombre
+                              }).ToList();
+                cmbCursoEdit.ItemsSource = cursos;
+                cmbCursoEdit.DisplayMemberPath = "Nombre";
+                cmbCursoEdit.SelectedValuePath = "IdCurso";
 
                 // Cargar sucursales
                 var sucursales = (from s in dcBd.Sucursal
@@ -194,11 +199,65 @@ namespace wpfAppCBADoc
                 cmbBimestreEdit.DisplayMemberPath = "Descripcion";
                 cmbBimestreEdit.SelectedValuePath = "IdBimestre";
 
+                // Inicialmente deshabilitar combobox dependientes
+                cmbModuloEdit.IsEnabled = false;
+                cmbAulaEdit.IsEnabled = false;
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error cargando datos: " + ex.Message, "Error",
                               MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void LoadModulosByCursoEdit(int idCurso)
+        {
+            try
+            {
+                var modulos = (from m in dcBd.Modulo
+                               where m.IdCurso == idCurso
+                               select new
+                               {
+                                   IdModulo = m.IdModulo,
+                                   Nombre = m.Nombre
+                               }).ToList();
+
+                cmbModuloEdit.ItemsSource = modulos;
+                cmbModuloEdit.DisplayMemberPath = "Nombre";
+                cmbModuloEdit.SelectedValuePath = "IdModulo";
+
+                // Solo habilitar si no hay estudiantes inscritos
+                bool tieneEstudiantes = dcBd.EstudianteInscrito
+                    .Any(ei => ei.IdModuloImp == idModuloImp);
+
+                cmbModuloEdit.IsEnabled = !tieneEstudiantes;
+
+                // Limpiar selección si no hay módulos
+                if (modulos.Count == 0)
+                {
+                    cmbModuloEdit.SelectedIndex = -1;
+                    cmbModuloEdit.IsEnabled = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error cargando módulos: " + ex.Message, "Error",
+                              MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void CmbCursoEdit_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbCursoEdit.SelectedValue != null)
+            {
+                int idCurso = (int)cmbCursoEdit.SelectedValue;
+                LoadModulosByCursoEdit(idCurso);
+            }
+            else
+            {
+                cmbModuloEdit.ItemsSource = null;
+                cmbModuloEdit.IsEnabled = false;
             }
         }
 
@@ -223,11 +282,13 @@ namespace wpfAppCBADoc
                     cmbAulaEdit.ItemsSource = aulas;
                     cmbAulaEdit.DisplayMemberPath = "NumeroAula";
                     cmbAulaEdit.SelectedValuePath = "IdAula";
+                    cmbAulaEdit.IsEnabled = true;
 
-                    // Si solo hay un aula disponible, seleccionarla automáticamente
-                    if (aulas.Count == 1 && cmbAulaEdit.SelectedIndex == -1)
+                    // Limpiar selección si no hay aulas
+                    if (aulas.Count == 0)
                     {
-                        cmbAulaEdit.SelectedIndex = 0;
+                        cmbAulaEdit.SelectedIndex = -1;
+                        cmbAulaEdit.IsEnabled = false;
                     }
                 }
                 catch (Exception ex)
@@ -240,6 +301,7 @@ namespace wpfAppCBADoc
             {
                 cmbAulaEdit.ItemsSource = null;
                 cmbAulaEdit.SelectedIndex = -1;
+                cmbAulaEdit.IsEnabled = false;
             }
         }
 
@@ -266,9 +328,22 @@ namespace wpfAppCBADoc
                 bool tieneEstudiantes = dcBd.EstudianteInscrito
                     .Any(ei => ei.IdModuloImp == idModuloImp);
 
-                // Si hay estudiantes, no permitir cambios en módulo o bimestre
+                // Si hay estudiantes, no permitir cambios en curso, módulo o bimestre
                 if (tieneEstudiantes)
                 {
+                    // Verificar si el curso cambió (aunque el combo esté deshabilitado)
+                    var cursoActual = (from mi in dcBd.ModuloImpartido
+                                       join m in dcBd.Modulo on mi.IdModulo equals m.IdModulo
+                                       where mi.IdModuloImp == idModuloImp
+                                       select m.IdCurso).FirstOrDefault();
+
+                    if (cursoActual != (int)cmbCursoEdit.SelectedValue)
+                    {
+                        MessageBox.Show("No se puede cambiar el curso porque hay estudiantes inscritos",
+                                      "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
                     if (moduloActual.IdModulo != (int)cmbModuloEdit.SelectedValue)
                     {
                         MessageBox.Show("No se puede cambiar el módulo porque hay estudiantes inscritos",
@@ -297,7 +372,7 @@ namespace wpfAppCBADoc
                     return;
                 }
 
-                // Actualizar datos (NOTA: no actualizamos IdDocente porque no tenemos el combo)
+                // Actualizar datos
                 moduloActual.IdModulo = (int)cmbModuloEdit.SelectedValue;
                 moduloActual.IdAula = (int)cmbAulaEdit.SelectedValue;
                 moduloActual.IdBimestre = (int)cmbBimestreEdit.SelectedValue;
@@ -322,6 +397,14 @@ namespace wpfAppCBADoc
 
         private bool ValidarFormulario()
         {
+            if (cmbCursoEdit.SelectedValue == null)
+            {
+                MessageBox.Show("Seleccione un curso", "Validación",
+                              MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbCursoEdit.Focus();
+                return false;
+            }
+
             if (cmbModuloEdit.SelectedValue == null)
             {
                 MessageBox.Show("Seleccione un módulo", "Validación",
