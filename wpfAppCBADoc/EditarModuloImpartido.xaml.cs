@@ -359,23 +359,43 @@ namespace wpfAppCBADoc
                     }
                 }
 
-                // Verificar que no haya conflictos de aula/bimestre
-                bool existeConflicto = dcBd.ModuloImpartido
-                    .Any(mi => mi.IdAula == (int)cmbAulaEdit.SelectedValue &&
-                               mi.IdBimestre == (int)cmbBimestreEdit.SelectedValue &&
-                               mi.IdModuloImp != idModuloImp);
+                // REEMPLAZAR ESTA VALIDACIÓN - NUEVA LÓGICA
+                int idBimestreSeleccionado = (int)cmbBimestreEdit.SelectedValue;
+                int idAulaSeleccionada = (int)cmbAulaEdit.SelectedValue;
 
-                if (existeConflicto)
+                // 1. Obtener todos los horarios disponibles en el sistema (excluyendo placeholder)
+                int totalHorariosDisponibles = dcBd.Horario
+                    .Where(h => h.IdHorario != 0)
+                    .Count();
+
+                // 2. Contar cuántos módulos ya están asignados a esta aula en este bimestre
+                int modulosAsignadosEnAulaBimestre = dcBd.ModuloImpartido
+                    .Count(mi => mi.IdAula == idAulaSeleccionada &&
+                                 mi.IdBimestre == idBimestreSeleccionado &&
+                                 mi.IdModuloImp != idModuloImp); // Excluir el actual
+
+                // 3. Verificar si se ha alcanzado el límite de horarios disponibles
+                if (modulosAsignadosEnAulaBimestre >= totalHorariosDisponibles)
                 {
-                    MessageBox.Show("Ya existe un módulo impartido en esta aula para el bimestre seleccionado",
-                                  "Conflicto", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show($"Esta aula ya tiene {modulosAsignadosEnAulaBimestre} módulo(s) asignado(s) " +
+                                   $"para este bimestre. Límite: {totalHorariosDisponibles} módulo(s) por aula por bimestre.\n\n" +
+                                   $"Cada aula puede tener tantos módulos como horarios disponibles existan en el sistema.",
+                                   "Límite alcanzado", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
+                }
+
+                // Opcional: Mostrar cuántos espacios quedan disponibles
+                int espaciosDisponibles = totalHorariosDisponibles - modulosAsignadosEnAulaBimestre;
+                if (espaciosDisponibles <= 2) // Solo mostrar advertencia si quedan pocos espacios
+                {
+                    MessageBox.Show($"Atención: Quedan {espaciosDisponibles} espacio(s) disponible(s) en esta aula para el bimestre seleccionado.",
+                                   "Espacios limitados", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
                 // Actualizar datos
                 moduloActual.IdModulo = (int)cmbModuloEdit.SelectedValue;
-                moduloActual.IdAula = (int)cmbAulaEdit.SelectedValue;
-                moduloActual.IdBimestre = (int)cmbBimestreEdit.SelectedValue;
+                moduloActual.IdAula = idAulaSeleccionada;
+                moduloActual.IdBimestre = idBimestreSeleccionado;
                 // IdHorario se mantiene como 0 (placeholder)
                 // IdDocente se mantiene como 0 (placeholder)
 
