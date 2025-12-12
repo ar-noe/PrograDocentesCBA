@@ -489,7 +489,7 @@ namespace wpfAppCBADoc
         // Métodos para navegación entre pestañas 
         private void BtnHorarios_Click(object sender, RoutedEventArgs e)
         {
-            Schedules horarios = new Schedules();
+            EditHorarios horarios = new EditHorarios();
             horarios.Show();
             this.Close();
         }

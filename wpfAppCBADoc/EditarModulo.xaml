@@ -63,7 +63,7 @@
                 BorderBrush="{StaticResource PrimaryBlueBrush}" 
                 BorderThickness="2">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="📚 Course Information" 
+                <TextBlock Text="Module Information" 
                           Foreground="{StaticResource DarkTextBrush}"
                           FontSize="24" FontWeight="Bold"
                           VerticalAlignment="Center"/>
@@ -262,7 +262,7 @@
                     Padding="20">
                 <StackPanel>
                     <!-- Título -->
-                    <Border Background="{StaticResource PrimaryPinkBrush}" 
+                    <Border Background="{StaticResource LightPinkBrush}" 
                             CornerRadius="6" 
                             Padding="15,10" 
                             Margin="0,0,0,20">
@@ -334,7 +334,7 @@
                                               Text="Available"
                                               FontSize="14" 
                                               FontWeight="SemiBold"
-                                              Foreground="{StaticResource SuccessGreenBrush}"
+                                              Foreground="{StaticResource LightGrayBrush}"
                                               HorizontalAlignment="Center"/>
                                     <TextBlock Text="state" 
                                               FontSize="12"
