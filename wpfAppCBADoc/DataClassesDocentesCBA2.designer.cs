@@ -1350,7 +1350,9 @@ namespace wpfAppCBADoc
 		
 		private int _IdEstadoA;
 		
-		private string _Estado;
+		private byte _Estado;
+		
+		private string _Descripcion;
 		
 		private EntitySet<Aula> _Aula;
 		
@@ -1360,8 +1362,10 @@ namespace wpfAppCBADoc
     partial void OnCreated();
     partial void OnIdEstadoAChanging(int value);
     partial void OnIdEstadoAChanged();
-    partial void OnEstadoChanging(string value);
+    partial void OnEstadoChanging(byte value);
     partial void OnEstadoChanged();
+    partial void OnDescripcionChanging(string value);
+    partial void OnDescripcionChanged();
     #endregion
 		
 		public EstadoAula()
@@ -1390,8 +1394,8 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Estado", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Estado
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Estado", DbType="TinyInt NOT NULL")]
+		public byte Estado
 		{
 			get
 			{
@@ -1406,6 +1410,26 @@ namespace wpfAppCBADoc
 					this._Estado = value;
 					this.SendPropertyChanged("Estado");
 					this.OnEstadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Descripcion", DbType="NVarChar(50)")]
+		public string Descripcion
+		{
+			get
+			{
+				return this._Descripcion;
+			}
+			set
+			{
+				if ((this._Descripcion != value))
+				{
+					this.OnDescripcionChanging(value);
+					this.SendPropertyChanging();
+					this._Descripcion = value;
+					this.SendPropertyChanged("Descripcion");
+					this.OnDescripcionChanged();
 				}
 			}
 		}
@@ -1623,7 +1647,7 @@ namespace wpfAppCBADoc
 		
 		private int _IdEstudiante;
 		
-		private System.DateTime _Fecha_Inscripcion;
+		private System.DateTime _FechaInscripcion;
 		
 		private EntityRef<Estudiante> _Estudiante;
 		
@@ -1639,8 +1663,8 @@ namespace wpfAppCBADoc
     partial void OnIdModuloImpChanged();
     partial void OnIdEstudianteChanging(int value);
     partial void OnIdEstudianteChanged();
-    partial void OnFecha_InscripcionChanging(System.DateTime value);
-    partial void OnFecha_InscripcionChanged();
+    partial void OnFechaInscripcionChanging(System.DateTime value);
+    partial void OnFechaInscripcionChanged();
     #endregion
 		
 		public EstudianteInscrito()
@@ -1718,22 +1742,22 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Fecha Inscripcion]", Storage="_Fecha_Inscripcion", DbType="Date NOT NULL")]
-		public System.DateTime Fecha_Inscripcion
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaInscripcion", DbType="Date NOT NULL")]
+		public System.DateTime FechaInscripcion
 		{
 			get
 			{
-				return this._Fecha_Inscripcion;
+				return this._FechaInscripcion;
 			}
 			set
 			{
-				if ((this._Fecha_Inscripcion != value))
+				if ((this._FechaInscripcion != value))
 				{
-					this.OnFecha_InscripcionChanging(value);
+					this.OnFechaInscripcionChanging(value);
 					this.SendPropertyChanging();
-					this._Fecha_Inscripcion = value;
-					this.SendPropertyChanged("Fecha_Inscripcion");
-					this.OnFecha_InscripcionChanged();
+					this._FechaInscripcion = value;
+					this.SendPropertyChanged("FechaInscripcion");
+					this.OnFechaInscripcionChanged();
 				}
 			}
 		}
@@ -1835,9 +1859,9 @@ namespace wpfAppCBADoc
 		
 		private int _IdHorario;
 		
-		private System.DateTime _HoraInicio;
+		private System.TimeSpan _HoraInicio;
 		
-		private System.DateTime _HoraFinal;
+		private System.TimeSpan _HoraFinal;
 		
 		private EntitySet<ModuloImpartido> _ModuloImpartido;
 		
@@ -1847,9 +1871,9 @@ namespace wpfAppCBADoc
     partial void OnCreated();
     partial void OnIdHorarioChanging(int value);
     partial void OnIdHorarioChanged();
-    partial void OnHoraInicioChanging(System.DateTime value);
+    partial void OnHoraInicioChanging(System.TimeSpan value);
     partial void OnHoraInicioChanged();
-    partial void OnHoraFinalChanging(System.DateTime value);
+    partial void OnHoraFinalChanging(System.TimeSpan value);
     partial void OnHoraFinalChanged();
     #endregion
 		
@@ -1879,8 +1903,8 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HoraInicio", DbType="DateTime NOT NULL")]
-		public System.DateTime HoraInicio
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HoraInicio", DbType="Time NOT NULL")]
+		public System.TimeSpan HoraInicio
 		{
 			get
 			{
@@ -1899,8 +1923,8 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HoraFinal", DbType="DateTime NOT NULL")]
-		public System.DateTime HoraFinal
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HoraFinal", DbType="Time NOT NULL")]
+		public System.TimeSpan HoraFinal
 		{
 			get
 			{
@@ -2676,7 +2700,7 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApPat", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApPat", DbType="NVarChar(50)")]
 		public string ApPat
 		{
 			get
@@ -2696,7 +2720,7 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApMat", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApMat", DbType="NVarChar(50)")]
 		public string ApMat
 		{
 			get
@@ -2736,7 +2760,7 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TipoPersona", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TipoPersona", DbType="NVarChar(50)")]
 		public string TipoPersona
 		{
 			get
@@ -3067,7 +3091,7 @@ namespace wpfAppCBADoc
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ubicacion", DbType="Text NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ubicacion", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string Ubicacion
 		{
 			get

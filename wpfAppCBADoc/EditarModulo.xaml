@@ -275,7 +275,7 @@
                     <!-- Contador de Estudiantes -->
                     <Border Style="{StaticResource StudentCountStyle}">
                         <StackPanel HorizontalAlignment="Center">
-                            <TextBlock Text="👥 Enrolled Students" 
+                            <TextBlock Text="Enrolled Students" 
                                       FontSize="16" 
                                       FontWeight="SemiBold"
                                       Foreground="{StaticResource DarkTextBrush}"
@@ -312,13 +312,12 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0" 
                                             HorizontalAlignment="Center">
                                     <TextBlock x:Name="txtCapacidadAula" 
-                                              Text="30"
+                                              Text="0"
                                               FontSize="24" 
                                               FontWeight="Bold"
                                               Foreground="{StaticResource DarkTextBrush}"
@@ -328,18 +327,7 @@
                                               Foreground="{StaticResource DarkTextBrush}"/>
                                 </StackPanel>
 
-                                <StackPanel Grid.Column="1" 
-                                            HorizontalAlignment="Center">
-                                    <TextBlock x:Name="txtDisponibilidad" 
-                                              Text="Available"
-                                              FontSize="14" 
-                                              FontWeight="SemiBold"
-                                              Foreground="{StaticResource LightGrayBrush}"
-                                              HorizontalAlignment="Center"/>
-                                    <TextBlock Text="state" 
-                                              FontSize="12"
-                                              Foreground="{StaticResource DarkTextBrush}"/>
-                                </StackPanel>
+                               
                             </Grid>
                         </StackPanel>
                     </Border>

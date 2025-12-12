@@ -118,7 +118,8 @@
               Style="{StaticResource DataGridStyle}"
               ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Schedule" Binding="{Binding Horario}" Width="250"/>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="60" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="Schedule" Binding="{Binding Horario}" Width="200"/>
                                     <DataGridTextColumn Header="Course" Binding="{Binding Curso}" Width="180"/>
                                     <DataGridTextColumn Header="Module" Binding="{Binding Modulo}" Width="180"/>
                                    
@@ -133,7 +134,7 @@
                                 <Button Content="➕ Info" 
                                     Style="{StaticResource PrimaryButtonStyle}"
                                     Margin="0,10,70,0"
-                                    Width="100" />
+                                    Width="100" Click="Button_Click_1" />
 
                             </StackPanel>
                         </Grid>

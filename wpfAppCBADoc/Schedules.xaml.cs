@@ -72,7 +72,8 @@ namespace wpfAppCBADoc
                                      {
                                          Horario = h.HoraInicio + " - " + h.HoraFinal,
                                          Modulo = m.Nombre,
-                                         Curso = c.Nombre
+                                         Curso = c.Nombre,
+                                         ID = professor.IdModuloImp
                                      }).ToList();
 
                     dgModulos.ItemsSource = profFound;
@@ -85,5 +86,25 @@ namespace wpfAppCBADoc
                 }
             }
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (dgModulos.SelectedValue != null)
+            {
+                dynamic idModulo = dgModulos.SelectedItem; //omite la comprobación de tipos en tiempo de compilación, es decir que soluciona al ejecutar, no al compilar (confia, google me lo dijo) por eso reconoce de esta manera el id y no con 'var'
+
+                int id = idModulo.ID;
+
+                EditarModulo seeInfo = new EditarModulo(id);
+
+                seeInfo.Show();
+                this.Close();
+            }
+            else
+            {
+                ShowMessage("Select a module to view information", true);
+            }
+        }
+
     }
 }

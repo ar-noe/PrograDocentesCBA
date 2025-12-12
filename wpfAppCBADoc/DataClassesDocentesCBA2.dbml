@@ -59,7 +59,8 @@
   <Table Name="dbo.EstadoAula" Member="EstadoAula">
     <Type Name="EstadoAula">
       <Column Name="IdEstadoA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Estado" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Association Name="EstadoAula_Aula" Member="Aula" ThisKey="IdEstadoA" OtherKey="IdEstadoA" Type="Aula" />
     </Type>
   </Table>
@@ -76,7 +77,7 @@
       <Column Name="IdEstInsc" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="IdModuloImp" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="IdEstudiante" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[Fecha Inscripcion]" Member="Fecha_Inscripcion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FechaInscripcion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Association Name="Estudiante_EstudianteInscrito" Member="Estudiante" ThisKey="IdEstudiante" OtherKey="IdEstudiante" Type="Estudiante" IsForeignKey="true" />
       <Association Name="ModuloImpartido_EstudianteInscrito" Member="ModuloImpartido" ThisKey="IdModuloImp" OtherKey="IdModuloImp" Type="ModuloImpartido" IsForeignKey="true" />
     </Type>
@@ -84,8 +85,8 @@
   <Table Name="dbo.Horario" Member="Horario">
     <Type Name="Horario">
       <Column Name="IdHorario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="HoraInicio" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="HoraFinal" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="HoraInicio" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="HoraFinal" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
       <Association Name="Horario_ModuloImpartido" Member="ModuloImpartido" ThisKey="IdHorario" OtherKey="IdHorario" Type="ModuloImpartido" />
     </Type>
   </Table>
@@ -119,10 +120,10 @@
       <Column Name="IdPersona" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="CI" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Nombres" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="ApPat" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="ApMat" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ApPat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ApMat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="FechaNac" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="TipoPersona" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TipoPersona" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Association Name="Persona_Administrativo" Member="Administrativo" ThisKey="IdPersona" OtherKey="IdPersona" Type="Administrativo" />
       <Association Name="Persona_Usuario" Member="Usuario" ThisKey="IdPersona" OtherKey="IdPersona" Type="Usuario" />
       <Association Name="Persona_Docente" Member="Docente" ThisKey="IdPersona" OtherKey="IdPersona" Type="Docente" />
@@ -140,7 +141,7 @@
     <Type Name="Sucursal">
       <Column Name="IdSucursal" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Alias" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Ubicacion" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Ubicacion" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="TelefonoContacto" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
       <Association Name="Sucursal_Aula" Member="Aula" ThisKey="IdSucursal" OtherKey="IdSucursal" Type="Aula" />
     </Type>
