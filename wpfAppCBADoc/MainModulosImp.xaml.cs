@@ -25,7 +25,6 @@ namespace wpfAppCBADoc
         {
             InitializeComponent();
             InitializeDatabaseConnection();
-            CrearDatosPlaceholderSiNoExisten();
             LoadComboBoxData();
             LoadModulosImpartidos();
         }
@@ -40,40 +39,6 @@ namespace wpfAppCBADoc
             catch (Exception ex)
             {
                 ShowMessage("Error conectando a la base de datos: " + ex.Message, true);
-            }
-        }
-
-        private void CrearDatosPlaceholderSiNoExisten()
-        {
-            try
-            {
-                // Verificar y crear placeholder para Horario
-                if (!dcBd.Horario.Any(h => h.IdHorario == 0))
-                {
-                    dcBd.ExecuteCommand("SET IDENTITY_INSERT Horario ON");
-                    dcBd.ExecuteCommand("INSERT INTO Horario (IdHorario, HoraInicio, HoraFinal) VALUES (0, '00:00:00', '00:00:01')");
-                    dcBd.ExecuteCommand("SET IDENTITY_INSERT Horario OFF");
-                }
-
-                // Verificar y crear placeholder para Persona
-                if (!dcBd.Persona.Any(p => p.IdPersona == 0))
-                {
-                    dcBd.ExecuteCommand("SET IDENTITY_INSERT Persona ON");
-                    dcBd.ExecuteCommand("INSERT INTO Persona (IdPersona, CI, Nombres, ApPat, ApMat, FechaNac, TipoPersona) VALUES (0, '0000000', 'Sin', 'Asignar', 'Profesor', '2000-01-01', 'Docente')");
-                    dcBd.ExecuteCommand("SET IDENTITY_INSERT Persona OFF");
-                }
-
-                // Verificar y crear placeholder para Docente
-                if (!dcBd.Docente.Any(d => d.IdDocente == 0))
-                {
-                    dcBd.ExecuteCommand("SET IDENTITY_INSERT Docente ON");
-                    dcBd.ExecuteCommand("INSERT INTO Docente (IdDocente, IdPersona, Especialidad) VALUES (0, 0, 'Pending')");
-                    dcBd.ExecuteCommand("SET IDENTITY_INSERT Docente OFF");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Advertencia al crear datos placeholder: " + ex.Message);
             }
         }
 
@@ -298,12 +263,6 @@ namespace wpfAppCBADoc
             {
                 if (!ValidarFormulario())
                     return;
-
-                // Verificar que el horario 0 existe
-                if (!dcBd.Horario.Any(h => h.IdHorario == 0))
-                {
-                    CrearDatosPlaceholderSiNoExisten();
-                }
 
                 // Crear nuevo módulo impartido
                 var nuevoModuloImpartido = new ModuloImpartido

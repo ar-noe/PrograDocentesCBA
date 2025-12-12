@@ -26,7 +26,7 @@ namespace wpfAppCBADoc
         public Schedules(int idProfessor)
         {
             InitializeComponent();
-            string connStr = ConfigurationManager.ConnectionStrings["WpfAppDBLingP3.Properties.Settings.ConnectionString"].ConnectionString;
+            string connStr = ConfigurationManager.ConnectionStrings["wpfAppCBADoc.Properties.Settings.PrograCBADocentesConnectionString"].ConnectionString;
 
             dcDB = new DataClassesDocentesCBA2DataContext(connStr);
 
@@ -64,15 +64,24 @@ namespace wpfAppCBADoc
                 foreach (var prof in searchQuery)
                 {
                     var profFound = (from professor in dcDB.ModuloImpartido
-                                       where professor.IdDocente == prof.IdDocente
-                                       select professor).ToList();
+                                     join h in dcDB.Horario on professor.IdHorario equals h.IdHorario
+                                     join m in dcDB.Modulo on professor.IdModulo equals m.IdModulo
+                                     join c in dcDB.Curso on professor.IdModulo equals c.IdCurso
+                                     where professor.IdDocente == prof.IdDocente
+                                     select new
+                                     {
+                                         Horario = h.HoraInicio + " - " + h.HoraFinal,
+                                         Modulo = m.Nombre,
+                                         Curso = c.Nombre
+                                     }).ToList();
+
                     dgModulos.ItemsSource = profFound;
                 }
             }
             catch (Exception e)
             {
                 {
-                    MessageBox.Show("Error: " + e.Message);
+                    ShowMessage("Error: " + e.Message, true);
                 }
             }
         }

@@ -228,7 +228,12 @@ namespace wpfAppCBADoc
             switch (idRol)
             {
                 case 2: // Docente
-                    Schedules schedules = new Schedules();
+
+                    var professor = from prof in dcBd.Docente
+                                    where prof.IdPersona == persona.IdPersona
+                                    select prof.IdDocente;
+
+                    Schedules schedules = new Schedules(int.Parse(professor.ToString()));
                     schedules.Show();
                     break;
 

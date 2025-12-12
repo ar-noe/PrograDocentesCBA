@@ -118,8 +118,8 @@
               Style="{StaticResource DataGridStyle}"
               ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="ID" Binding="{Binding IdModuloImp}" Width="60"/>
-                                    <DataGridTextColumn Header="Schedule" Binding="{Binding Docente}" Width="200"/>
+                                    <DataGridTextColumn Header="Schedule" Binding="{Binding Horario}" Width="250"/>
+                                    <DataGridTextColumn Header="Course" Binding="{Binding Curso}" Width="180"/>
                                     <DataGridTextColumn Header="Module" Binding="{Binding Modulo}" Width="180"/>
                                    
                                     
