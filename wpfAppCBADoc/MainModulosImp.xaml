@@ -108,68 +108,85 @@
                         <!-- Formulario para agregar módulos -->
                         <GroupBox Grid.Row="0" Header="Add a new Imparted Module" 
                               Style="{StaticResource GroupBoxStyle}">
-                            <Grid Margin="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="10"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
+                        <!-- Dentro del GroupBox "Add a new Imparted Module" -->
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                                <!-- Fila 1 -->
-                                
-                                <Label Grid.Row="0" Grid.Column="1" Content="Module:" 
-                                   Style="{StaticResource FieldLabelStyle}"/>
-                                <ComboBox Grid.Row="1" Grid.Column="1" 
-                                      Style="{StaticResource ComboBoxStyle}"
-                                      x:Name="cmbModulo"
-                                      Margin="5,0,5,15"/>
+                            <!-- Fila 1: Curso -->
+                            <Label Grid.Row="0" Grid.Column="0" Content="Course:" 
+           Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox Grid.Row="1" Grid.Column="0" 
+              Style="{StaticResource ComboBoxStyle}"
+              x:Name="cmbCurso"
+              Margin="0,0,5,15"
+              SelectionChanged="CmbCurso_SelectionChanged"/>
 
-                                <Label Grid.Row="0" Grid.Column="3" Content="Branch:" 
-                                   Style="{StaticResource FieldLabelStyle}"/>
-                                <ComboBox Grid.Row="1" Grid.Column="3" 
-                                      Style="{StaticResource ComboBoxStyle}"
-                                      x:Name="cmbSucursal"
-                                      Margin="5,0,5,15"
-                                      SelectionChanged="CmbSucursal_SelectionChanged"/>
+                            <!-- Fila 1: Módulo (ahora en columna 1) -->
+                            <Label Grid.Row="0" Grid.Column="1" Content="Module:" 
+           Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox Grid.Row="1" Grid.Column="1" 
+              Style="{StaticResource ComboBoxStyle}"
+              x:Name="cmbModulo"
+              Margin="5,0,5,15"
+              IsEnabled="False"/>
+                            <!-- Deshabilitado hasta que se seleccione curso -->
 
-                                <Label Grid.Row="0" Grid.Column="4" Content="Classroom:" 
-                                   Style="{StaticResource FieldLabelStyle}"/>
-                                <ComboBox Grid.Row="1" Grid.Column="4" 
-                                      Style="{StaticResource ComboBoxStyle}"
-                                      x:Name="cmbAula"
-                                      Margin="5,0,0,15"/>
+                            <!-- Fila 1: Sucursal (ahora en columna 3) -->
+                            <Label Grid.Row="0" Grid.Column="3" Content="Branch:" 
+           Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox Grid.Row="1" Grid.Column="3" 
+              Style="{StaticResource ComboBoxStyle}"
+              x:Name="cmbSucursal"
+              Margin="5,0,5,15"
+              SelectionChanged="CmbSucursal_SelectionChanged"/>
 
-                                <Label Grid.Row="0" Grid.Column="0" Content="Bimester:" 
-                                   Style="{StaticResource FieldLabelStyle}"/>
-                                <ComboBox Grid.Row="1" Grid.Column="0" 
-                                      Style="{StaticResource ComboBoxStyle}"
-                                      x:Name="cmbBimestre"
-                                      Margin="0,0,5,0"/>
+                            <!-- Fila 1: Aula (ahora en columna 4) -->
+                            <Label Grid.Row="0" Grid.Column="4" Content="Classroom:" 
+           Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox Grid.Row="1" Grid.Column="4" 
+              Style="{StaticResource ComboBoxStyle}"
+              x:Name="cmbAula"
+              Margin="5,0,0,15"
+              IsEnabled="False"/>
+                            <!-- Deshabilitado hasta que se seleccione sucursal -->
 
-                                <!-- Botones -->
-                                <StackPanel Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" 
-                                        Orientation="Horizontal" 
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Bottom">
-                                    <Button Content="➕ Add Module" 
-                                        Style="{StaticResource PrimaryButtonStyle}"
-                                        Click="BtnAgregarModulo_Click"
-                                        Margin="0,0,10,0"
-                                        Width="160"/>
-                                    <Button Content="🔄 Clear" 
-                                        Style="{StaticResource SecondaryButtonStyle}"
-                                        Click="BtnLimpiarFormulario_Click"
-                                        Width="100"/>
-                                </StackPanel>
-                            </Grid>
-                        </GroupBox>
+                            <!-- Fila 2: Bimestre (nueva fila) -->
+                            <Label Grid.Row="2" Grid.Column="0" Content="Bimester:" 
+           Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox Grid.Row="3" Grid.Column="0" 
+              Style="{StaticResource ComboBoxStyle}"
+              x:Name="cmbBimestre"
+              Margin="0,0,5,0"/>
+
+                            <!-- Botones (ahora en fila 3, columnas 3-4) -->
+                            <StackPanel Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" 
+                Orientation="Horizontal" 
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom">
+                                <Button Content="➕ Add Module" 
+                Style="{StaticResource PrimaryButtonStyle}"
+                Click="BtnAgregarModulo_Click"
+                Margin="0,0,10,0"
+                Width="160"/>
+                                <Button Content="🔄 Clear" 
+                Style="{StaticResource SecondaryButtonStyle}"
+                Click="BtnLimpiarFormulario_Click"
+                Width="100"/>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
 
                         <!-- Lista de módulos existentes -->
                         <GroupBox Grid.Row="1" Header="Existing Imparted Modules" 

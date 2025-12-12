@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfAppCBADoc"
         mc:Ignorable="d"
-       Title="Editar Módulo Impartido" 
+        Title="Editar Módulo Impartido" 
         Height="750" Width="1200"
         WindowStartupLocation="CenterOwner"
         Background="{StaticResource BackgroundBrush}"
@@ -75,6 +75,8 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <!-- Información del Módulo Actual -->
@@ -95,16 +97,28 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- Fila 1 - Docente y Módulo -->
+                    <!-- Fila 1: Curso y Módulo -->
+                    <!-- Curso -->
+                    <Label Grid.Row="1" Grid.Column="0" Content="Course:" 
+                           Style="{StaticResource EditFieldLabelStyle}"/>
+                    <ComboBox Grid.Row="2" Grid.Column="0" 
+                              Style="{StaticResource EditComboBoxStyle}"
+                              x:Name="cmbCursoEdit"
+                              DisplayMemberPath="Nombre"
+                              SelectedValuePath="IdCurso"
+                              SelectionChanged="CmbCursoEdit_SelectionChanged"/>
+
+                    <!-- Módulo -->
                     <Label Grid.Row="1" Grid.Column="2" Content="Module:" 
                            Style="{StaticResource EditFieldLabelStyle}"/>
                     <ComboBox Grid.Row="2" Grid.Column="2" 
                               Style="{StaticResource EditComboBoxStyle}"
                               x:Name="cmbModuloEdit"
-                              DisplayMemberPath="NombreModulo"
-                              SelectedValuePath="IdModulo"/>
+                              DisplayMemberPath="Nombre"
+                              SelectedValuePath="IdModulo"
+                              IsEnabled="False"/>
 
-                    <!-- Fila 2 - Sucursal y Aula -->
+                    <!-- Fila 2: Sucursal y Aula -->
                     <Label Grid.Row="3" Grid.Column="0" Content="Branch:" 
                            Style="{StaticResource EditFieldLabelStyle}"/>
                     <ComboBox Grid.Row="4" Grid.Column="0" 
@@ -120,45 +134,23 @@
                               Style="{StaticResource EditComboBoxStyle}"
                               x:Name="cmbAulaEdit"
                               DisplayMemberPath="NumeroAula"
-                              SelectedValuePath="IdAula"/>
+                              SelectedValuePath="IdAula"
+                              IsEnabled="False"/>
 
-                    <!-- Fila 3 - Bimestre -->
-                    <Label Grid.Row="1" Grid.Column="0" Content="Bimester:" 
-                           Style="{StaticResource EditFieldLabelStyle}"
-                           HorizontalAlignment="Left"/>
-                    <ComboBox Grid.Row="2" Grid.Column="0" 
+                    <!-- Fila 3: Bimestre -->
+                    <Label Grid.Row="5" Grid.Column="0" Content="Bimester:" 
+                           Style="{StaticResource EditFieldLabelStyle}"/>
+                    <ComboBox Grid.Row="6" Grid.Column="0" 
                               Style="{StaticResource EditComboBoxStyle}"
                               x:Name="cmbBimestreEdit"
                               DisplayMemberPath="Descripcion"
                               SelectedValuePath="IdBimestre"/>
 
-
                 </Grid>
             </ScrollViewer>
         </GroupBox>
-        <!-- Información adicional -->
-        <Border Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="3" 
-        Background="{StaticResource LightPinkBrush}" 
-        CornerRadius="8" Padding="15" Margin="0,20,0,10">
-            <StackPanel>
-                <TextBlock Text="! Información Importante:" 
-                  FontWeight="Bold" 
-                  FontSize="14"
-                  Foreground="{StaticResource DarkTextBrush}"
-                  Margin="0,0,0,8"/>
-                <TextBlock Text="• Para asignar un horario al curso debe ir a la pestaña 'Ver Horarios'" 
-                  Foreground="{StaticResource DarkTextBrush}"
-                  FontSize="12"
-                  Margin="0,0,0,4"/>
-                <TextBlock Text="• No se puede cambiar módulo y bimestre si hay estudiantes inscritos" 
-                  Foreground="{StaticResource DarkTextBrush}"
-                  FontSize="12"
-                  Margin="0,0,0,4"/>
-                <TextBlock Text="• El horario se mantiene como nulo por defecto" 
-                  Foreground="{StaticResource DarkTextBrush}"
-                  FontSize="12"/>
-            </StackPanel>
-        </Border>
+
+
         <!-- Botones -->
         <Border Grid.Row="3" Background="{StaticResource WhiteBrush}" 
                 CornerRadius="8" Padding="20" Margin="0,20,0,0">
