@@ -120,10 +120,10 @@
                         </Grid.RowDefinitions>
 
                         <!-- DataGrid de Horarios -->
-                        <DataGrid Grid.Row="0" x:Name="dgHorariosDocente" 
+                        <DataGrid Grid.Row="0" x:Name="dgHorariosDocente" IsReadOnly="True"
                                   Style="{StaticResource DataGridStyle}"
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                                  ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Time" Binding="{Binding Hora}" Width="120"/>
                                 <DataGridTextColumn Header="Course" Binding="{Binding NombreCurso}" Width="200"/>
@@ -133,7 +133,7 @@
                         </DataGrid>
 
                         <!-- Botón Aceptar -->
-                        <Button Grid.Row="1" Content="Accept" 
+                        <Button Grid.Row="1" Content="Accept"  
                                 Style="{StaticResource PrimaryButtonStyle}"
                                 HorizontalAlignment="Right"
                                 Margin="0,10,0,0"
@@ -146,7 +146,7 @@
                 <GroupBox Grid.Row="3" Header="Available Modules to Assign" 
                           Style="{StaticResource GroupBoxStyle}"
                           Margin="0,5,0,0">
-                    <DataGrid x:Name="dgModulosDisponibles" 
+                    <DataGrid x:Name="dgModulosDisponibles"  IsReadOnly="True"
                               Style="{StaticResource DataGridStyle}"
                               ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                               ScrollViewer.VerticalScrollBarVisibility="Auto">
@@ -221,7 +221,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <DataGrid x:Name="dgDocentes" 
+                        <DataGrid x:Name="dgDocentes"  IsReadOnly="True"
                   Style="{StaticResource DataGridStyle}"
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                   ScrollViewer.VerticalScrollBarVisibility="Auto"

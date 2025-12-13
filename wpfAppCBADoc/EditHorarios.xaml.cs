@@ -85,15 +85,26 @@ namespace wpfAppCBADoc
                                        where mi.IdDocente == idDocente && mi.IdHorario != 0
                                        select new
                                        {
-                                           Hora = h.HoraInicio + " - " + h.HoraFinal,
-                                           NombreCurso = c.Nombre,
-                                           Aula = a.NumeroAula,
-                                           Sucursal = s.Alias,
-                                           IdModuloImp = mi.IdModuloImp,
-                                           IdHorario = mi.IdHorario
-                                       }).ToList();
+                                           h.HoraInicio,
+                                           h.HoraFinal,
+                                           c.Nombre,
+                                           a.NumeroAula,
+                                           s.Alias,
+                                           mi.IdModuloImp
+                                       })
+                       .AsEnumerable()
+                       .Select(x => new
+                       {
+                           Hora = x.HoraInicio + " - " + x.HoraFinal,
+                           NombreCurso = x.Nombre,
+                           Aula = x.NumeroAula,
+                           Sucursal = x.Alias,
+                           IdModuloImp = x.IdModuloImp
+                       })
+                       .ToList();
 
                 dgHorariosDocente.ItemsSource = horariosDocente;
+
             }
             catch (Exception ex)
             {
@@ -109,7 +120,7 @@ namespace wpfAppCBADoc
                                          join m in dcDB.Modulo on mi.IdModulo equals m.IdModulo
                                          join a in dcDB.Aula on mi.IdAula equals a.IdAula
                                          join s in dcDB.Sucursal on a.IdSucursal equals s.IdSucursal
-                                         where mi.IdHorario == 0
+                                         where mi.IdHorario == 0 || mi.IdDocente == 0
                                          select new
                                          {
                                              IdModuloImp = mi.IdModuloImp,
@@ -132,12 +143,17 @@ namespace wpfAppCBADoc
         {
             try
             {
-                var horarios = (from h in dcDB.Horario
-                                select new
-                                {
-                                    IdHorario = h.IdHorario,
-                                    Descripcion = h.HoraInicio + " - " + h.HoraFinal
-                                }).ToList();
+                var horarios = dcDB.Horario
+                    .AsEnumerable()
+                    .Select(h => new
+                    {
+                        IdHorario = h.IdHorario,
+                        Descripcion =
+                            h.HoraInicio.ToString() +
+                            " - " +
+                            h.HoraFinal.ToString()
+                    })
+                    .ToList();
 
                 cmbHorarios.ItemsSource = horarios;
                 cmbHorarios.DisplayMemberPath = "Descripcion";
@@ -148,6 +164,8 @@ namespace wpfAppCBADoc
                 ShowMessage("Error cargando horarios: " + ex.Message, true);
             }
         }
+
+
 
         // botones para la navegación entre pestañas 
         private void btnModulos_Click(object sender, RoutedEventArgs e)
@@ -252,61 +270,7 @@ namespace wpfAppCBADoc
 
         private void BtnAsignarHorario_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (docenteSeleccionadoId == 0)
-                {
-                    ShowMessage("Please select a teacher first", true);
-                    return;
-                }
-
-                var button = sender as Button;
-                if (button != null)
-                {
-                    var modulo = button.DataContext as dynamic;
-                    if (modulo != null)
-                    {
-                        int idModuloImp = modulo.IdModuloImp;
-
-                        if (cmbHorarios.SelectedValue == null)
-                        {
-                            ShowMessage("Please select a schedule", true);
-                            return;
-                        }
-
-                        int idHorario = (int)cmbHorarios.SelectedValue;
-
-                        var moduloImpartido = dcDB.ModuloImpartido
-                            .FirstOrDefault(mi => mi.IdModuloImp == idModuloImp);
-
-                        if (moduloImpartido != null)
-                        {
-                            // Verificar que el módulo no tenga ya un docente asignado
-                            if (moduloImpartido.IdDocente != 0 && moduloImpartido.IdDocente != docenteSeleccionadoId)
-                            {
-                                ShowMessage("This module already has another teacher assigned", true);
-                                return;
-                            }
-
-                            // Asignar docente y horario
-                            moduloImpartido.IdDocente = docenteSeleccionadoId;
-                            moduloImpartido.IdHorario = idHorario;
-
-                            dcDB.SubmitChanges();
-
-                            ShowMessage("Schedule assigned successfully!", false);
-
-                            // Recargar datos
-                            LoadModulosSinHorario();
-                            LoadHorariosDocente(docenteSeleccionadoId);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowMessage("Error assigning schedule: " + ex.Message, true);
-            }
+          
         }
 
         private void BtnEliminarHorario_Click(object sender, RoutedEventArgs e)
@@ -367,33 +331,50 @@ namespace wpfAppCBADoc
 
         private void BtnAceptar_Click(object sender, RoutedEventArgs e)
         {
-            // Validar que se haya seleccionado un docente
-            if (dgDocentes.SelectedItem == null)
+            try
             {
-                ShowMessage("Please select a teacher", true);
-                return;
-            }
+                if (dgModulosDisponibles.SelectedItem == null)
+                {
+                    ShowMessage("Please select a module", true);
+                    return;
+                }
 
-            // Validar que se haya seleccionado un horario en el ComboBox
-            if (cmbHorarios.SelectedValue == null)
+                dynamic moduloSeleccionado = dgModulosDisponibles.SelectedItem;
+                int idModuloImp = moduloSeleccionado.IdModuloImp;
+
+                if (cmbHorarios.SelectedValue == null)
+                {
+                    ShowMessage("Please select a schedule", true);
+                    return;
+                }
+
+                int idHorario = Convert.ToInt32(cmbHorarios.SelectedValue);
+                int idDocente = docenteSeleccionadoId;
+
+                var moduloImpartido = dcDB.ModuloImpartido
+                    .FirstOrDefault(mi => mi.IdModuloImp == idModuloImp);
+
+                if (moduloImpartido == null)
+                {
+                    ShowMessage("Module record not found in database", true);
+                    return;
+                }
+
+                moduloImpartido.IdDocente = idDocente;
+                moduloImpartido.IdHorario = idHorario;
+
+                dcDB.SubmitChanges();
+
+                ShowMessage("Schedule assigned successfully!", false);
+
+                LoadModulosSinHorario();
+                LoadHorariosDocente(idDocente);
+            }
+            catch (Exception ex)
             {
-                ShowMessage("Please select a schedule", true);
-                return;
+                ShowMessage("Error assigning schedule: " + ex.Message, true);
             }
-
-            // Validar que se haya seleccionado un módulo a asignar
-            if (dgModulosDisponibles.SelectedItem == null)
-            {
-                ShowMessage("Please select a module to assign", true);
-                return;
-            }
-
-            // Si todas las validaciones pasan, mostrar mensaje de éxito
-            ShowMessage("Operation completed successfully!", false);
-
-            // Opcional: Limpiar selecciones
-            // dgModulosDisponibles.SelectedItem = null;
-            // cmbHorarios.SelectedIndex = -1;
         }
+
     }
 }
