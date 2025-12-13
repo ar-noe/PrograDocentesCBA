@@ -107,7 +107,7 @@ namespace wpfAppCBADoc
             string correoUsr = txtUsername.Text.Trim();
             string passwrdUsr = txtPassword.Password;
 
-            string patronEmail = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            string patronEmail = @"^[A-z0-9]+@[A-z]+\.[a-z]+$ ";
             string patronPassword = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$";
 
             if (string.IsNullOrEmpty(correoUsr))

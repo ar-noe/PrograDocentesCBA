@@ -63,10 +63,10 @@ namespace wpfAppCBADoc
                         // Formatear fecha después de traer los datos
                         string bimestreFormateado = $"{infoActual.Bimestre} - {infoActual.FechaInicio:MMM/yyyy}";
 
-                        txtInfoActual.Text = $"Docente: {infoActual.Docente}\n" +
-                                           $"Módulo: {infoActual.Modulo} ({infoActual.Curso})\n" +
-                                           $"Aula: {infoActual.Aula} - {infoActual.Sucursal}\n" +
-                                           $"Bimestre: {bimestreFormateado}";
+                        txtInfoActual.Text = $"Teacher: {infoActual.Docente}\n" +
+                                           $"Module: {infoActual.Modulo} ({infoActual.Curso})\n" +
+                                           $"Classroom: {infoActual.Aula} - {infoActual.Sucursal}\n" +
+                                           $"Bimester: {bimestreFormateado}";
 
                         // Establecer valores actuales en los comboboxes
                         cmbCursoEdit.SelectedValue = infoActual.CursoId;
@@ -97,14 +97,14 @@ namespace wpfAppCBADoc
                 }
                 else
                 {
-                    MessageBox.Show("No se encontró el módulo impartido", "Error",
+                    MessageBox.Show("Module not found", "Error",
                                   MessageBoxButton.OK, MessageBoxImage.Error);
                     this.Close();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error cargando datos del módulo: " + ex.Message, "Error",
+                MessageBox.Show("Error obtaining the module: " + ex.Message, "Error",
                               MessageBoxButton.OK, MessageBoxImage.Error);
                 this.Close();
             }
@@ -136,7 +136,7 @@ namespace wpfAppCBADoc
                         {
                             stackPanel.Children.Add(new TextBlock
                             {
-                                Text = "• Curso, módulo y bimestre bloqueados por estudiantes inscritos",
+                                Text = "• Course, module and bimester are locked if they have students enrolled",
                                 Foreground = System.Windows.Media.Brushes.DarkRed,
                                 FontSize = 12,
                                 FontWeight = FontWeights.Bold,
@@ -148,7 +148,7 @@ namespace wpfAppCBADoc
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Error verificando estudiantes: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("Error verifing students: " + ex.Message);
             }
         }
 
@@ -339,57 +339,55 @@ namespace wpfAppCBADoc
 
                     if (cursoActual != (int)cmbCursoEdit.SelectedValue)
                     {
-                        MessageBox.Show("No se puede cambiar el curso porque hay estudiantes inscritos",
+                        MessageBox.Show("Can´t change the course, there is/are student/s enrolled",
                                       "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
 
                     if (moduloActual.IdModulo != (int)cmbModuloEdit.SelectedValue)
                     {
-                        MessageBox.Show("No se puede cambiar el módulo porque hay estudiantes inscritos",
+                        MessageBox.Show("Can´t change the module, there is/are student/s enrolled",
                                       "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
 
                     if (moduloActual.IdBimestre != (int)cmbBimestreEdit.SelectedValue)
                     {
-                        MessageBox.Show("No se puede cambiar el bimestre porque hay estudiantes inscritos",
+                        MessageBox.Show("Can´t change the bimester, there is/are student/s enrolled",
                                       "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
                 }
 
-                // REEMPLAZAR ESTA VALIDACIÓN - NUEVA LÓGICA
                 int idBimestreSeleccionado = (int)cmbBimestreEdit.SelectedValue;
                 int idAulaSeleccionada = (int)cmbAulaEdit.SelectedValue;
 
-                // 1. Obtener todos los horarios disponibles en el sistema (excluyendo placeholder)
+                // bbtener todos los horarios disponibles en el sistema (excluyendo placeholder)
                 int totalHorariosDisponibles = dcBd.Horario
                     .Where(h => h.IdHorario != 0)
                     .Count();
 
-                // 2. Contar cuántos módulos ya están asignados a esta aula en este bimestre
+                // contar cuántos módulos ya están asignados a esta aula en este bimestre
                 int modulosAsignadosEnAulaBimestre = dcBd.ModuloImpartido
                     .Count(mi => mi.IdAula == idAulaSeleccionada &&
                                  mi.IdBimestre == idBimestreSeleccionado &&
                                  mi.IdModuloImp != idModuloImp); // Excluir el actual
 
-                // 3. Verificar si se ha alcanzado el límite de horarios disponibles
+                // verificar si se ha alcanzado el límite de horarios disponibles
                 if (modulosAsignadosEnAulaBimestre >= totalHorariosDisponibles)
                 {
-                    MessageBox.Show($"Esta aula ya tiene {modulosAsignadosEnAulaBimestre} módulo(s) asignado(s) " +
-                                   $"para este bimestre. Límite: {totalHorariosDisponibles} módulo(s) por aula por bimestre.\n\n" +
-                                   $"Cada aula puede tener tantos módulos como horarios disponibles existan en el sistema.",
-                                   "Límite alcanzado", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show($"This classroom already has {modulosAsignadosEnAulaBimestre} module(s) assigned" +
+                                   $"this bimester. Limit: {totalHorariosDisponibles} module(s) per classroom this bimester.\n\n" +
+                                   $"Each classroom only has to have as much modules asigned as schedules available each bimester.",
+                                   "Limit reached", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                // Opcional: Mostrar cuántos espacios quedan disponibles
                 int espaciosDisponibles = totalHorariosDisponibles - modulosAsignadosEnAulaBimestre;
                 if (espaciosDisponibles <= 2) // Solo mostrar advertencia si quedan pocos espacios
                 {
-                    MessageBox.Show($"Atención: Quedan {espaciosDisponibles} espacio(s) disponible(s) en esta aula para el bimestre seleccionado.",
-                                   "Espacios limitados", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show($"Warning: There is/are {espaciosDisponibles} spots left for this classroom this bimester.",
+                                   "Limited spots", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
                 // Actualizar datos
@@ -402,7 +400,7 @@ namespace wpfAppCBADoc
                 // Guardar cambios
                 dcBd.SubmitChanges();
 
-                MessageBox.Show("✅ Cambios guardados exitosamente", "Éxito",
+                MessageBox.Show("Changes saved correctly", ":)",
                               MessageBoxButton.OK, MessageBoxImage.Information);
 
                 this.DialogResult = true;
@@ -410,7 +408,7 @@ namespace wpfAppCBADoc
             }
             catch (Exception ex)
             {
-                MessageBox.Show("❌ Error guardando cambios: " + ex.Message, "Error",
+                MessageBox.Show("Error saving changes: " + ex.Message, "Error",
                               MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -419,7 +417,7 @@ namespace wpfAppCBADoc
         {
             if (cmbCursoEdit.SelectedValue == null)
             {
-                MessageBox.Show("Seleccione un curso", "Validación",
+                MessageBox.Show("Select a course", "Validate",
                               MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbCursoEdit.Focus();
                 return false;
@@ -427,7 +425,7 @@ namespace wpfAppCBADoc
 
             if (cmbModuloEdit.SelectedValue == null)
             {
-                MessageBox.Show("Seleccione un módulo", "Validación",
+                MessageBox.Show("Select a module", "Validate",
                               MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbModuloEdit.Focus();
                 return false;
@@ -435,7 +433,7 @@ namespace wpfAppCBADoc
 
             if (cmbSucursalEdit.SelectedValue == null)
             {
-                MessageBox.Show("Seleccione una sucursal", "Validación",
+                MessageBox.Show("Select a Branch", "Validate",
                               MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbSucursalEdit.Focus();
                 return false;
@@ -443,7 +441,7 @@ namespace wpfAppCBADoc
 
             if (cmbAulaEdit.SelectedValue == null)
             {
-                MessageBox.Show("Seleccione un aula", "Validación",
+                MessageBox.Show("Select a classroom", "Validate",
                               MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbAulaEdit.Focus();
                 return false;
@@ -451,7 +449,7 @@ namespace wpfAppCBADoc
 
             if (cmbBimestreEdit.SelectedValue == null)
             {
-                MessageBox.Show("Seleccione un bimestre", "Validación",
+                MessageBox.Show("Select a bimester", "Validate",
                               MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbBimestreEdit.Focus();
                 return false;

@@ -18,7 +18,7 @@ namespace wpfAppCBADoc
 {
     public partial class MainModulosImp : Window
     {
-        private DataClassesDocentesCBA2DataContext dcBd;
+        private DataClassesDocentesCBA2DataContext dcDB;
         private string connectionString;
 
         public MainModulosImp()
@@ -34,7 +34,7 @@ namespace wpfAppCBADoc
             try
             {
                 connectionString = ConfigurationManager.ConnectionStrings["wpfAppCBADoc.Properties.Settings.PrograCBADocentesConnectionString"].ConnectionString;
-                dcBd = new DataClassesDocentesCBA2DataContext(connectionString);
+                dcDB = new DataClassesDocentesCBA2DataContext(connectionString);
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ namespace wpfAppCBADoc
             try
             {
                 // Cargar cursos
-                var cursos = (from c in dcBd.Curso
+                var cursos = (from c in dcDB.Curso
                               select new
                               {
                                   IdCurso = c.IdCurso,
@@ -58,7 +58,7 @@ namespace wpfAppCBADoc
                 cmbCurso.SelectedValuePath = "IdCurso";
 
                 // Cargar sucursales
-                var sucursales = (from s in dcBd.Sucursal
+                var sucursales = (from s in dcDB.Sucursal
                                   select new
                                   {
                                       IdSucursal = s.IdSucursal,
@@ -69,7 +69,7 @@ namespace wpfAppCBADoc
                 cmbSucursal.SelectedValuePath = "IdSucursal";
 
                 // Cargar bimestres 
-                var bimestres = (from b in dcBd.Bimestre
+                var bimestres = (from b in dcDB.Bimestre
                                  select new
                                  {
                                      IdBimestre = b.IdBimestre,
@@ -104,7 +104,7 @@ namespace wpfAppCBADoc
         {
             try
             {
-                var modulos = (from m in dcBd.Modulo
+                var modulos = (from m in dcDB.Modulo
                                where m.IdCurso == idCurso
                                select new
                                {
@@ -134,7 +134,7 @@ namespace wpfAppCBADoc
         {
             try
             {
-                var aulas = (from a in dcBd.Aula
+                var aulas = (from a in dcDB.Aula
                              where a.IdSucursal == idSucursal && a.IdEstadoA == 1 // Asumiendo 1 = Activo
                              select new
                              {
@@ -180,7 +180,7 @@ namespace wpfAppCBADoc
                         b.Gestion,
                         b.FechaInicio,
                         CASE 
-                            WHEN h.IdHorario = 0 THEN 'Sin horario'
+                            WHEN h.IdHorario = 0 THEN 'No schedule'
                             ELSE CONVERT(varchar(5), h.HoraInicio, 108) + ' - ' + CONVERT(varchar(5), h.HoraFinal, 108)
                         END AS Horario
                     FROM ModuloImpartido mi
@@ -275,8 +275,8 @@ namespace wpfAppCBADoc
                 };
 
                 // Insertar en la base de datos
-                dcBd.ModuloImpartido.InsertOnSubmit(nuevoModuloImpartido);
-                dcBd.SubmitChanges();
+                dcDB.ModuloImpartido.InsertOnSubmit(nuevoModuloImpartido);
+                dcDB.SubmitChanges();
 
                 ShowMessage("Módulo impartido agregado exitosamente!", false);
                 LimpiarFormulario();
@@ -354,7 +354,7 @@ namespace wpfAppCBADoc
                         int idModuloImp = moduloImpartido.IdModuloImp;
 
                         // Abrir ventana de edición
-                        var ventanaEdicion = new EditarModuloImpartido(idModuloImp, dcBd);
+                        var ventanaEdicion = new EditarModuloImpartido(idModuloImp, dcDB);
                         ventanaEdicion.Owner = this;
                         bool? resultado = ventanaEdicion.ShowDialog();
 
@@ -393,13 +393,13 @@ namespace wpfAppCBADoc
 
                         if (result == MessageBoxResult.Yes)
                         {
-                            var moduloAEliminar = dcBd.ModuloImpartido
+                            var moduloAEliminar = dcDB.ModuloImpartido
                                 .FirstOrDefault(mi => mi.IdModuloImp == idModuloImp);
 
                             if (moduloAEliminar != null)
                             {
                                 // Verificar si hay estudiantes inscritos
-                                var estudiantesInscritos = dcBd.EstudianteInscrito
+                                var estudiantesInscritos = dcDB.EstudianteInscrito
                                     .Any(ei => ei.IdModuloImp == idModuloImp);
 
                                 if (estudiantesInscritos)
@@ -408,8 +408,8 @@ namespace wpfAppCBADoc
                                     return;
                                 }
 
-                                dcBd.ModuloImpartido.DeleteOnSubmit(moduloAEliminar);
-                                dcBd.SubmitChanges();
+                                dcDB.ModuloImpartido.DeleteOnSubmit(moduloAEliminar);
+                                dcDB.SubmitChanges();
 
                                 ShowMessage("Módulo impartido eliminado exitosamente!", false);
                                 LoadModulosImpartidos();
@@ -446,63 +446,51 @@ namespace wpfAppCBADoc
             {
                 var textoBusqueda = txtBuscarModulo.Text.ToLower();
 
-                string query = @"
-                    SELECT 
-                        mi.IdModuloImp,
-                        CASE 
-                            WHEN p.IdPersona IS NULL OR p.IdPersona = 0 THEN 'Pending'
-                            ELSE p.Nombres + ' ' + ISNULL(p.ApPat, '') + ' ' + ISNULL(p.ApMat, '') 
-                        END AS Docente,
-                        m.Nombre AS Modulo,
-                        c.Nombre AS Curso,
-                        a.NumeroAula AS Aula,
-                        s.Alias AS Sucursal,
-                        b.Gestion,
-                        b.FechaInicio
-                    FROM ModuloImpartido mi
-                    LEFT JOIN Docente d ON mi.IdDocente = d.IdDocente
-                    LEFT JOIN Persona p ON d.IdPersona = p.IdPersona
-                    LEFT JOIN Modulo m ON mi.IdModulo = m.IdModulo
-                    LEFT JOIN Curso c ON m.IdCurso = c.IdCurso
-                    LEFT JOIN Aula a ON mi.IdAula = a.IdAula
-                    LEFT JOIN Sucursal s ON a.IdSucursal = s.IdSucursal
-                    LEFT JOIN Bimestre b ON mi.IdBimestre = b.IdBimestre
-                    WHERE 
-                        (CASE WHEN p.IdPersona IS NULL OR p.IdPersona = 0 THEN 'Pending' ELSE p.Nombres + ' ' + ISNULL(p.ApPat, '') + ' ' + ISNULL(p.ApMat, '') END LIKE '%' + @busqueda + '%') OR
-                        m.Nombre LIKE '%' + @busqueda + '%' OR
-                        c.Nombre LIKE '%' + @busqueda + '%' OR
-                        a.NumeroAula LIKE '%' + @busqueda + '%' OR
-                        s.Alias LIKE '%' + @busqueda + '%' OR
-                        b.Gestion LIKE '%' + @busqueda + '%'";
-
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@busqueda", textoBusqueda);
-
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            var resultado = new List<object>();
-                            while (reader.Read())
+                var query = from mi in dcDB.ModuloImpartido
+                            join d in dcDB.Docente on mi.IdDocente equals d.IdDocente into docenteJoin
+                            from d in docenteJoin.DefaultIfEmpty()
+                            join p in dcDB.Persona on d.IdPersona equals p.IdPersona into personaJoin
+                            from p in personaJoin.DefaultIfEmpty()
+                            join m in dcDB.Modulo on mi.IdModulo equals m.IdModulo
+                            join c in dcDB.Curso on m.IdCurso equals c.IdCurso
+                            join a in dcDB.Aula on mi.IdAula equals a.IdAula
+                            join s in dcDB.Sucursal on a.IdSucursal equals s.IdSucursal
+                            join b in dcDB.Bimestre on mi.IdBimestre equals b.IdBimestre
+                            where string.IsNullOrEmpty(textoBusqueda) ||
+                                  ((p.IdPersona == null || p.IdPersona == 0 ? "Pending" :
+                                    (p.Nombres ?? "") + " " + (p.ApPat ?? "") + " " + (p.ApMat ?? "")).ToLower().Contains(textoBusqueda) ||
+                                   m.Nombre.ToLower().Contains(textoBusqueda) ||
+                                   c.Nombre.ToLower().Contains(textoBusqueda) ||
+                                   a.NumeroAula.ToLower().Contains(textoBusqueda) ||
+                                   s.Alias.ToLower().Contains(textoBusqueda) ||
+                                   b.Gestion.ToLower().Contains(textoBusqueda))
+                            select new
                             {
-                                resultado.Add(new
-                                {
-                                    IdModuloImp = reader["IdModuloImp"],
-                                    Docente = reader["Docente"],
-                                    Modulo = reader["Modulo"],
-                                    Curso = reader["Curso"],
-                                    Aula = reader["Aula"],
-                                    Sucursal = reader["Sucursal"],
-                                    Bimestre = $"{reader["Gestion"]} - {Convert.ToDateTime(reader["FechaInicio"]):MMM/yyyy}",
-                                    Gestion = reader["Gestion"]
-                                });
-                            }
-                            dgModulos.ItemsSource = resultado;
-                        }
-                    }
-                }
+                                mi.IdModuloImp,
+                                Docente = p.IdPersona == null || p.IdPersona == 0 ? "Pending" :
+                                         (p.Nombres ?? "") + " " + (p.ApPat ?? "") + " " + (p.ApMat ?? ""),
+                                Modulo = m.Nombre,
+                                Curso = c.Nombre,
+                                Aula = a.NumeroAula,
+                                Sucursal = s.Alias,
+                                b.Gestion,
+                                b.FechaInicio
+                            };
+
+                var resultado = query.AsEnumerable() // Traer a memoria para usar métodos de C#
+                    .Select(x => new
+                    {
+                        x.IdModuloImp,
+                        x.Docente,
+                        x.Modulo,
+                        x.Curso,
+                        x.Aula,
+                        x.Sucursal,
+                        Bimestre = $"{x.Gestion} - {x.FechaInicio:MMM/yyyy}",
+                        x.Gestion
+                    }).ToList();
+
+                dgModulos.ItemsSource = resultado;
             }
             catch (Exception ex)
             {

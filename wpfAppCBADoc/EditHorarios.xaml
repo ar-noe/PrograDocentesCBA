@@ -124,7 +124,6 @@
                                 <DataGridTextColumn Header="Time" Binding="{Binding Hora}" Width="120"/>
                                 <DataGridTextColumn Header="Course" Binding="{Binding NombreCurso}" Width="200"/>
                                 <DataGridTextColumn Header="Classroom" Binding="{Binding Aula}" Width="100"/>
-                                <DataGridTextColumn Header="Day" Binding="{Binding Dia}" Width="100"/>
                                 <DataGridTextColumn Header="Branch" Binding="{Binding Sucursal}" Width="120"/>
                             </DataGrid.Columns>
                         </DataGrid>
@@ -187,7 +186,7 @@
                 </Border>
 
                 <!-- Formulario Docente -->
-                <GroupBox Grid.Row="1" Header="Data" 
+                <GroupBox Grid.Row="1" Header="Filter"
                           Style="{StaticResource GroupBoxStyle}"
                           Background="{StaticResource WhiteBrush}"
                           Margin="0,0,0,15">
@@ -197,53 +196,45 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <Label Grid.Row="0" Content="Teacher:" 
-                               Style="{StaticResource FieldLabelStyle}"
-                               Margin="0,0,0,5"/>
-                        <ComboBox Grid.Row="1" 
-                                  Style="{StaticResource ComboBoxStyle}"
-                                  x:Name="cmbDocenteSeleccionado"
-                                  Margin="0,0,0,0"/>
+                        <TextBox 
+                          x:Name="txtDocentesSearch"
+     Style="{StaticResource TextBoxStyle}" 
+     Width="auto" Margin="0,0,10,0"
+     TextChanged="TxtBuscarDoc_TextChanged"
+     Background="{StaticResource WhiteBrush}"/>
                     </Grid>
                 </GroupBox>
 
                 <!-- Formulario Filtros -->
-                <GroupBox Grid.Row="2" Header="Filter" 
-                          Style="{StaticResource GroupBoxStyle}"
-                          Background="{StaticResource WhiteBrush}">
+                <GroupBox Grid.Row="2" Header="Data" 
+          Style="{StaticResource GroupBoxStyle}"
+          Background="{StaticResource WhiteBrush}">
                     <Grid Margin="5">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <!-- Sucursal -->
-                        <Label Grid.Row="0" Content="Branch:" 
-                               Style="{StaticResource FieldLabelStyle}"
-                               Margin="0,0,0,5"/>
-                        <ComboBox Grid.Row="1" 
-                                  Style="{StaticResource ComboBoxStyle}"
-                                  x:Name="cmbSucursalFiltro"
-                                  Margin="0,0,0,10"/>
+                        <DataGrid x:Name="dgDocentes" 
+                  Style="{StaticResource DataGridStyle}"
+                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  SelectionChanged="DgDocentes_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="120" Visibility="Hidden"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding NombreCompleto}" Width="200"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
 
-                        <!-- Curso -->
-                        <Label Grid.Row="2" Content="Classroom:" 
-                               Style="{StaticResource FieldLabelStyle}"
-                               Margin="0,0,0,5"/>
-                        <ComboBox Grid.Row="3" 
-                                  Style="{StaticResource ComboBoxStyle}"
-                                  x:Name="cmbCursoFiltro"
-                                  Margin="0,0,0,15"/>
+                        <!-- Combobox de Horarios -->
+                        <Label Grid.Row="1" Content="Select Schedule:" 
+               Margin="0,10,0,5"
+               Foreground="{StaticResource DarkTextBrush}"/>
 
-                        <!-- Botón Aceptar Filtro -->
-                        <Button Grid.Row="4" Content="Apply filter" 
-                                Style="{StaticResource PrimaryButtonStyle}"
-                                x:Name="btnAplicarFiltro"
-                                Height="40"
-                                HorizontalAlignment="Stretch"/>
+                        <ComboBox Grid.Row="2" x:Name="cmbHorarios"
+                  Style="{StaticResource ComboBoxStyle}"
+                  Margin="0,0,0,10"/>
                     </Grid>
                 </GroupBox>
             </Grid>

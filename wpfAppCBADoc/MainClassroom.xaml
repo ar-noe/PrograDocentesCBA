@@ -89,7 +89,7 @@
                     BorderBrush="{StaticResource LightBlueBrush}" 
                     BorderThickness="2">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Imparted Module Management" 
+                        <TextBlock Text="Classrooms Management" 
                               Foreground="{StaticResource DarkTextBrush}"
                               FontSize="24" FontWeight="Bold"
                               VerticalAlignment="Center"/>
@@ -104,7 +104,7 @@
                     </Grid.RowDefinitions>
 
                     <!-- Formulario para agregar módulos -->
-                    <GroupBox Grid.Row="0" Header="Add a new Imparted Module" 
+                    <GroupBox Grid.Row="0" Header="Add a Classroom to Update" 
                           Style="{StaticResource GroupBoxStyle}">
                         <Grid Margin="10">
                             <Grid.ColumnDefinitions>
@@ -133,14 +133,7 @@
                             </StackPanel>
 
                             <!-- Botones -->
-                            <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" 
-                                        Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Content="Continue" 
-                                        Style="{StaticResource PrimaryButtonStyle}"
-                                        Margin="0,0,20,0"/>
-                                <Button Content="Cancel" 
-                                        Style="{StaticResource SecondaryButtonStyle}"/>
-                            </StackPanel>
+                            
                         </Grid>
                     </GroupBox>
 
@@ -184,13 +177,7 @@
                                         Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3"
  
                                         Orientation="Vertical" HorizontalAlignment="Center">
-                                <Label Content="Description:"
-                                        Style="{StaticResource FieldLabelStyle}"
-                                        Margin="0,0,0,3"/>
-                                <TextBox x:Name="cmbS"
-                                        Style="{StaticResource TextBoxStyle}" 
-                                        Width="700"
-                                        Height="40" />
+                              
                             </StackPanel>
 
                             <!-- Botones -->
@@ -198,7 +185,7 @@
                                         Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button Content="Save" 
                                         Style="{StaticResource PrimaryButtonStyle}"
-                                        Margin="0,0,20,0"/>
+                                        Margin="0,0,20,0" Click="Button_Click_1"/>
                                 
                             </StackPanel>
 
