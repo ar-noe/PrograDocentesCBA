@@ -164,6 +164,13 @@ namespace wpfAppCBADoc
             this.Close();
         }
 
+        private void btnDeleteProfessor_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteProfessor delProf = new DeleteProfessor();
+            delProf.Show();
+            this.Close();
+        }
+
         //mostrar mensajes de error u otros
         private void ShowMessage(string message, bool isError)
         {
@@ -188,11 +195,12 @@ namespace wpfAppCBADoc
                 var query = from p in dcDB.Persona
                             join d in dcDB.Docente on p.IdPersona equals d.IdPersona
                             where p.TipoPersona == "Docente"
-                            where string.IsNullOrEmpty(textoBusqueda) ||
+                            where (string.IsNullOrEmpty(textoBusqueda) ||
                                   p.ApMat.ToLower().Contains(textoBusqueda) ||
                                   p.ApPat.ToLower().Contains(textoBusqueda) ||
                                   p.Nombres.ToLower().Contains(textoBusqueda) ||
-                                  (p.Nombres.ToLower() + " " + p.ApMat.ToLower() + " " + p.ApPat.ToLower()).Contains(textoBusqueda)
+                                  (p.Nombres.ToLower() + " " + p.ApMat.ToLower() + " " + p.ApPat.ToLower()).Contains(textoBusqueda))
+                                  && p.IdPersona != 0
                             select new
                             {
                                 ID = p.IdPersona,

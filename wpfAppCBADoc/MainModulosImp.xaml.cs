@@ -512,6 +512,12 @@ namespace wpfAppCBADoc
             aula.Show();
             this.Close();
         }
+        private void btnDeleteProfessor_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteProfessor delProf = new DeleteProfessor();
+            delProf.Show();
+            this.Close();
+        }
 
         //mostrar mensajes de error u otros
         private void ShowMessage(string message, bool isError)
@@ -527,5 +533,6 @@ namespace wpfAppCBADoc
             signUp.Show();
             this.Close();
         }
+
     }
 }

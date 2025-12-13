@@ -50,6 +50,10 @@
                             Margin="0,2" Height="45"
                             Background="{StaticResource LightBlueBrush}"
                             Foreground="{StaticResource DarkTextBrush}" />
+                    <Button x:Name="btnDeleteProfessor" Content="👔 Delete Professor" 
+    Style="{StaticResource MenuButtonStyle}"
+Margin="0,2" Height="45" Click="btnDeleteProfessor_Click"
+/>
                 </StackPanel>
 
                 <!-- Footer -->
